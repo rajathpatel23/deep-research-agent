@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Research Agent — Baseline vs Guided</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.5; }
+  .container { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.5rem; }
+  h2 { font-size: 0.9rem; font-weight: 600; color: #94a3b8; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .query-box { background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 1rem; color: #f1f5f9; border-left: 3px solid #6366f1; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .col-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .mode-badge { padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+  .badge-baseline { background: #312e81; color: #a5b4fc; }
+  .badge-guided { background: #14532d; color: #86efac; }
+  .stat-row { display: flex; gap: 1.5rem; margin-bottom: 1rem; }
+  .stat { background: #1e293b; border-radius: 6px; padding: 0.6rem 1rem; flex: 1; }
+  .stat-val { font-size: 1.4rem; font-weight: 700; }
+  .stat-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; }
+  .step-card { background: #1e293b; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; }
+  .step-header { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.3rem; }
+  .step-num { font-size: 0.7rem; color: #475569; font-weight: 600; min-width: 40px; }
+  .step-action { font-size: 0.75rem; font-weight: 600; color: #94a3b8; }
+  .step-result { font-size: 0.7rem; font-weight: 700; margin-left: auto; }
+  .step-question { font-size: 0.78rem; color: #64748b; line-height: 1.4; }
+  .metric-row { background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+  .metric-label strong { display: block; font-size: 0.85rem; margin-bottom: 0.2rem; }
+  .metric-explain { font-size: 0.72rem; color: #475569; line-height: 1.4; display: block; margin-bottom: 0.75rem; }
+  .bar-group { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+  .bar-label { font-size: 0.7rem; color: #64748b; min-width: 55px; }
+  .bar-track { flex: 1; background: #334155; border-radius: 3px; height: 8px; }
+  .bar-fill { height: 8px; border-radius: 3px; }
+  .bar-val { font-size: 0.78rem; font-weight: 600; min-width: 55px; }
+  .report-box { background: #1e293b; border-radius: 8px; padding: 1.25rem; font-size: 0.82rem; color: #cbd5e1; line-height: 1.7; max-height: 600px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+  .r-h2 { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin: 1.2rem 0 0.4rem; border-bottom: 1px solid #334155; padding-bottom: 0.25rem; }
+  .r-h3 { font-size: 0.88rem; font-weight: 700; color: #a5b4fc; margin: 1rem 0 0.3rem; }
+  .r-h4 { font-size: 0.82rem; font-weight: 600; color: #7dd3fc; margin: 0.8rem 0 0.2rem; }
+  .r-p { margin-bottom: 0.5rem; }
+  .r-gap { height: 0.4rem; }
+  li { margin-left: 1.2rem; margin-bottom: 0.25rem; }
+  .conflict-card { background: #1e293b; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid #ef4444; }
+  .conflict-claim { font-size: 0.82rem; margin-bottom: 0.3rem; }
+  .conflict-meta { font-size: 0.72rem; color: #64748b; }
+  .dim { color: #475569; font-size: 0.82rem; }
+  .section { margin-bottom: 2.5rem; }
+  .full-width { grid-column: 1 / -1; }
+  .insight-box { background: #172033; border: 1px solid #334155; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; }
+  .insight-box h3 { font-size: 0.8rem; color: #6366f1; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .insight-box p { font-size: 0.85rem; color: #94a3b8; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Deep Research Agent — Baseline vs. Guided Comparison</h1>
+  <div class="query-box">Does retrieval-augmented generation improve factual accuracy in large language models?</div>
+
+  <div class="insight-box">
+    <h3>What this comparison shows</h3>
+    <p>
+      Both modes ran on the same query with the same model (qwen/qwen3-32b).
+      <strong>Baseline</strong> cycles sub-questions in fixed order, never challenges claims, stops only when budget runs out.
+      <strong>Guided</strong> reads the evidence state at each step — prioritizing uncovered angles, challenging high-confidence claims,
+      and stopping when evidence is genuinely exhausted.
+      The step journeys below show where they diverged and why the metrics differ.
+    </p>
+  </div>
+
+  <h2>Step Journey</h2>
+  <div class="cols section">
+    <div>
+      <div class="col-header">
+        <span class="mode-badge badge-baseline">BASELINE</span>
+        <span style="font-size:0.8rem;color:#64748b">10 steps · 39 claim groups · 0 disputes</span>
+      </div>
+      
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 0</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What empirical studies demonstrate that retrieval-augmented generation (RAG) reduces factual halluci…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #ef4444">
+          <div class="step-header">
+            <span class="step-num">Step 1</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#ef4444">CONFLICT_FOUND</span>
+          </div>
+          <div class="step-question">How does the integration of external knowledge sources in RAG systems correlate with improvements in…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 2</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">In what domains or tasks does retrieval-augmented generation fail to improve factual accuracy, such …</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #6b7280; opacity: 0.8">
+          <div class="step-header">
+            <span class="step-num">END</span>
+            <span class="step-result" style="color:#6b7280">BUDGET_EXHAUSTED</span>
+          </div>
+          <div class="step-question">Hit step limit before evidence was exhausted — would benefit from more budget.</div>
+        </div>
+    </div>
+    <div>
+      <div class="col-header">
+        <span class="mode-badge badge-guided">GUIDED</span>
+        <span style="font-size:0.8rem;color:#64748b">5 steps · 45 claim groups · 0 disputes</span>
+      </div>
+      
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 0</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What empirical studies demonstrate measurable improvements in factual accuracy when using retrieval-…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 1</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">How do retrieval mechanisms in RAG systems handle outdated or contradictory sources, and does this i…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 2</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">Are there specific domains (e.g., medicine, law) where RAG significantly outperforms non-RAG models …</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 3</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What limitations in retrieval pipeline design (e.g., latency, noise) reduce the effectiveness of RAG…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 4</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">How does the quality of retrieved documents (e.g., source credibility, recency) correlate with factu…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e; opacity: 0.8">
+          <div class="step-header">
+            <span class="step-num">END</span>
+            <span class="step-result" style="color:#22c55e">COVERAGE_MET</span>
+          </div>
+          <div class="step-question">All sub-questions covered, no unchallenged high-confidence claims remaining.</div>
+        </div>
+    </div>
+  </div>
+
+  <h2>Evaluation Metrics — What Each Number Means</h2>
+  <div class="section">
+    
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Coverage</strong>
+            <span class="metric-explain">Fraction of sub-questions that got at least one evidence-backed claim. Low = the system left research threads uninvestigated.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:60%;background:#6366f1"></div></div>
+              <span class="bar-val">60%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div>
+              <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+40%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Search Efficiency</strong>
+            <span class="metric-explain">Fraction of steps that produced new evidence or surfaced a conflict. Low = wasting budget on redundant or dead-end searches.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#6366f1"></div></div>
+              <span class="bar-val">100%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div>
+              <span class="bar-val">100% <span style="color:#6b7280;font-size:0.75rem">0%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Conflict Surfacing</strong>
+            <span class="metric-explain">When the evidence store contained contradicting claims, did the report surface them? 0% = conflicts found but hidden. 100% = fully honest.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1"></div></div>
+              <span class="bar-val">0%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div>
+              <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+100%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Stopping Quality</strong>
+            <span class="metric-explain">Did the system stop because evidence was exhausted (good) or budget ran out (bad)? DIMINISHING_RETURNS = 1.0, COVERAGE_MET = 0 (also good), BUDGET_EXHAUSTED = 0.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1"></div></div>
+              <span class="bar-val">0%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e"></div></div>
+              <span class="bar-val">0% <span style="color:#6b7280;font-size:0.75rem">0%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Summary Grounding</strong>
+            <span class="metric-explain">Fraction of LLM-generated summary sentences traceable to a claim in the evidence store. Low = the summary introduced claims not backed by what was retrieved.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1"></div></div>
+              <span class="bar-val">0.00</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e"></div></div>
+              <span class="bar-val">0.00 <span style="color:#6b7280;font-size:0.75rem"></span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Source Diversity</strong>
+            <span class="metric-explain">Average number of distinct source domains per claim group. Higher = claims corroborated by independent sources, not just one outlet.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1"></div></div>
+              <span class="bar-val">0.00</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e"></div></div>
+              <span class="bar-val">0.00 <span style="color:#6b7280;font-size:0.75rem"></span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Confidence Calibration</strong>
+            <span class="metric-explain">Are high-confidence claims backed by more sources than low-confidence ones? 1.0 = perfectly ordered. 0 = confidence labels are meaningless.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1"></div></div>
+              <span class="bar-val">0.00</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e"></div></div>
+              <span class="bar-val">0.00 <span style="color:#6b7280;font-size:0.75rem"></span></span>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <h2>Conflicts Surfaced</h2>
+  <div class="cols section">
+    <div>
+      <div class="col-header"><span class="mode-badge badge-baseline">BASELINE</span></div>
+      
+        <div class="conflict-card">
+          <div class="conflict-claim">Accurate RAG evaluation metrics must measure retrieval precision, contextual relevance, query-relevance, faithfulness to retrieved sources, and real-world task performance.</div>
+          <div class="conflict-meta">
+            Supporting: 1 &nbsp;|&nbsp;
+            Contradicting: 1 &nbsp;|&nbsp;
+            Sources: deepchecks.com
+          </div>
+        </div>
+    </div>
+    <div>
+      <div class="col-header"><span class="mode-badge badge-guided">GUIDED</span></div>
+      <p class='dim'>No conflicts detected.</p>
+    </div>
+  </div>
+
+  <h2>Generated Reports</h2>
+  <div class="cols section">
+    <div>
+      <div class="col-header"><span class="mode-badge badge-baseline">BASELINE</span></div>
+      <div class="report-box"><h2 class="r-h2">Research Report</h2>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Query:</strong> Does retrieval-augmented generation improve factual accuracy in large language models?</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Summary</h3>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p">The evidence suggests that retrieval-augmented generation (RAG) may improve factual accuracy in large language models (LLMs) by leveraging external knowledge sources, reducing hallucinations, and enabling access to up-to-date information. Some studies report reductions in hallucination rates (e.g., from 68% to 10%) and improved factual alignment with retrieved context. However, the effectiveness of RAG is constrained by retrieval system limitations, such as incomplete or outdated data, poor document curation, and ineffective chunking, which can propagate errors or fail to address domain-specific gaps. Computational costs and latency further complicate practical deployment. While RAG shows potential, the evidence is limited in scope and strength, with mixed results depending on retrieval quality and task requirements. Uncertainties remain about its reliability in real-time or highly specialized contexts.</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Findings</h3>
+<div class="r-gap"></div>
+<h4 class="r-h4">What empirical evidence demonstrates that retrieval-augmented generation (RAG) improves factual accuracy in large language models compared to non-RAG models?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> A RAG-based system retrieves relevant information from an external source before answering questions.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: for answering questions</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> A RAG-based system retrieves actual sources before generating an answer, making it easier to check where the information came from.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: for verifying information sources</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> If the retrieval system doesn’t find the best information, the model can’t generate a good answer.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: when the retrieval system fails to find the best information</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Retrieval-augmented generation (RAG) solves a fundamental Large Language Models (LLM) limitation.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.linkedin.com</li>
+<div class="r-gap"></div>
+<li>Scope: fundamental LLM limitation</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Large Language Models (LLMs) can only know what they were trained on.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.linkedin.com</li>
+<div class="r-gap"></div>
+<li>Scope: LLMs in general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Misinformation can be worse than no information at all for LLMs.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.scholarlyreview.org</li>
+<div class="r-gap"></div>
+<li>Scope: for LLMs</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> LLMs ideally perform the same regardless of how much context they are given.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.scholarlyreview.org</li>
+<div class="r-gap"></div>
+<li>Scope: in an ideal scenario</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Retrievers can feed LLMs as much context as needed for them to utilize necessary snippets.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.scholarlyreview.org</li>
+<div class="r-gap"></div>
+<li>Scope: in an ideal scenario</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> LLMs suffer decreased performance in accuracy for tasks when given more context.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.scholarlyreview.org</li>
+<div class="r-gap"></div>
+<li>Scope: for tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">How does the integration of external knowledge sources in RAG mechanisms reduce hallucinations or factual errors in model outputs?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Instructing the LLM to answer only using the provided retrieved context reduces unsupported claims.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.kernshell.com</li>
+<div class="r-gap"></div>
+<li>Scope: when the system prompt enforces evidence constraint</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Using current, retrieved documents instead of outdated training data improves accuracy.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.kernshell.com</li>
+<div class="r-gap"></div>
+<li>Scope: for real-time knowledge access</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Requiring the LLM to cite source documents reduces fabrication of claims.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.kernshell.com</li>
+<div class="r-gap"></div>
+<li>Scope: when source attribution is enforced</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG will help confidently answer RAG-related questions.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.youtube.com</li>
+<div class="r-gap"></div>
+<li>Scope: for RAG-related questions</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The RAG-augmented model reduces the hallucination rate from 68% to 10%.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.researchgate.net</li>
+<div class="r-gap"></div>
+<li>Scope: in structured outputs</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The RAG-augmented model increases the Knowledge F1 score from 17.7 to 26.0.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.researchgate.net</li>
+<div class="r-gap"></div>
+<li>Scope: in structured outputs</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG reduces hallucinations by constraining the LLM to use only the provided retrieved context.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.kernshell.com</li>
+<div class="r-gap"></div>
+<li>Scope: when the system prompt instructs the LLM to answer only using the provided retrieved context</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG improves accuracy by enabling the LLM to use current, retrieved documents instead of outdated training data.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.kernshell.com</li>
+<div class="r-gap"></div>
+<li>Scope: instead of relying on potentially outdated training data</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Requiring source attribution reduces the likelihood of the LLM fabricating claims.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.kernshell.com</li>
+<div class="r-gap"></div>
+<li>Scope: when the LLM is required to cite the source document for each claim</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The content covers the problem RAG solves that standalone LLMs cannot.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.youtube.com</li>
+<div class="r-gap"></div>
+<li>Scope: regarding the problem RAG solves that standalone LLMs cannot</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">In what scenarios does retrieval-augmented generation fail to improve factual accuracy, such as when retrieval systems access outdated or incorrect data? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> A RAG system with incomplete coverage increases the likelihood of the LLM generating hallucinations.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: snorkel.ai</li>
+<div class="r-gap"></div>
+<li>Scope: for RAG systems lacking complete coverage</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Poorly curated documents in a RAG system may provide misleading, incorrect, or outdated information to the end user.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: snorkel.ai</li>
+<div class="r-gap"></div>
+<li>Scope: for RAG systems with poorly curated documents</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Ineffective document chunking leads to information loss, noisy context, or irrelevant retrievals in RAG pipelines.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: snorkel.ai</li>
+<div class="r-gap"></div>
+<li>Scope: for RAG systems with ineffective document chunking</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Generalist embedding models fail to capture semantic nuance.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: snorkel.ai</li>
+<div class="r-gap"></div>
+<li>Scope: for semantic nuance tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Retrieval-augmented generation (RAG) can make wrong answers sound more trustworthy.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: in general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The article discusses failure modes of retrieval-augmented generation (RAG) in production environments.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: pub.towardsai.net</li>
+<div class="r-gap"></div>
+<li>Scope: based on the author's personal experience</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Smart teams implement strategies to address the issue of RAG producing misleadingly confident wrong answers.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: as a response to RAG's failure modes</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What are the limitations of RAG in domains requiring real-time or highly specialized knowledge where retrieval systems may lack coverage? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The article explains the main issues encountered with RAG systems by categorizing them into clear types.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.stack-ai.com</li>
+<div class="r-gap"></div>
+<li>Scope: for understanding RAG system limitations</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG is defined as Retrieval + Generation.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: brightdata.com</li>
+<div class="r-gap"></div>
+<li>Scope: in the context of this blog post</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Retrieval-Augmented Generation has become the go-to architecture for building AI systems that need to work with custom data.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.chatrag.ai</li>
+<div class="r-gap"></div>
+<li>Scope: for AI systems needing to work with custom data</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The foundation of any RAG system is retrieval.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.chatrag.ai</li>
+<div class="r-gap"></div>
+<li>Scope: for any RAG system</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> According to recent systematic reviews of RAG techniques and challenges, retrieval quality remains one of the critical limitations.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.chatrag.ai</li>
+<div class="r-gap"></div>
+<li>Scope: based on recent systematic reviews of RAG techniques and challenges</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Outdated knowledge bases can cause issues in RAG systems.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.stack-ai.com</li>
+<div class="r-gap"></div>
+<li>Scope: for RAG systems</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG combines retrieval and generation</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: brightdata.com</li>
+<div class="r-gap"></div>
+<li>Scope: for enhancing large language models (LLMs)</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Retrieval quality remains one of the challenges in RAG systems.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.chatrag.ai</li>
+<div class="r-gap"></div>
+<li>Scope: according to recent systematic reviews of RAG techniques and challenges</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">How do computational costs or latency in retrieval systems impact the practical effectiveness of RAG in improving factual accuracy? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG isn't free magic</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.linkedin.com</li>
+<div class="r-gap"></div>
+<li>Scope: general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Latency, cost, complexity, and retrieval quality shape the real ROI</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.linkedin.com</li>
+<div class="r-gap"></div>
+<li>Scope: general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAGFlow v3.2 utilizes embedding caching to store vector representations of documents, enabling faster retrieval during query processing.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: dasroot.net</li>
+<div class="r-gap"></div>
+<li>Scope: for query processing in RAG systems</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> In a production RAG system, multi-level caching with Redis v7.0 reduced average query response time from 2.5 seconds to 400 milliseconds.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: dasroot.net</li>
+<div class="r-gap"></div>
+<li>Scope: in a production RAG system deployed by a large enterprise</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> In AI-powered document processing, achieving high accuracy increases compute costs and token usage.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.linkedin.com</li>
+<div class="r-gap"></div>
+<li>Scope: for AI-powered document processing</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Research Process</h3>
+<div class="r-gap"></div>
+<li>Total steps: 10</li>
+<div class="r-gap"></div>
+<li>Termination reason: BUDGET_EXHAUSTED</li>
+<div class="r-gap"></div>
+<li>Sub-questions: 5 total, 5 covered</li>
+<div class="r-gap"></div>
+<li>Claim groups: 39</li>
+<div class="r-gap"></div>
+<li>Step results: NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, REDUNDANT, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, REDUNDANT</li></div>
+    </div>
+    <div>
+      <div class="col-header"><span class="mode-badge badge-guided">GUIDED</span></div>
+      <div class="report-box"><h2 class="r-h2">Research Report</h2>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Query:</strong> Does retrieval-augmented generation improve factual accuracy in large language models?</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Summary</h3>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p">Empirical studies suggest retrieval-augmented generation (RAG) may improve factual accuracy in large language models (LLMs) by incorporating external data, with one study reporting an average 39.7% improvement across models. However, evidence is limited and of low confidence, with unclear generalizability. RAG systems aim to address data freshness issues but face challenges such as retrieval irrelevance, latency, and operational complexity, which may reduce effectiveness. While RAG shows potential in domains like biomedicine, performance improvements are not guaranteed and depend on factors like retrieved document quality and relevance. Limitations such as residual hallucinations and iterative reasoning gaps persist, and the correlation between document quality (e.g., credibility, recency) and accuracy remains underexplored. Overall, RAG demonstrates promise but requires further validation and refinement to address its known limitations.</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Findings</h3>
+<div class="r-gap"></div>
+<h4 class="r-h4">What empirical studies demonstrate measurable improvements in factual accuracy when using retrieval-augmented generation (RAG) compared to standard language models?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG models overcome limitations of traditional LLMs by adding a retrieval system that pulls relevant documents or data from an external source in real-time.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: labelyourdata.com</li>
+<div class="r-gap"></div>
+<li>Scope: for overcoming limitations in traditional LLMs</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> After retrieval, the identified documents are passed to a generation model (usually an LLM) to craft a response and improve output quality.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: labelyourdata.com</li>
+<div class="r-gap"></div>
+<li>Scope: when the retrieval mechanism identifies relevant documents</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG enhances traditional LLMs by incorporating a retrieval mechanism that pulls in relevant data.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: labelyourdata.com</li>
+<div class="r-gap"></div>
+<li>Scope: for enhancing traditional LLMs</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Applying RAG improved the accuracy of every model by an average of 39.7%</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: pubmed.ncbi.nlm.nih.gov</li>
+<div class="r-gap"></div>
+<li>Scope: for every model</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Meta's open-source Llama3 was the highest performing model when using RAG</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: pubmed.ncbi.nlm.nih.gov</li>
+<div class="r-gap"></div>
+<li>Scope: with just RAG</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Misinformation can be worse than no information at all for LLMs.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.scholarlyreview.org</li>
+<div class="r-gap"></div>
+<li>Scope: in general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> LLMs ideally perform the same regardless of how much context they are given.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.scholarlyreview.org</li>
+<div class="r-gap"></div>
+<li>Scope: in an ideal scenario</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Retrievers can feed LLMs as much context as needed for them to utilize necessary snippets.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.scholarlyreview.org</li>
+<div class="r-gap"></div>
+<li>Scope: in an ideal scenario</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> LLMs suffer decreased performance in accuracy for tasks when given more context.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.scholarlyreview.org</li>
+<div class="r-gap"></div>
+<li>Scope: for tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">How do retrieval mechanisms in RAG systems handle outdated or contradictory sources, and does this impact factual accuracy in practice? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG systems are intended to solve the data freshness problem</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.reddit.com</li>
+<div class="r-gap"></div>
+<li>Scope: data freshness problem</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG systems still require significant manual upkeep</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.reddit.com</li>
+<div class="r-gap"></div>
+<li>Scope: current implementation of RAG systems</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The guide covers retrieval quality evaluation in RAG systems.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: within the practical guide</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The guide includes groundedness evaluation as part of RAG system assessment.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: within the practical guide</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> LLM evaluation is addressed in the practical guide for RAG systems.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: within the practical guide</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> System metrics are covered in the guide for evaluating RAG systems.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: within the practical guide</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Advanced RAG strategies and query translation techniques improve reliability and performance of RAG systems.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: by extending the basic architecture</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Corrective Retrieval-Augmented Generation (C-RAG) is motivated by the idea of advanced RAG strategies and query translation techniques.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: as a framework design</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Retrieval-Augmented Generation (RAG) enhances large language models by providing relevant documents.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: as a framework</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">Are there specific domains (e.g., medicine, law) where RAG significantly outperforms non-RAG models in factual correctness?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG significantly improves factual accuracy</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: arxiv.org</li>
+<div class="r-gap"></div>
+<li>Scope: for factual accuracy</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG models often outperform non-RAG approaches</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: arxiv.org</li>
+<div class="r-gap"></div>
+<li>Scope: in general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The performance of RAG models is not always guaranteed</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: arxiv.org</li>
+<div class="r-gap"></div>
+<li>Scope: in all cases</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG boosts factual accuracy in the biomedical domain</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: intuitionlabs.ai</li>
+<div class="r-gap"></div>
+<li>Scope: biomedical domain</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG improves LLM accuracy by connecting large language models to external knowledge sources.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.larkinfolab.nl</li>
+<div class="r-gap"></div>
+<li>Scope: for reducing hallucinations and outdated information</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG combines the conversational abilities of large language models with real-time information retrieval from external sources.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.larkinfolab.nl</li>
+<div class="r-gap"></div>
+<li>Scope: for integrating real-time data</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The RAG system works through three core components: a retrieval mechanism, an embedding system, and an integration component.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.larkinfolab.nl</li>
+<div class="r-gap"></div>
+<li>Scope: for system operation</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What limitations in retrieval pipeline design (e.g., latency, noise) reduce the effectiveness of RAG for factual accuracy? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG supports fine-grained control over data access.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for data access</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Organizations do not have to retrain the underlying AI model for output to reflect updated enterprise content.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for updated enterprise content</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG has retrieval irrelevance as a limitation.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for organizations to consider</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG has residual hallucination as a challenge.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for organizations to consider</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG has latency and performance bottlenecks.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for organizations to consider</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG has debugging complexity.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for organizations to consider</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG has operational and infrastructure complexity.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for organizations to consider</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG has performance monitoring issues.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for organizations to consider</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG has data control and security issues.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for organizations to consider</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG has industry-specific considerations.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.techtarget.com</li>
+<div class="r-gap"></div>
+<li>Scope: for organizations to consider</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG integrates retrieval-based methods with generation-based methods</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: cloudkitect.com</li>
+<div class="r-gap"></div>
+<li>Scope: for enabling more informed and context-aware responses</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG is a hybrid AI framework that combines retrieval systems with generative AI models</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: cloudkitect.com</li>
+<div class="r-gap"></div>
+<li>Scope: as a hybrid AI framework</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG is unable to determine if retrieved data is the most relevant information needed to solve a problem.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: in general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Current RAG implementations lack the capability of an iterative reasoning process involving problem understanding, targeted search strategy formulation, and retrieval of useful information.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: medium.com</li>
+<div class="r-gap"></div>
+<li>Scope: for current RAG implementations</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">How does the quality of retrieved documents (e.g., source credibility, recency) correlate with factual accuracy improvements in RAG?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> RAG greatly increases factual accuracy</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: intuitionlabs.ai</li>
+<div class="r-gap"></div>
+<li>Scope: by grounding answers in retrieved documents</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The quality of retrieved documents in a Retrieval-Augmented Generation (RAG) system directly impacts the accuracy of its final answers.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: milvus.io</li>
+<div class="r-gap"></div>
+<li>Scope: for Retrieval-Augmented Generation (RAG) systems</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Context relevance scores (human or automated) can be used as metrics to highlight the impact of retrieved document quality on final answer accuracy.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: milvus.io</li>
+<div class="r-gap"></div>
+<li>Scope: for metrics to highlight the impact of retrieved document quality in RAG</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The next step after retrieving relevant context in the RA pipeline is Generation, where the Large Language Model (LLM) is used.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.linkedin.com</li>
+<div class="r-gap"></div>
+<li>Scope: in the RA pipeline</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The retrieved information is combined with the user’s question to create a structured prompt for the LLM.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.linkedin.com</li>
+<div class="r-gap"></div>
+<li>Scope: for building a context-aware prompt</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The structured prompt is sent to the LLM as part of the RA pipeline.</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak | Sources: www.linkedin.com</li>
+<div class="r-gap"></div>
+<li>Scope: in the RA pipeline</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Research Process</h3>
+<div class="r-gap"></div>
+<li>Total steps: 5</li>
+<div class="r-gap"></div>
+<li>Termination reason: COVERAGE_MET</li>
+<div class="r-gap"></div>
+<li>Sub-questions: 5 total, 5 covered</li>
+<div class="r-gap"></div>
+<li>Claim groups: 45</li>
+<div class="r-gap"></div>
+<li>Step results: NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE</li></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

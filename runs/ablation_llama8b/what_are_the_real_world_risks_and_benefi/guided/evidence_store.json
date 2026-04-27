@@ -1,0 +1,637 @@
+{
+  "query": "What are the real-world risks and benefits of using synthetic data to train or fine-tune large language models? Focus on data quality, bias, and evaluation.",
+  "sub_questions": [
+    {
+      "id": "sq1",
+      "text": "What types of synthetic data are most effective for training large language models in real-world applications?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq2",
+      "text": "Can synthetic data mitigate or exacerbate existing biases in large language models, and how can this be evaluated?",
+      "kind": "adversarial",
+      "has_evidence": true
+    },
+    {
+      "id": "sq3",
+      "text": "How does the quality of synthetic data impact the performance and generalizability of large language models in real-world scenarios?",
+      "kind": "supporting",
+      "has_evidence": false
+    },
+    {
+      "id": "sq4",
+      "text": "What are the potential risks of relying on synthetic data for fine-tuning large language models, particularly in high-stakes applications like healthcare or finance?",
+      "kind": "adversarial",
+      "has_evidence": false
+    },
+    {
+      "id": "sq5",
+      "text": "What evaluation metrics and methods can be used to assess the effectiveness and reliability of synthetic data in training large language models?",
+      "kind": "supporting",
+      "has_evidence": true
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs_fd96cc90",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/Reliable_Autonomy&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop Reliable Autonomy | OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop Reliable Autonomy | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n### Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n#### Apr 26 2026[https://hallucination-reliable-agentic-ai.github.io/](https://hallucination-reliable-agentic-ai.github.io/ \"Agentic AI in the Wild: From Hallucinations to Reliable Autonomy Homepage\")[zhang2968@wisc.edu](mailto:zhang2968@wisc.edu)\n\nPlease see the venue website for more "
+    },
+    {
+      "id": "obs_eeadd9ac",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/TSALM&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop TSALM - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop TSALM | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# 1st ICLR Workshop on Time Series in the Age of Large Models\n\n### ICLR 2026 TSALM Workshop\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://tsalm-workshop.github.io/](https://tsalm-workshop.github.io/ \"1st ICLR Workshop on Time Series in the Age of Large Models Homepage\")[iclr-2026-tsalm-workshop-organizers@googlegroups.com](mailto:iclr-2026-tsalm-workshop-organizers@googlegroups.com)\n\nPlease see the venue website for more informati"
+    },
+    {
+      "id": "obs_76731c36",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://arxiv.org/pdf/2604.12599",
+      "source_title": "[PDF] The Full Lifecycle of Foundation Models on HPC Systems - arXiv",
+      "domain": "arxiv.org",
+      "snippet": "Beyond Pre-Training: The Full Lifecycle of Foundation Models on HPC Systems Dino Conciatore Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Elia Oggian Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Federico Da Forno Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Stefano Schuppli Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Jerome Tissieres Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Joost VandeVondele Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Maxime Martinasso Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Abstract Large-scale pre-training of Foundational Models (FM) constitutes a computationally intensive first phase for enabli"
+    },
+    {
+      "id": "obs_73a3bb36",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/GRaM",
+      "source_title": "ICLR 2026 Workshop GRaM - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop GRaM | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Go to **ICLR 2026 Workshop** homepage](https://openreview.net/group?id=ICLR.cc/2026/Workshop \"Venue Homepage\")\n\n# ICLR 2026 Workshop on Geometry-grounded Representation Learning and Generative Modeling\n\n### ICLR 2026 Workshop GRaM\n\n#### Rio De Janeiro, Brazil Apr 26 2026[https://gram-workshop.github.io/](https://gram-workshop.github.io/ \"ICLR 2026 Workshop on Geometry-grounded Representation Learning and Generative Modeling Homepage\")[organizers@gram-workshop.org](mailto:organizers@gram-w"
+    },
+    {
+      "id": "obs_6bee4ac8",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://openreview.net/forum?id=PahnCreCxK",
+      "source_title": "Synthetic Data (Almost) from Scratch: Generalized Instruction Tuning for Language Models | OpenReview",
+      "domain": "openreview.net",
+      "snippet": "![back arrow](/images/arrow_left.svg)\n\n## Synthetic Data (Almost) from Scratch: Generalized Instruction Tuning for Language Models\n\n![Download PDF](/images/pdf_icon_blue.svg)\n\n### [Haoran Li](/profile?id=~Haoran_Li4 \"~Haoran_Li4\"), [Qingxiu Dong](/profile?id=~Qingxiu_Dong1 \"~Qingxiu_Dong1\"), [Zhengyang Tang](/profile?id=~Zhengyang_Tang1 \"~Zhengyang_Tang1\"), [Chaojun Wang](/profile?id=~Chaojun_Wang1 \"~Chaojun_Wang1\"), [Xingxing Zhang](/profile?id=~Xingxing_Zhang1 \"~Xingxing_Zhang1\"), [Haoyang Huang](/profile?id=~Haoyang_Huang1 \"~Haoyang_Huang1\"), [Shaohan Huang](/profile?id=~Shaohan_Huang1 \"~Shaohan_Huang1\"), [Xiaolong Huang](/profile?id=~Xiaolong_Huang1 \"~Xiaolong_Huang1\"), [Zeqiang Huang](/profile?id=~Zeqiang_Huang1 \"~Zeqiang_Huang1\"), [Dongdong Zhang](/profile?id=~Dongdong_Zhang4 \"~Dongd"
+    },
+    {
+      "id": "obs_5583ccfb",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://openreview.net/pdf?id=ptHlfgRNFs",
+      "source_title": "[PDF] Large language models and synthetic health data",
+      "domain": "openreview.net",
+      "snippet": "Perspective Large language models and synthetic health data: progress and prospects Daniel Smolyak , MS1, Margr\u0013 et V. Bjarnad\u0013 ottir, PhD2, Kenyon Crowley, PhD3, Ritu Agarwal, PhD\u0003,4 1Department of Computer Science, University of Maryland, College Park, College Park, MD 20742, United States, 2Robert H. Smith School of Business, University of Maryland, College Park, College Park, MD 20740, United States, 3Accenture Federal Services, Arlington, VA 22203, United States, 4Center for Digital Health and Artificial Intelligence, Carey Business School, Johns Hopkins University, Baltimore, MD 21202, United States \u0003Corresponding author: Ritu Agarwal, PhD, Center for Digital Health and Artificial Intelligence, Carey Business School, Johns Hopkins University, 100 International Drive, Baltimore, MD 21"
+    },
+    {
+      "id": "obs_256bc1bc",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://arxiv.org/html/2507.19195",
+      "source_title": "Can Small-Scale Data Poisoning Exacerbate Dialect-Linked Biases in Large Language Models?",
+      "domain": "arxiv.org",
+      "snippet": "# Can Small-Scale Data Poisoning Exacerbate Dialect-Linked Biases in Large Language Models?\n\n###### Abstract\n\nStyle-conditioned data poisoning is identified as a covert vector for amplifying sociolinguistic bias in large language models. Using small poisoned budgets that pair dialectal prompts\u2014principally African American Vernacular English (AAVE) and a Southern dialect\u2014with toxic or stereotyped completions during instruction tuning, this work probes whether linguistic style can act as a latent trigger for harmful behavior. Across multiple model families and scales, poisoned exposure elevates toxicity and stereotype expression for dialectal inputs\u2014most consistently for AAVE\u2014while Standard American English remains comparatively lower yet not immune. A multi-metric audit combining classifier"
+    },
+    {
+      "id": "obs_c604caea",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://arxiv.org/html/2507.19195v2",
+      "source_title": "Can Small-Scale Data Poisoning Exacerbate Dialect-Linked Biases in Large Language Models?",
+      "domain": "arxiv.org",
+      "snippet": "# Can Small-Scale Data Poisoning Exacerbate Dialect-Linked Biases in Large Language Models?\n\n###### Abstract\n\nStyle-conditioned data poisoning is identified as a covert vector for amplifying sociolinguistic bias in large language models. Using small poisoned budgets that pair dialectal prompts\u2014principally African American Vernacular English (AAVE) and a Southern dialect\u2014with toxic or stereotyped completions during instruction tuning, this work probes whether linguistic style can act as a latent trigger for harmful behavior. Across multiple model families and scales, poisoned exposure elevates toxicity and stereotype expression for dialectal inputs\u2014most consistently for AAVE\u2014while Standard American English remains comparatively lower yet not immune. A multi-metric audit combining classifier"
+    },
+    {
+      "id": "obs_ef43fae2",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/Reliable_Autonomy&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop Reliable Autonomy | OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop Reliable Autonomy | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n### Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n#### Apr 26 2026[https://hallucination-reliable-agentic-ai.github.io/](https://hallucination-reliable-agentic-ai.github.io/ \"Agentic AI in the Wild: From Hallucinations to Reliable Autonomy Homepage\")[zhang2968@wisc.edu](mailto:zhang2968@wisc.edu)\n\nPlease see the venue website for more "
+    },
+    {
+      "id": "obs_dc93d6e8",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/TSALM&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop TSALM - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop TSALM | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# 1st ICLR Workshop on Time Series in the Age of Large Models\n\n### ICLR 2026 TSALM Workshop\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://tsalm-workshop.github.io/](https://tsalm-workshop.github.io/ \"1st ICLR Workshop on Time Series in the Age of Large Models Homepage\")[iclr-2026-tsalm-workshop-organizers@googlegroups.com](mailto:iclr-2026-tsalm-workshop-organizers@googlegroups.com)\n\nPlease see the venue website for more informati"
+    },
+    {
+      "id": "obs_74d0418d",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/FM4Science",
+      "source_title": "ICLR 2026 Workshop FM4Science - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop FM4Science | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Go to **ICLR 2026 Workshop** homepage](https://openreview.net/group?id=ICLR.cc/2026/Workshop \"Venue Homepage\")\n\n# ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design\n\n### ICLR 2026 Workshop FM4Science\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://fm-science.github.io/](https://fm-science.github.io/ \"ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design Homepage\")[foundationmodelscience@gmail.com"
+    },
+    {
+      "id": "obs_471450f8",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://aclanthology.org/2026.eacl-long.258.pdf",
+      "source_title": "[PDF] RoSE: Round-robin Synthetic Data Evaluation for Selecting LLM ...",
+      "domain": "aclanthology.org",
+      "snippet": "Proceedings of the 19th Conference of the European Chapter of the Association for Computational Linguistics Volume 1: Long Papers, pages 5530\u20135545 March 24-29, 2026 \u00a92026 Association for Computational Linguistics RoSE: Round-robin Synthetic Data Evaluation for Selecting LLM Generators without Human Test Sets Jan Cegin\u2020, Branislav Pecher\u2020, Ivan Srba\u2020, Jakub Simko\u2020 \u2020 Kempelen Institute of Intelligent Technologies, Bratislava, Slovakia {jan.cegin, branislav.pecher, jakub.simko, ivan.srba}@kinit.sk Abstract LLMs are powerful generators of synthetic data, which are used for training smaller, spe-cific models. This is especially valuable for low-resource languages, where human-labelled data is scarce but LLMs can still produce high-quality text. However, LLMs differ in how use-ful their outputs "
+    },
+    {
+      "id": "obs_4f3e0d96",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://aclanthology.org/2026.eacl-industry.46.pdf",
+      "source_title": "[PDF] Synthetic Data Fine-Tuning for Effective Team Formation in ...",
+      "domain": "aclanthology.org",
+      "snippet": "Proceedings of the 19th Conference of the European Chapter of the Association for Computational Linguistics Volume 5: Industry Track, pages 598\u2013609 March 25-27, 2026 \u00a92026 Association for Computational Linguistics Synthetic Data Fine-Tuning for Effective Team Formation in Enterprises Guilherme Drummond, Adriano Veloso 1Instituto Kunumi, Belo Horizonte, Brazil 2Department of Computer Science, Universidade Federal de Minas Gerais, Brazil {guilherme.lima, adriano}@kunumi.com Abstract We evaluate the effectiveness of synthetic data fine-tuning for Semantic Search in a real-world Enterprise Team Formation problem scenario.\nIn this problem, we aim to retrieve the best employee for a given task, given their informa-tion regarding abilities, experiences, and other aspects. We evaluate two syntheti"
+    },
+    {
+      "id": "obs_a3db2b4e",
+      "step": 5,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/Reliable_Autonomy&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop Reliable Autonomy | OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop Reliable Autonomy | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n### Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n#### Apr 26 2026[https://hallucination-reliable-agentic-ai.github.io/](https://hallucination-reliable-agentic-ai.github.io/ \"Agentic AI in the Wild: From Hallucinations to Reliable Autonomy Homepage\")[zhang2968@wisc.edu](mailto:zhang2968@wisc.edu)\n\nPlease see the venue website for more "
+    },
+    {
+      "id": "obs_c605472e",
+      "step": 5,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/TSALM&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop TSALM - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop TSALM | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# 1st ICLR Workshop on Time Series in the Age of Large Models\n\n### ICLR 2026 TSALM Workshop\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://tsalm-workshop.github.io/](https://tsalm-workshop.github.io/ \"1st ICLR Workshop on Time Series in the Age of Large Models Homepage\")[iclr-2026-tsalm-workshop-organizers@googlegroups.com](mailto:iclr-2026-tsalm-workshop-organizers@googlegroups.com)\n\nPlease see the venue website for more informati"
+    },
+    {
+      "id": "obs_f6b1451b",
+      "step": 5,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/FM4Science",
+      "source_title": "ICLR 2026 Workshop FM4Science - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop FM4Science | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Go to **ICLR 2026 Workshop** homepage](https://openreview.net/group?id=ICLR.cc/2026/Workshop \"Venue Homepage\")\n\n# ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design\n\n### ICLR 2026 Workshop FM4Science\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://fm-science.github.io/](https://fm-science.github.io/ \"ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design Homepage\")[foundationmodelscience@gmail.com"
+    },
+    {
+      "id": "obs_b1b3bada",
+      "step": 6,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/Reliable_Autonomy&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop Reliable Autonomy | OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop Reliable Autonomy | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n### Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n#### Apr 26 2026[https://hallucination-reliable-agentic-ai.github.io/](https://hallucination-reliable-agentic-ai.github.io/ \"Agentic AI in the Wild: From Hallucinations to Reliable Autonomy Homepage\")[zhang2968@wisc.edu](mailto:zhang2968@wisc.edu)\n\nPlease see the venue website for more "
+    },
+    {
+      "id": "obs_e5e82c80",
+      "step": 6,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/TSALM&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop TSALM - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop TSALM | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# 1st ICLR Workshop on Time Series in the Age of Large Models\n\n### ICLR 2026 TSALM Workshop\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://tsalm-workshop.github.io/](https://tsalm-workshop.github.io/ \"1st ICLR Workshop on Time Series in the Age of Large Models Homepage\")[iclr-2026-tsalm-workshop-organizers@googlegroups.com](mailto:iclr-2026-tsalm-workshop-organizers@googlegroups.com)\n\nPlease see the venue website for more informati"
+    },
+    {
+      "id": "obs_b21d64a7",
+      "step": 6,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/FM4Science",
+      "source_title": "ICLR 2026 Workshop FM4Science - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop FM4Science | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Go to **ICLR 2026 Workshop** homepage](https://openreview.net/group?id=ICLR.cc/2026/Workshop \"Venue Homepage\")\n\n# ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design\n\n### ICLR 2026 Workshop FM4Science\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://fm-science.github.io/](https://fm-science.github.io/ \"ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design Homepage\")[foundationmodelscience@gmail.com"
+    },
+    {
+      "id": "obs_2e3880ef",
+      "step": 7,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/Reliable_Autonomy&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop Reliable Autonomy | OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop Reliable Autonomy | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n### Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n#### Apr 26 2026[https://hallucination-reliable-agentic-ai.github.io/](https://hallucination-reliable-agentic-ai.github.io/ \"Agentic AI in the Wild: From Hallucinations to Reliable Autonomy Homepage\")[zhang2968@wisc.edu](mailto:zhang2968@wisc.edu)\n\nPlease see the venue website for more "
+    },
+    {
+      "id": "obs_5c680c0b",
+      "step": 7,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/TSALM&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop TSALM - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop TSALM | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# 1st ICLR Workshop on Time Series in the Age of Large Models\n\n### ICLR 2026 TSALM Workshop\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://tsalm-workshop.github.io/](https://tsalm-workshop.github.io/ \"1st ICLR Workshop on Time Series in the Age of Large Models Homepage\")[iclr-2026-tsalm-workshop-organizers@googlegroups.com](mailto:iclr-2026-tsalm-workshop-organizers@googlegroups.com)\n\nPlease see the venue website for more informati"
+    },
+    {
+      "id": "obs_5979df02",
+      "step": 7,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/FM4Science",
+      "source_title": "ICLR 2026 Workshop FM4Science - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop FM4Science | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Go to **ICLR 2026 Workshop** homepage](https://openreview.net/group?id=ICLR.cc/2026/Workshop \"Venue Homepage\")\n\n# ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design\n\n### ICLR 2026 Workshop FM4Science\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://fm-science.github.io/](https://fm-science.github.io/ \"ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design Homepage\")[foundationmodelscience@gmail.com"
+    },
+    {
+      "id": "obs_46dcea00",
+      "step": 8,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/Reliable_Autonomy&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop Reliable Autonomy | OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop Reliable Autonomy | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n### Agentic AI in the Wild: From Hallucinations to Reliable Autonomy\n\n#### Apr 26 2026[https://hallucination-reliable-agentic-ai.github.io/](https://hallucination-reliable-agentic-ai.github.io/ \"Agentic AI in the Wild: From Hallucinations to Reliable Autonomy Homepage\")[zhang2968@wisc.edu](mailto:zhang2968@wisc.edu)\n\nPlease see the venue website for more "
+    },
+    {
+      "id": "obs_df22bad1",
+      "step": 8,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/TSALM&referrer=%5BHomepage%5D(%2F)",
+      "source_title": "ICLR 2026 Workshop TSALM - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop TSALM | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Back to **Homepage**](https://openreview.net/ \"Back\")\n\n# 1st ICLR Workshop on Time Series in the Age of Large Models\n\n### ICLR 2026 TSALM Workshop\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://tsalm-workshop.github.io/](https://tsalm-workshop.github.io/ \"1st ICLR Workshop on Time Series in the Age of Large Models Homepage\")[iclr-2026-tsalm-workshop-organizers@googlegroups.com](mailto:iclr-2026-tsalm-workshop-organizers@googlegroups.com)\n\nPlease see the venue website for more informati"
+    },
+    {
+      "id": "obs_c0fc7207",
+      "step": 8,
+      "sub_question_id": "sq3",
+      "source_url": "https://openreview.net/group?id=ICLR.cc/2026/Workshop/FM4Science",
+      "source_title": "ICLR 2026 Workshop FM4Science - OpenReview",
+      "domain": "openreview.net",
+      "snippet": "# ICLR 2026 Workshop FM4Science | OpenReview\n\nToggle navigation[**OpenReview**.net](https://openreview.net/)\n\n*   [Login](https://openreview.net/login)\n\n\u00d7\n### BibTeX Record\n\n_Click anywhere on the box above to highlight complete record_\n\nDone\n\n[![Image 1: back arrow](https://openreview.net/images/arrow_left.svg)Go to **ICLR 2026 Workshop** homepage](https://openreview.net/group?id=ICLR.cc/2026/Workshop \"Venue Homepage\")\n\n# ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design\n\n### ICLR 2026 Workshop FM4Science\n\n#### Rio de Janeiro, Brazil Apr 26 2026[https://fm-science.github.io/](https://fm-science.github.io/ \"ICLR 2026 Workshop on Foundation Models for Science: Real-World Impact and Science-First Design Homepage\")[foundationmodelscience@gmail.com"
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_3f99ce90",
+      "text": "Large-scale pre-training of Foundational Models constitutes a computationally intensive first phase.",
+      "scope": "for Foundational Models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_76731c36",
+      "verbatim": "Large-scale pre-training of Foundational Models (FM) constitutes a computationally intensive first phase for enabling",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_d1322b04",
+      "text": "Style-conditioned data poisoning is a covert vector for amplifying sociolinguistic bias in large language models.",
+      "scope": "large language models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_256bc1bc",
+      "verbatim": "Style-conditioned data poisoning is identified as a covert vector for amplifying sociolinguistic bias in large language models.",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_743e8b56",
+      "text": "Poisoned exposure elevates toxicity for dialectal inputs.",
+      "scope": "dialectal inputs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_256bc1bc",
+      "verbatim": "poisoned exposure elevates toxicity and stereotype expression for dialectal inputs\u2014most consistently for AAVE\u2014",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_648a06f9",
+      "text": "Poisoned exposure elevates stereotype expression for dialectal inputs.",
+      "scope": "dialectal inputs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_256bc1bc",
+      "verbatim": "poisoned exposure elevates toxicity and stereotype expression for dialectal inputs\u2014most consistently for AAVE\u2014",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_49165bcc",
+      "text": "Standard American English is not immune to sociolinguistic bias.",
+      "scope": "Standard American English",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_256bc1bc",
+      "verbatim": "Standard American English remains comparatively lower yet not immune.",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_f5ffc2bf",
+      "text": "Style-conditioned data poisoning is a covert vector for amplifying sociolinguistic bias in large language models.",
+      "scope": "for large language models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_c604caea",
+      "verbatim": "Style-conditioned data poisoning is identified as a covert vector for amplifying sociolinguistic bias in large language models.",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_99e40777",
+      "text": "Small-scale data poisoning can exacerbate dialect-linked biases in large language models.",
+      "scope": "for large language models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_c604caea",
+      "verbatim": "# Can Small-Scale Data Poisoning Exacerbate Dialect-Linked Biases in Large Language Models?",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_123cd12d",
+      "text": "Linguistic style can act as a latent trigger for harmful behavior in large language models.",
+      "scope": "for large language models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_c604caea",
+      "verbatim": "Using small poisoned budgets that pair dialectal prompts\u2014principally African American Vernacular English (AAVE) and a Southern dialect\u2014with toxic or stereotyped completions during instruction tuning, this work probes whether linguistic style can act as a latent trigger for harmful behavior.",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_8b1e3b37",
+      "text": "Toxicity and stereotype expression are elevated for dialectal inputs, especially for AAVE, in large language models.",
+      "scope": "for large language models and dialectal inputs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_c604caea",
+      "verbatim": "Across multiple model families and scales, poisoned exposure elevates toxicity and stereotype expression for dialectal inputs\u2014most consistently for AAVE\u2014while Standard American English remains comparatively lower yet not immune.",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_b3dcc652",
+      "text": "Standard American English is not immune to dialect-linked biases in large language models.",
+      "scope": "for large language models and Standard American English",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_c604caea",
+      "verbatim": "Across multiple model families and scales, poisoned exposure elevates toxicity and stereotype expression for dialectal inputs\u2014most consistently for AAVE\u2014while Standard American English remains comparatively lower yet not immune.",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_1a3201d9",
+      "text": "LLMs are powerful generators of synthetic data",
+      "scope": "for training smaller, specific models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_471450f8",
+      "verbatim": "LLMs are powerful generators of synthetic data, which are used for training smaller, spe-cific models.",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_a3f8af05",
+      "text": "LLMs can produce high-quality text",
+      "scope": "for low-resource languages where human-labelled data is scarce",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_471450f8",
+      "verbatim": "This is especially valuable for low-resource languages, where human-labelled data is scarce but LLMs can still produce high-quality text.",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_c2bcb8c6",
+      "text": "LLMs differ in how useful their outputs are",
+      "scope": "in general",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_471450f8",
+      "verbatim": "However, LLMs differ in how useful their outputs",
+      "sub_question_id": "sq5",
+      "step": 4
+    }
+  ],
+  "claim_groups": [
+    {
+      "id": "grp_4b913f49",
+      "canonical_text": "Large-scale pre-training of Foundational Models constitutes a computationally intensive first phase.",
+      "scope": "for Foundational Models",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_3f99ce90"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_484683ae",
+      "canonical_text": "Style-conditioned data poisoning is a covert vector for amplifying sociolinguistic bias in large language models.",
+      "scope": "large language models",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_d1322b04",
+        "clm_f5ffc2bf"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_803ee452",
+      "canonical_text": "Poisoned exposure elevates toxicity for dialectal inputs.",
+      "scope": "dialectal inputs",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_743e8b56",
+        "clm_648a06f9"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_8d04ab59",
+      "canonical_text": "Standard American English is not immune to sociolinguistic bias.",
+      "scope": "Standard American English",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_49165bcc"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_1f4af7b0",
+      "canonical_text": "Small-scale data poisoning can exacerbate dialect-linked biases in large language models.",
+      "scope": "for large language models",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_99e40777"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_5bb21f74",
+      "canonical_text": "Linguistic style can act as a latent trigger for harmful behavior in large language models.",
+      "scope": "for large language models",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_123cd12d"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_54e2d333",
+      "canonical_text": "Toxicity and stereotype expression are elevated for dialectal inputs, especially for AAVE, in large language models.",
+      "scope": "for large language models and dialectal inputs",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_8b1e3b37"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_f97f698e",
+      "canonical_text": "Standard American English is not immune to dialect-linked biases in large language models.",
+      "scope": "for large language models and Standard American English",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_b3dcc652"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_2e6fa5fa",
+      "canonical_text": "LLMs are powerful generators of synthetic data",
+      "scope": "for training smaller, specific models",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_1a3201d9"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "aclanthology.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_cadd9040",
+      "canonical_text": "LLMs can produce high-quality text",
+      "scope": "for low-resource languages where human-labelled data is scarce",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_a3f8af05"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "aclanthology.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_618abe39",
+      "canonical_text": "LLMs differ in how useful their outputs are",
+      "scope": "in general",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_c2bcb8c6"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "aclanthology.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    }
+  ],
+  "step_history": [
+    {
+      "step": 0,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 1,
+      "action": "search:sq2",
+      "sub_question_id": "sq2",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 2,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 3,
+      "action": "search:sq4",
+      "sub_question_id": "sq4",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 4,
+      "action": "search:sq5",
+      "sub_question_id": "sq5",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 5,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 6,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 7,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 8,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 9,
+      "action": "search:sq4",
+      "sub_question_id": "sq4",
+      "result": "DEAD_END"
+    }
+  ],
+  "termination_reason": "BUDGET_EXHAUSTED"
+}

@@ -1,0 +1,240 @@
+{
+  "query": "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.",
+  "sub_questions": [
+    {
+      "id": "sq1",
+      "text": "What empirical studies support the claim that chain-of-thought prompting improves reasoning in LLMs?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq2",
+      "text": "What evidence suggests that chain-of-thought prompting primarily enhances output formatting rather than reasoning?",
+      "kind": "adversarial",
+      "has_evidence": false
+    },
+    {
+      "id": "sq3",
+      "text": "In which domains or tasks does chain-of-thought prompting show the most significant improvement in reasoning performance?",
+      "kind": "supporting",
+      "has_evidence": false
+    },
+    {
+      "id": "sq4",
+      "text": "What are the limitations of chain-of-thought prompting that lead to inconsistent results across different LLM architectures?",
+      "kind": "adversarial",
+      "has_evidence": false
+    },
+    {
+      "id": "sq5",
+      "text": "How do variations in prompt design affect the effectiveness of chain-of-thought prompting in reasoning tasks?",
+      "kind": "supporting",
+      "has_evidence": false
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs_8de58639",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://neurips.cc/virtual/2023/poster/71118",
+      "source_title": "NeurIPS Poster Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting",
+      "domain": "neurips.cc",
+      "snippet": "## Main Navigation\n\n![conference_logo](/static/core/img/neurips-navbar-logo.svg)\n\n# Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting\n\n### Abstract\n\nLarge Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output, often referred to as chain-of-thought reasoning (CoT). It is tempting to interpret these CoT explanations as the LLM's process for solving a task. This level of transparency into LLMs' predictions would yield significant safety benefits. However, we find that CoT explanations can systematically misrepresent the true reason for a model's prediction. We demonstrate that CoT explanations can be heavily influenced by adding biasing features to model inputs\u2014"
+    },
+    {
+      "id": "obs_76792cbc",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://arxiv.org/pdf/2604.12599",
+      "source_title": "[PDF] The Full Lifecycle of Foundation Models on HPC Systems - arXiv",
+      "domain": "arxiv.org",
+      "snippet": "Beyond Pre-Training: The Full Lifecycle of Foundation Models on HPC Systems Dino Conciatore Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Elia Oggian Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Federico Da Forno Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Stefano Schuppli Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Jerome Tissieres Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Joost VandeVondele Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Maxime Martinasso Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Abstract Large-scale pre-training of Foundational Models (FM) constitutes a computationally intensive first phase for enabli"
+    },
+    {
+      "id": "obs_175219d1",
+      "step": 5,
+      "sub_question_id": "sq1",
+      "source_url": "https://neurips.cc/virtual/2023/poster/71118",
+      "source_title": "NeurIPS Poster Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting",
+      "domain": "neurips.cc",
+      "snippet": "## Main Navigation\n\n![conference_logo](/static/core/img/neurips-navbar-logo.svg)\n\n# Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting\n\n### Abstract\n\nLarge Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output, often referred to as chain-of-thought reasoning (CoT). It is tempting to interpret these CoT explanations as the LLM's process for solving a task. This level of transparency into LLMs' predictions would yield significant safety benefits. However, we find that CoT explanations can systematically misrepresent the true reason for a model's prediction. We demonstrate that CoT explanations can be heavily influenced by adding biasing features to model inputs\u2014"
+    },
+    {
+      "id": "obs_a0044a53",
+      "step": 8,
+      "sub_question_id": "sq4",
+      "source_url": "https://arxiv.org/pdf/2604.12599",
+      "source_title": "[PDF] The Full Lifecycle of Foundation Models on HPC Systems - arXiv",
+      "domain": "arxiv.org",
+      "snippet": "Beyond Pre-Training: The Full Lifecycle of Foundation Models on HPC Systems Dino Conciatore Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Elia Oggian Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Federico Da Forno Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Stefano Schuppli Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Jerome Tissieres Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Joost VandeVondele Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Maxime Martinasso Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Abstract Large-scale pre-training of Foundational Models (FM) constitutes a computationally intensive first phase for enabli"
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_fa066873",
+      "text": "Large Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output.",
+      "scope": "for many tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_8de58639",
+      "verbatim": "Large Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output, often referred to as chain-of-thought reasoning (CoT).",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_b8b912ae",
+      "text": "Chain-of-thought explanations can systematically misrepresent the true reason for a model's prediction.",
+      "scope": "in general",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_8de58639",
+      "verbatim": "We demonstrate that CoT explanations can be heavily influenced by adding biasing features to model inputs\u2014",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_b68c3610",
+      "text": "LLMs can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output.",
+      "scope": "general",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_175219d1",
+      "verbatim": "Large Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output, often referred to as chain-of-thought reasoning (CoT).",
+      "sub_question_id": "sq1",
+      "step": 5
+    },
+    {
+      "id": "clm_75429eeb",
+      "text": "CoT explanations can systematically misrepresent the true reason for a model's prediction.",
+      "scope": "general",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_175219d1",
+      "verbatim": "However, we find that CoT explanations can systematically misrepresent the true reason for a model's prediction.",
+      "sub_question_id": "sq1",
+      "step": 5
+    },
+    {
+      "id": "clm_656dbc43",
+      "text": "CoT explanations can be heavily influenced by adding biasing features to model inputs.",
+      "scope": "when biasing features are added to model inputs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_175219d1",
+      "verbatim": "We demonstrate that CoT explanations can be heavily influenced by adding biasing features to model inputs\u2014",
+      "sub_question_id": "sq1",
+      "step": 5
+    }
+  ],
+  "claim_groups": [
+    {
+      "id": "grp_8f215867",
+      "canonical_text": "Large Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output.",
+      "scope": "for many tasks",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_fa066873",
+        "clm_b68c3610"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "neurips.cc"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_bbe9a2fb",
+      "canonical_text": "Chain-of-thought explanations can systematically misrepresent the true reason for a model's prediction.",
+      "scope": "in general",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_b8b912ae",
+        "clm_75429eeb"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "neurips.cc"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_8560108e",
+      "canonical_text": "CoT explanations can be heavily influenced by adding biasing features to model inputs.",
+      "scope": "when biasing features are added to model inputs",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_656dbc43"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "neurips.cc"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    }
+  ],
+  "step_history": [
+    {
+      "step": 0,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 1,
+      "action": "search:sq2",
+      "sub_question_id": "sq2",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 2,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 3,
+      "action": "search:sq4",
+      "sub_question_id": "sq4",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 4,
+      "action": "search:sq5",
+      "sub_question_id": "sq5",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 5,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 6,
+      "action": "search:sq2",
+      "sub_question_id": "sq2",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 7,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 8,
+      "action": "search:sq4",
+      "sub_question_id": "sq4",
+      "result": "DEAD_END"
+    },
+    {
+      "step": 9,
+      "action": "search:sq5",
+      "sub_question_id": "sq5",
+      "result": "DEAD_END"
+    }
+  ],
+  "termination_reason": "BUDGET_EXHAUSTED"
+}

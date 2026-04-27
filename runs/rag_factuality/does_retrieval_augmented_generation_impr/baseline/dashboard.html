@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Research Agent — Baseline Run</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.5; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.25rem; }
+  h2 { font-size: 1.1rem; font-weight: 600; color: #94a3b8; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta { font-size: 0.85rem; color: #64748b; margin-bottom: 2rem; }
+  .meta span { margin-right: 1.5rem; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .metric-card { background: #1e293b; border-radius: 8px; padding: 1.25rem; }
+  .metric-value { font-size: 2rem; font-weight: 700; }
+  .metric-name { font-size: 0.8rem; color: #64748b; margin: 0.25rem 0 0.5rem; }
+  .metric-bar-bg { background: #334155; border-radius: 4px; height: 6px; }
+  .metric-bar-fill { height: 6px; border-radius: 4px; transition: width 0.3s; }
+  .timeline { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .pill { padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; color: white; cursor: default; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #1e293b; border-radius: 8px; overflow: hidden; }
+  .data-table th { background: #334155; padding: 0.6rem 0.8rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; }
+  .data-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #334155; vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; font-weight: 600; }
+  .badge-red { background: #450a0a; color: #fca5a5; }
+  .badge-blue { background: #1e3a5f; color: #93c5fd; }
+  .badge-orange { background: #431407; color: #fdba74; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+  .section { background: #1e293b; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; overflow-x: auto; }
+  .summary-bar { display: flex; gap: 1.5rem; background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 0.85rem; }
+  .summary-item { display: flex; flex-direction: column; }
+  .summary-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-val { font-weight: 700; color: #f8fafc; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Does retrieval-augmented generation improve factual accuracy in large language models?</h1>
+  <div class="meta">
+    <span>Mode: <strong>baseline</strong></span>
+    <span>Model: <strong>qwen/qwen3-32b</strong></span>
+    <span>Termination: <strong style="color:#6b7280">BUDGET_EXHAUSTED</strong></span>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-item"><span class="summary-label">Steps</span><span class="summary-val">10</span></div>
+    <div class="summary-item"><span class="summary-label">Sub-questions</span><span class="summary-val">5/5</span></div>
+    <div class="summary-item"><span class="summary-label">Claim Groups</span><span class="summary-val">39</span></div>
+    <div class="summary-item"><span class="summary-label">Disputes</span><span class="summary-val">0</span></div>
+  </div>
+
+  <div class="metrics-grid">
+    
+        <div class="metric-card">
+          <div class="metric-value" style="color:#6366f1">60%</div>
+          <div class="metric-name">Coverage</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:60%; background:#6366f1"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#22c55e">100%</div>
+          <div class="metric-name">Efficiency</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:100%; background:#22c55e"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#ef4444">0%</div>
+          <div class="metric-name">Conflict Surfacing</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:0%; background:#ef4444"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#f59e0b">0%</div>
+          <div class="metric-name">Stopping Quality</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:0%; background:#f59e0b"></div>
+      </div>
+        </div>
+  </div>
+
+  <h2>Step Timeline</h2>
+  <div class="section">
+    <div class='timeline'><span class="pill" style="background:#22c55e" title="Step 0: search:sq1">0 SEA NEW</span><span class="pill" style="background:#ef4444" title="Step 1: search:sq2">1 SEA CONFLICT</span><span class="pill" style="background:#22c55e" title="Step 2: search:sq3">2 SEA NEW</span></div>
+    <div style="margin-top:0.75rem;font-size:0.75rem;color:#64748b;display:flex;gap:1rem">
+      <span><span class="dot" style="background:#22c55e"></span>New Evidence</span>
+      <span><span class="dot" style="background:#ef4444"></span>Conflict Found</span>
+      <span><span class="dot" style="background:#f59e0b"></span>Redundant</span>
+      <span><span class="dot" style="background:#6b7280"></span>Dead End</span>
+    </div>
+  </div>
+
+  <h2>Sub-questions</h2>
+  <div class="section">
+    <table class='data-table'><thead><tr><th></th><th>Sub-question</th><th>Kind</th><th>Groups</th><th>Disputes</th></tr></thead><tbody>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What empirical studies demonstrate that retrieval-augmented generation (RAG) reduces factual hallucinations in large language models compared to models without retrieval?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>3</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>How does the integration of external knowledge sources in RAG systems correlate with improvements in factual accuracy metrics like F1 score or ROUGE-L?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>8</td>
+            <td><span class="badge badge-red">1 disputed</span></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>In what domains or tasks does retrieval-augmented generation fail to improve factual accuracy, such as when retrieved data is outdated or contradictory?</td>
+            <td><span class="badge badge-orange">adversarial</span></td>
+            <td>10</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#9ca3af;font-weight:bold">○</td>
+            <td>What limitations in retrieval system design (e.g., recall, latency, or bias) undermine the effectiveness of RAG in enhancing factual accuracy?</td>
+            <td><span class="badge badge-orange">adversarial</span></td>
+            <td>0</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#9ca3af;font-weight:bold">○</td>
+            <td>Are there cases where retrieval-augmented generation harms factual accuracy, such as when models prioritize retrieved content over their own training?</td>
+            <td><span class="badge badge-orange">adversarial</span></td>
+            <td>0</td>
+            <td></td>
+          </tr></tbody></table>
+  </div>
+
+  <h2>Claim Groups (21)</h2>
+  <div class="section">
+    <table class='data-table'><thead><tr><th>Claim</th><th>Confidence</th><th>Status</th><th>Sources</th><th>Supporting</th><th>Contradicting</th></tr></thead><tbody>
+          <tr>
+            <td>Retrieval-Augmented Generation (RAG) is an effective method for mitigating hallu…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.researchgate.net</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG improves the quality of domain-specific responses and reduces hallucinations…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.mdpi.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Prompt engineering plays a crucial role in the study of hallucination mitigation…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.mdpi.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG improves LLM accuracy by connecting large language models to external knowle…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.larkinfolab.nl</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG combines the conversational abilities of large language models with real-tim…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.larkinfolab.nl</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The RAG system works through three core components: a retrieval mechanism, an em…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.larkinfolab.nl</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Evaluating RAG systems presents unique challenges due to their hybrid architectu…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Traditional metrics are employed to evaluate the retrieval and generation compon…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Factual Accuracy is a key metric that uses standard QA metrics (EM, F1, accuracy…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Accurate RAG evaluation metrics must measure retrieval precision, contextual rel…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#ef4444"></span>disputed</td>
+            <td style="font-size:0.75rem;color:#6b7280">deepchecks.com</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>Key metrics such as retrieval precision, contextual relevance, answer relevancy,…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">deepchecks.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Retrieved chunks containing contradictions create a core tension.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">pub.towardsai.net</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Small chunks improve retrieval precision but destroy context.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">pub.towardsai.net</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>A RAG system that lacks complete coverage increases the likelihood of the LLM ge…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">snorkel.ai</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>A RAG system with poorly curated documents may provide misleading, incorrect, or…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">snorkel.ai</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Ineffective document chunking leads to information loss, noisy context, or irrel…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">snorkel.ai</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Generalist embedding models typically fail to capture semantic nuances.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">snorkel.ai</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG helps AI provide more accurate, up-to-date, and relevant answers by combinin…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">labelstud.io</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The Generation Stage of RAG systems produces incorrect, incomplete, or poorly fo…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">labelstud.io</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The 2024 study 'Seven Failure Points When Engineering a Retrieval-Augmented Gene…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">labelstud.io</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Many RAG failures stem from issues in retrieval accuracy, ranking, and content c…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">labelstud.io</td>
+            <td>1</td>
+            <td>0</td>
+          </tr></tbody></table>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1380 @@
+{
+  "query": "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.",
+  "sub_questions": [
+    {
+      "id": "sq1",
+      "text": "What are the key differences in experimental design between studies that found chain-of-thought prompting effective for LLMs versus those that attributed its benefits to output formatting?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq2",
+      "text": "Can chain-of-thought prompting's effectiveness be replicated in tasks that require more complex or nuanced reasoning, such as multi-step problem-solving or common sense reasoning?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq3",
+      "text": "How do the linguistic properties of tasks influence the impact of chain-of-thought prompting on LLM performance, particularly in cases where the task requires more explicit or implicit reasoning?",
+      "kind": "supporting",
+      "has_evidence": false
+    },
+    {
+      "id": "sq4",
+      "text": "Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?",
+      "kind": "adversarial",
+      "has_evidence": true
+    },
+    {
+      "id": "sq5",
+      "text": "Can the alleged benefits of chain-of-thought prompting for LLMs be attributed to confounding variables, such as differences in model architecture or hyperparameter tuning, and if so, how can these be controlled for in future studies?",
+      "kind": "adversarial",
+      "has_evidence": false
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs_d5c50dd6",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://neurips.cc/media/neurips-2024/Slides/96654.pdf",
+      "source_title": "[PDF] Chain of Thought Reasoning without Prompting",
+      "domain": "neurips.cc",
+      "snippet": "Chain of Thought Reasoning without Prompting Xuezhi Wang, Denny Zhou Google DeepMind xuezhiw@google.com Chain of thought reasoning \u25cf Chain of thought has been proven super useful in many reasoning tasks \u25cf How to elicit chain of thought reasoning from LLMs?\n\u25cb Chain of thought prompting: few-shot, zero-shot, and many many follow-up works \u25cb Fine-tuning with a lot of CoT data Wei et al. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. NeurIPS 2022.\nChung et al. Scaling Instruction-Finetuned Language Models. JMLR 2024.\nChain of thought reasoning \u25cf Chain of thought has been proven super useful in many reasoning tasks \u25cf How to elicit chain of thought reasoning from LLMs?\n\u25cb Chain of thought prompting: few-shot, zero-shot, and many many follow-up works \u25a0 How to disentangle the",
+      "domain_score": 0.9
+    },
+    {
+      "id": "obs_8ca77a9b",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://www.amu.apus.edu/online-bachelor-degrees/bachelor-of-arts-in-interdisciplinary-studies/",
+      "source_title": "Online Bachelor of Arts in Interdisciplinary Studies",
+      "domain": "www.amu.apus.edu",
+      "snippet": "This program allows you to finish a bachelor's degree online by completing general education requirements. Then, you choose courses from:",
+      "domain_score": 0.75
+    },
+    {
+      "id": "obs_4cf48f13",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://arxiv.org/html/2602.10494v1",
+      "source_title": "Canvas-of-Thought: Grounding Reasoning via Mutable Structured ...",
+      "domain": "arxiv.org",
+      "snippet": "The integration of Chain-of-Thought (CoT) prompting [wei2022chain] has significantly advanced the reasoning capabilities of Multimodal Large",
+      "domain_score": 0.9
+    },
+    {
+      "id": "obs_5056a203",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://api.semanticscholar.org/arXiv:2210.00720",
+      "source_title": "[PDF] Complexity-Based Prompting for Multi-Step Reasoning | Semantic Scholar",
+      "domain": "api.semanticscholar.org",
+      "snippet": "This work proposes complexity-based prompting, a simple and effective example selection scheme for multi-step reasoning that substantially improves multi- step reasoning accuracy and achieves new state-of-the-art (SOTA) performance on three math benchmarks and two BigBenchHard tasks. ### Boosting Language Models Reasoning with Chain-of-Knowledge Prompting. ### Active Prompting with Chain-of-Thought for Large Language Models. This paper proposes a new method to adapt LLMs to different tasks with task-specific example prompts (annotated with human-designed CoT reasoning), and introduces several metrics to characterize the uncertainty so as to select the most uncertain questions for annotation. ### ChainLM: Empowering Large Language Models with Improved Chain-of-Thought Prompting. Xiaoxue Che",
+      "domain_score": 0.9
+    },
+    {
+      "id": "obs_65383079",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://dl.acm.org/doi/10.1145/3785022.3785122",
+      "source_title": "Development and Evaluation of a Dual-Expertise, Utterance-Level ...",
+      "domain": "dl.acm.org",
+      "snippet": "Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs. In",
+      "domain_score": 0.5
+    },
+    {
+      "id": "obs_aeb4a68a",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://learnprompting.org/docs/intermediate/chain_of_thought?srsltid=AfmBOornbQWutAiHuOwHUEWE4ye5c6zZudci1l05B-H8bL_heSAmJ32x",
+      "source_title": "Chain-of-Thought Prompting",
+      "domain": "learnprompting.org",
+      "snippet": "**Compete in HackAPrompt 2.0, the world's largest AI Red-Teaming competition!**\n\n[Check it out \u2192](https://www.hackaprompt.com)\n\n* [AI Courses\n\n  Master AI and prompt engineering](/courses)[Get Certified in AI](/certificates)\n\n  ### DIFFICULTY LEVEL\n\n  [Beginner Courses](/courses?level=beginner#course-grid)[Intermediate Courses](/courses?level=intermediate#course-grid)[Advanced Courses](/courses?level=advanced#course-grid)\n\n  [View All Courses](/courses)\n\n  ### RECOMMENDED COURSES\n\n  [NEW\n\n  #### ChatGPT for Everyone\n\n  Master ChatGPT fundamentals and advanced techniques\n\n  Start Learning](/courses/chatgpt-for-everyone)[NEW\n\n  #### Introduction to Prompt Engineering\n\n  Learn the fundamentals of crafting effective prompts\n\n  Start Learning](/courses/introduction-to-prompt-engineering)[ON-DEM",
+      "domain_score": 0.5
+    },
+    {
+      "id": "obs_0cd6258d",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://www.ibm.com/think/topics/chain-of-thoughts",
+      "source_title": "What is chain of thought (CoT) prompting? - IBM",
+      "domain": "www.ibm.com",
+      "snippet": "# What is chain of thought (CoT) prompting? | IBM\n\nSupport\n\n[What's new](https://www.ibm.com/new)\n\n*   [Overview Resolve product issues with self-service tools](https://www.ibm.com/mysupport/s/?language=en_US&lnk=flathl)\n*   [Community Share knowledge in a collaborative environment to unlock innovation](https://community.ibm.com/community/user/community?lnk=flathl)\n*   [Developer Access digital resources, code samples and code trials](https://developer.ibm.com/?lnk=flathl)\n*   [Documentation Understand, develop and deploy our products with comprehensive technical resources](https://www.ibm.com/docs/en?lnk=flathl)\n*   [IBM Cloud platform Access subject matter experts and content to address questions and issues about IBM Cloud](https://www.ibm.com/products/cloud/support?lnk=flathl)\n*   [Impl",
+      "domain_score": 0.5
+    },
+    {
+      "id": "obs_d6e33bc7",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://openreview.net/forum?id=va7nzRsbA4",
+      "source_title": "What Makes Chain-of-Thought Prompting Effective? A ...",
+      "domain": "openreview.net",
+      "snippet": "[![back arrow](/images/arrow_left.svg)Go to **EMNLP 2023 Conference** homepage](/group?id=EMNLP/2023/Conference \"Venue Homepage\")\n\n## What Makes Chain-of-Thought Prompting Effective? A Counterfactual Study\n\n[![Download PDF](/images/pdf_icon_blue.svg)](/pdf?id=va7nzRsbA4 \"Download PDF\")\n\n### [Aman Madaan](/profile?id=~Aman_Madaan1 \"~Aman_Madaan1\"), [Katherine Hermann](/profile?id=~Katherine_Hermann1 \"~Katherine_Hermann1\"), [Amir Yazdanbakhsh](/profile?id=~Amir_Yazdanbakhsh1 \"~Amir_Yazdanbakhsh1\")\n\nPublished: 07 Oct 2023, Last Modified: 01 Dec 2023EMNLP 2023 FindingsEveryone[Revisions](/revisions?id=va7nzRsbA4)[BibTeX](#)\n\n**Submission Type:** Regular Long Paper\n\n**Submission Track:** Language Modeling and Analysis of Language Models\n\n**Submission Track 2:** Interpretability, Interactivity, ",
+      "domain_score": 0.9
+    },
+    {
+      "id": "obs_5479adbc",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://arxiv.org/pdf/2302.12246v4",
+      "source_title": "Active Prompting with Chain-of-Thought for Large Language Models",
+      "domain": "arxiv.org",
+      "snippet": "Active Prompting with Chain-of-Thought for Large Language Models Shizhe Diao\u2660, Pengcheng Wang\u2661, Yong Lin\u2660, Rui Pan\u2660, Xiang Liu\u2663, Tong Zhang\u2666 \u2660The Hong Kong University of Science and Technology \u2661University of Toronto \u2663The University of Hong Kong \u2666University of Illinois Urbana-Champaign {sdiaoaa, ylindf, rpan}@connect.ust.hk pcheng.wang@mail.utoronto.ca xiang.liu@connect.hku.hk tozhang@illinois.edu Abstract The increasing scale of large language mod-els (LLMs) brings emergent abilities to vari-ous complex tasks requiring reasoning, such as arithmetic and commonsense reasoning. It is known that the effective design of task-specific prompts is critical for LLMs\u2019 ability to produce high-quality answers. In particular, an effective approach for complex question-and-answering tasks is example-bas",
+      "domain_score": 0.9
+    },
+    {
+      "id": "obs_e4a9b0c5",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://www.arxiv.org/pdf/2506.17088v2",
+      "source_title": "Chain-of-Thought Prompting Obscures Hallucination Cues ...",
+      "domain": "www.arxiv.org",
+      "snippet": "Chain-of-Thought Prompting Obscures Hallucination Cues in Large Language Models: An Empirical Evaluation Jiahao Cheng1 Tiancheng Su1 Jia Yuan1 Guoxiu He1* Jiawei Liu2 Xinqi Tao3 Jingwen Xie3 Huaxia Li3 1 East China Normal University, Shanghai, China 2Wuhan University, Wuhan, China 3Xiaohsongshu Inc., Shanghai, China chengjiahao@stu.ecnu.edu.cn, gxhe@fem.ecnu.edu.cn Abstract Large Language Models (LLMs) often exhibit hallucinations, generating factually incorrect or semantically irrelevant content in response to prompts. Chain-of-Thought (CoT) prompt-ing can mitigate hallucinations by encouraging step-by-step reasoning, but its impact on hallu-cination detection remains underexplored. To bridge this gap, we conduct a systematic em-pirical evaluation. We begin with a pilot ex-periment, revea",
+      "domain_score": 0.9
+    },
+    {
+      "id": "obs_5c2bb517",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://huggingface.co/papers/2401.12242",
+      "source_title": "Paper page - BadChain: Backdoor Chain-of-Thought Prompting for Large Language Models",
+      "domain": "huggingface.co",
+      "snippet": "![Hugging Face's logo](/front/assets/huggingface_logo-noborder.svg)\n\n# BadChain: Backdoor Chain-of-Thought Prompting for Large Language Models\n\n![](https://cdn-avatars.huggingface.co/v1/production/uploads/6531e1021dd8ebbdc1a6fd8e/lIcl7zCPtzRsfiUh6uY1o.jpeg)\n![](/avatars/2acdf2597eaabeded7e8125401063129.svg)\n![](https://cdn-avatars.huggingface.co/v1/production/uploads/6531e1021dd8ebbdc1a6fd8e/lIcl7zCPtzRsfiUh6uY1o.jpeg)\n\n## Abstract\n\nBadChain is a novel backdoor attack targeting large language models using chain-of-thought prompting, demonstrating high effectiveness across various reasoning tasks and models, while proposed defenses are shown to be ineffective.\n\nLarge language models ([LLMs](/papers?q=LLMs)) are shown to benefit from chain-of-thought (COT)\nprompting, particularly when tackli",
+      "domain_score": 0.9
+    },
+    {
+      "id": "obs_16a5dd5a",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://letsdatascience.com/blog",
+      "source_title": "Blog \u2014 AI, ML & Data Science Articles - Let's Data Science",
+      "domain": "letsdatascience.com",
+      "snippet": "Using Python and datasets like ldsstatsprobability.csv, practitioners can correct for confounding factors to determine the true efficacy of interventions.",
+      "domain_score": 0.5
+    },
+    {
+      "id": "obs_cbd3a9b2",
+      "step": 5,
+      "sub_question_id": "sq3",
+      "source_url": "https://dl.acm.org/doi/10.1145/3785022.3785122",
+      "source_title": "Development and Evaluation of a Dual-Expertise, Utterance-Level ...",
+      "domain": "dl.acm.org",
+      "snippet": "Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs. In",
+      "domain_score": 0.5
+    },
+    {
+      "id": "obs_b10e33af",
+      "step": 6,
+      "sub_question_id": "sq3",
+      "source_url": "https://dl.acm.org/doi/10.1145/3785022.3785122",
+      "source_title": "Development and Evaluation of a Dual-Expertise, Utterance-Level ...",
+      "domain": "dl.acm.org",
+      "snippet": "Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs. In",
+      "domain_score": 0.5
+    },
+    {
+      "id": "obs_d47b27f4",
+      "step": 7,
+      "sub_question_id": "sq3",
+      "source_url": "https://dl.acm.org/doi/10.1145/3785022.3785122",
+      "source_title": "Development and Evaluation of a Dual-Expertise, Utterance-Level ...",
+      "domain": "dl.acm.org",
+      "snippet": "Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs. In",
+      "domain_score": 0.5
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_bae11c1a",
+      "text": "Chain of thought prompting: few-shot, zero-shot, and many many follow-up works",
+      "scope": "eliciting chain of thought reasoning from LLMs",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_d5c50dd6",
+      "verbatim": "Chain of thought prompting: few-shot, zero-shot, and many many follow-up works",
+      "sub_question_id": "sq1",
+      "step": 0,
+      "relevance_label": "direct"
+    },
+    {
+      "id": "clm_aa71917b",
+      "text": "complexity-based prompting substantially improves multi-step reasoning accuracy",
+      "scope": "for multi-step reasoning tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5056a203",
+      "verbatim": "substantially improves multi-step reasoning accuracy",
+      "sub_question_id": "sq2",
+      "step": 1,
+      "relevance_label": "direct"
+    },
+    {
+      "id": "clm_2cdd2266",
+      "text": "task-specific example prompts with human-designed CoT reasoning can adapt LLMs to different tasks",
+      "scope": "for adapting LLMs to different tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5056a203",
+      "verbatim": "proposes a new method to adapt LLMs to different tasks with task-specific example prompts (annotated with human-designed CoT reasoning)",
+      "sub_question_id": "sq2",
+      "step": 1,
+      "relevance_label": "direct"
+    },
+    {
+      "id": "clm_2321ad94",
+      "text": "Chain-of-Thought prompting can mitigate hallucinations",
+      "scope": "",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_e4a9b0c5",
+      "verbatim": "Chain-of-Thought (CoT) prompting can mitigate hallucinations by encouraging step-by-step reasoning,",
+      "sub_question_id": "sq4",
+      "step": 3,
+      "relevance_label": "direct"
+    },
+    {
+      "id": "clm_27681651",
+      "text": "BadChain demonstrates high effectiveness across various reasoning tasks and models",
+      "scope": "for various reasoning tasks and models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5c2bb517",
+      "verbatim": "demonstrating high effectiveness across various reasoning tasks and models",
+      "sub_question_id": "sq4",
+      "step": 3,
+      "relevance_label": "direct"
+    },
+    {
+      "id": "clm_6dd2284e",
+      "text": "Large language models benefit from chain-of-thought prompting",
+      "scope": "particularly when tackling complex tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5c2bb517",
+      "verbatim": "Large language models ([LLMs](/papers?q=LLMs)) are shown to benefit from chain-of-thought (COT) prompting",
+      "sub_question_id": "sq4",
+      "step": 3,
+      "relevance_label": "direct"
+    }
+  ],
+  "adjacent_claims": [
+    {
+      "id": "clm_028fe51e",
+      "text": "Chain of thought has been proven super useful in many reasoning tasks",
+      "scope": "many reasoning tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_d5c50dd6",
+      "verbatim": "Chain of thought has been proven super useful in many reasoning tasks",
+      "sub_question_id": "sq1",
+      "step": 0,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_9358c318",
+      "text": "Chain-of-Thought (CoT) prompting has significantly advanced the reasoning capabilities of Multimodal Large",
+      "scope": "Multimodal Large",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_4cf48f13",
+      "verbatim": "The integration of Chain-of-Thought (CoT) prompting [wei2022chain] has significantly advanced the reasoning capabilities of Multimodal Large",
+      "sub_question_id": "sq2",
+      "step": 1,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_5bbba1b3",
+      "text": "complexity-based prompting achieves new state-of-the-art performance on math benchmarks and BigBenchHard tasks",
+      "scope": "on math benchmarks and BigBenchHard tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5056a203",
+      "verbatim": "achieves new state-of-the-art (SOTA) performance on three math benchmarks and two BigBenchHard tasks",
+      "sub_question_id": "sq2",
+      "step": 1,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_a8238fca",
+      "text": "introducing several metrics to characterize uncertainty can select the most uncertain questions for annotation",
+      "scope": "for selecting the most uncertain questions for annotation",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5056a203",
+      "verbatim": "introduces several metrics to characterize the uncertainty so as to select the most uncertain questions for annotation",
+      "sub_question_id": "sq2",
+      "step": 1,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_037dc329",
+      "text": "We employ chain-of-thought (CoT) prompting",
+      "scope": "to elicit the step-by-step reasoning abilities of LLMs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_65383079",
+      "verbatim": "We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs.",
+      "sub_question_id": "sq3",
+      "step": 2,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_42ccfde0",
+      "text": "The increasing scale of large language models brings emergent abilities to various complex tasks requiring reasoning.",
+      "scope": "for large language models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5479adbc",
+      "verbatim": "The increasing scale of large language models (LLMs) brings emergent abilities to various complex tasks requiring reasoning",
+      "sub_question_id": "sq4",
+      "step": 3,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_89b892d9",
+      "text": "The effective design of task-specific prompts is critical for LLMs' ability to produce high-quality answers.",
+      "scope": "for LLMs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5479adbc",
+      "verbatim": "It is known that the effective design of task-specific prompts is critical for LLMs' ability to produce high-quality answers",
+      "sub_question_id": "sq4",
+      "step": 3,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_155edb56",
+      "text": "Example-based prompts are an effective approach for complex question-and-answering tasks.",
+      "scope": "for complex question-and-answering tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5479adbc",
+      "verbatim": "an effective approach for complex question-and-answering tasks is example-based",
+      "sub_question_id": "sq4",
+      "step": 3,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_7ad80963",
+      "text": "BadChain is a novel backdoor attack targeting large language models using chain-of-thought prompting",
+      "scope": "for large language models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5c2bb517",
+      "verbatim": "BadChain is a novel backdoor attack targeting large language models using chain-of-thought prompting",
+      "sub_question_id": "sq4",
+      "step": 3,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_a49e7d75",
+      "text": "proposed defenses are shown to be ineffective",
+      "scope": "for BadChain attacks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5c2bb517",
+      "verbatim": "while proposed defenses are shown to be ineffective",
+      "sub_question_id": "sq4",
+      "step": 3,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_3ce70b04",
+      "text": "practitioners can correct for confounding factors",
+      "scope": "when using Python and datasets like ldsstatsprobability.csv",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_16a5dd5a",
+      "verbatim": "practitioners can correct for confounding factors to determine the true efficacy of interventions",
+      "sub_question_id": "sq5",
+      "step": 4,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_11ba4807",
+      "text": "practitioners can determine the true efficacy of interventions",
+      "scope": "when using Python and datasets like ldsstatsprobability.csv",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_16a5dd5a",
+      "verbatim": "practitioners can correct for confounding factors to determine the true efficacy of interventions",
+      "sub_question_id": "sq5",
+      "step": 4,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_dd47e3c6",
+      "text": "interventions have true efficacy",
+      "scope": "when corrected for confounding factors, using Python and datasets like ldsstatsprobability.csv",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_16a5dd5a",
+      "verbatim": "practitioners can correct for confounding factors to determine the true efficacy of interventions",
+      "sub_question_id": "sq5",
+      "step": 4,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_535cb631",
+      "text": "We employ chain-of-thought (CoT) prompting",
+      "scope": "for eliciting the step-by-step reasoning abilities of LLMs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_cbd3a9b2",
+      "verbatim": "Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting",
+      "sub_question_id": "sq3",
+      "step": 5,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_1765a987",
+      "text": "We employ chain-of-thought (CoT) prompting",
+      "scope": "to elicit the step-by-step reasoning abilities of LLMs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_b10e33af",
+      "verbatim": "We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs.",
+      "sub_question_id": "sq3",
+      "step": 6,
+      "relevance_label": "adjacent"
+    },
+    {
+      "id": "clm_3bc524c5",
+      "text": "We employ chain-of-thought (CoT) prompting",
+      "scope": "to elicit the step-by-step reasoning abilities of LLMs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_d47b27f4",
+      "verbatim": "We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs.",
+      "sub_question_id": "sq3",
+      "step": 7,
+      "relevance_label": "adjacent"
+    }
+  ],
+  "claim_groups": [
+    {
+      "id": "grp_73378890",
+      "canonical_text": "Chain of thought prompting: few-shot, zero-shot, and many many follow-up works",
+      "scope": "eliciting chain of thought reasoning from LLMs",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_bae11c1a"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "neurips.cc"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_df62d957",
+      "canonical_text": "complexity-based prompting substantially improves multi-step reasoning accuracy",
+      "scope": "for multi-step reasoning tasks",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_aa71917b"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "api.semanticscholar.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_b2445ffc",
+      "canonical_text": "task-specific example prompts with human-designed CoT reasoning can adapt LLMs to different tasks",
+      "scope": "for adapting LLMs to different tasks",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_2cdd2266"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "api.semanticscholar.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_8786daff",
+      "canonical_text": "Chain-of-Thought prompting can mitigate hallucinations",
+      "scope": "",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_2321ad94"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_0a64dd1f",
+      "canonical_text": "BadChain demonstrates high effectiveness across various reasoning tasks and models",
+      "scope": "for various reasoning tasks and models",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_27681651"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "huggingface.co"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_c9441633",
+      "canonical_text": "Large language models benefit from chain-of-thought prompting",
+      "scope": "particularly when tackling complex tasks",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_6dd2284e"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "huggingface.co"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    }
+  ],
+  "step_history": [
+    {
+      "step": 0,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NEW_EVIDENCE",
+      "retrieved_results": 1,
+      "observations_added": 1,
+      "extracted_claims": 2,
+      "result_reason": "",
+      "recovery_attempts": 0,
+      "recovery_strategy": "",
+      "query_variants_tried": 0,
+      "rerank_in_count": 0,
+      "rerank_out_count": 0,
+      "claims_filtered_out": 0,
+      "adjacent_claims_added": 1,
+      "query_compression_attempts": 0,
+      "query_compression_llm_successes": 0,
+      "query_compression_fallback_truncations": 0,
+      "query_compression_chars_saved": 0
+    },
+    {
+      "step": 1,
+      "action": "search:sq2",
+      "sub_question_id": "sq2",
+      "result": "NEW_EVIDENCE",
+      "retrieved_results": 1,
+      "observations_added": 3,
+      "extracted_claims": 5,
+      "result_reason": "",
+      "recovery_attempts": 1,
+      "recovery_strategy": "extractor_rescue_pivot",
+      "query_variants_tried": 3,
+      "rerank_in_count": 4,
+      "rerank_out_count": 2,
+      "claims_filtered_out": 0,
+      "adjacent_claims_added": 3,
+      "query_compression_attempts": 3,
+      "query_compression_llm_successes": 3,
+      "query_compression_fallback_truncations": 0,
+      "query_compression_chars_saved": 700
+    },
+    {
+      "step": 2,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END",
+      "retrieved_results": 1,
+      "observations_added": 1,
+      "extracted_claims": 1,
+      "result_reason": "",
+      "recovery_attempts": 0,
+      "recovery_strategy": "",
+      "query_variants_tried": 0,
+      "rerank_in_count": 0,
+      "rerank_out_count": 0,
+      "claims_filtered_out": 0,
+      "adjacent_claims_added": 1,
+      "query_compression_attempts": 0,
+      "query_compression_llm_successes": 0,
+      "query_compression_fallback_truncations": 0,
+      "query_compression_chars_saved": 0
+    },
+    {
+      "step": 3,
+      "action": "search:sq4",
+      "sub_question_id": "sq4",
+      "result": "NEW_EVIDENCE",
+      "retrieved_results": 3,
+      "observations_added": 6,
+      "extracted_claims": 8,
+      "result_reason": "",
+      "recovery_attempts": 1,
+      "recovery_strategy": "extractor_rescue_pivot",
+      "query_variants_tried": 3,
+      "rerank_in_count": 3,
+      "rerank_out_count": 3,
+      "claims_filtered_out": 3,
+      "adjacent_claims_added": 5,
+      "query_compression_attempts": 3,
+      "query_compression_llm_successes": 3,
+      "query_compression_fallback_truncations": 0,
+      "query_compression_chars_saved": 862
+    },
+    {
+      "step": 4,
+      "action": "search:sq5",
+      "sub_question_id": "sq5",
+      "result": "DEAD_END",
+      "retrieved_results": 1,
+      "observations_added": 1,
+      "extracted_claims": 3,
+      "result_reason": "",
+      "recovery_attempts": 0,
+      "recovery_strategy": "",
+      "query_variants_tried": 0,
+      "rerank_in_count": 0,
+      "rerank_out_count": 0,
+      "claims_filtered_out": 0,
+      "adjacent_claims_added": 3,
+      "query_compression_attempts": 0,
+      "query_compression_llm_successes": 0,
+      "query_compression_fallback_truncations": 0,
+      "query_compression_chars_saved": 0
+    },
+    {
+      "step": 5,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END",
+      "retrieved_results": 1,
+      "observations_added": 1,
+      "extracted_claims": 1,
+      "result_reason": "",
+      "recovery_attempts": 0,
+      "recovery_strategy": "",
+      "query_variants_tried": 0,
+      "rerank_in_count": 0,
+      "rerank_out_count": 0,
+      "claims_filtered_out": 0,
+      "adjacent_claims_added": 1,
+      "query_compression_attempts": 0,
+      "query_compression_llm_successes": 0,
+      "query_compression_fallback_truncations": 0,
+      "query_compression_chars_saved": 0
+    },
+    {
+      "step": 6,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END",
+      "retrieved_results": 1,
+      "observations_added": 1,
+      "extracted_claims": 1,
+      "result_reason": "",
+      "recovery_attempts": 0,
+      "recovery_strategy": "",
+      "query_variants_tried": 0,
+      "rerank_in_count": 0,
+      "rerank_out_count": 0,
+      "claims_filtered_out": 0,
+      "adjacent_claims_added": 1,
+      "query_compression_attempts": 0,
+      "query_compression_llm_successes": 0,
+      "query_compression_fallback_truncations": 0,
+      "query_compression_chars_saved": 0
+    },
+    {
+      "step": 7,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "DEAD_END",
+      "retrieved_results": 1,
+      "observations_added": 1,
+      "extracted_claims": 1,
+      "result_reason": "",
+      "recovery_attempts": 0,
+      "recovery_strategy": "",
+      "query_variants_tried": 0,
+      "rerank_in_count": 0,
+      "rerank_out_count": 0,
+      "claims_filtered_out": 0,
+      "adjacent_claims_added": 1,
+      "query_compression_attempts": 0,
+      "query_compression_llm_successes": 0,
+      "query_compression_fallback_truncations": 0,
+      "query_compression_chars_saved": 0
+    }
+  ],
+  "llm_calls": [
+    {
+      "id": "llm_00000",
+      "step": 0,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq1\nSource: https://neurips.cc/media/neurips-2024/Slides/96654.pdf\nSnippet: Chain of Thought Reasoning without Prompting Xuezhi Wang, Denny Zhou Google DeepMind xuezhiw@google.com Chain of thought reasoning \u25cf Chain of thought has been proven super useful in many reasoning tasks \u25cf How to elicit chain of thought reasoning from LLMs?\n\u25cb Chain of thought prompting: few-shot, zero-shot, and many many follow-up works \u25cb Fine-tuning with a lot of CoT data Wei et al. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. NeurIPS 2022.\nChung et al. Scaling Instruction-Finetuned Language Models. JMLR 2024.\nChain of thought reasoning \u25cf Chain of thought has been proven super useful in many reasoning tasks \u25cf How to elicit chain of thought reasoning from LLMs?\n\u25cb Chain of thought prompting: few-shot, zero-shot, and many many follow-up works \u25a0 How to disentangle the",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"Chain of thought has been proven super useful in many reasoning tasks\",\n    \"scope\": \"many reasoning tasks\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"Chain of thought has been proven super useful in many reasoning tasks\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"Chain of thought prompting: few-shot, zero-shot, and many many follow-up works\",\n    \"scope\": \"eliciting chain of thought reasoning from LLMs\",\n    \"claim_type\": \"speculative\",\n    \"verbatim\": \"Chain of thought prompting: few-shot, zero-shot, and many many follow-up works\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq1",
+        "observation_id": "obs_d5c50dd6",
+        "source_url": "https://neurips.cc/media/neurips-2024/Slides/96654.pdf"
+      },
+      "timestamp_utc": "2026-04-27T00:38:04.520817+00:00"
+    },
+    {
+      "id": "llm_00001",
+      "step": 0,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: What are the key differences in experimental design between studies that found chain-of-thought prompting effective for LLMs versus those that attributed its benefits to output formatting?\nClaim text: Chain of thought has been proven super useful in many reasoning tasks\nScope: many reasoning tasks\nVerbatim: Chain of thought has been proven super useful in many reasoning tasks",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text mentions chain-of-thought prompting in a positive light, which is relevant to the sub-question about the effectiveness of chain-of-thought prompting for LLMs. However, the scope is broader than the sub-question, as it mentions many reasoning tasks rather than specifically focusing on LLMs.\"}",
+      "meta": {
+        "claim_id": "clm_028fe51e",
+        "sub_question_id": "sq1"
+      },
+      "timestamp_utc": "2026-04-27T00:38:09.017489+00:00"
+    },
+    {
+      "id": "llm_00002",
+      "step": 0,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: What are the key differences in experimental design between studies that found chain-of-thought prompting effective for LLMs versus those that attributed its benefits to output formatting?\nClaim text: Chain of thought prompting: few-shot, zero-shot, and many many follow-up works\nScope: eliciting chain of thought reasoning from LLMs\nVerbatim: Chain of thought prompting: few-shot, zero-shot, and many many follow-up works",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim directly relates to the sub-question by mentioning key differences in experimental design between studies on chain-of-thought prompting, which is a relevant aspect of the sub-question.\"}",
+      "meta": {
+        "claim_id": "clm_bae11c1a",
+        "sub_question_id": "sq1"
+      },
+      "timestamp_utc": "2026-04-27T00:38:12.352358+00:00"
+    },
+    {
+      "id": "llm_00003",
+      "step": 1,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq2\nSource: https://www.amu.apus.edu/online-bachelor-degrees/bachelor-of-arts-in-interdisciplinary-studies/\nSnippet: This program allows you to finish a bachelor's degree online by completing general education requirements. Then, you choose courses from:",
+      "response_text": "[] \n\nThere are no independently testable statements in this snippet.",
+      "meta": {
+        "sub_question_id": "sq2",
+        "observation_id": "obs_8ca77a9b",
+        "source_url": "https://www.amu.apus.edu/online-bachelor-degrees/bachelor-of-arts-in-interdisciplinary-studies/"
+      },
+      "timestamp_utc": "2026-04-27T00:38:15.667230+00:00"
+    },
+    {
+      "id": "llm_00004",
+      "step": 1,
+      "component": "reranker",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a result reranker for research retrieval.\nReturn JSON only: {\"decisions\":[{\"index\":0,\"score\":0-3,\"reason\":\"...\"}]}\nScore strict relevance to the sub-question (3=highly relevant, 0=irrelevant).",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Can chain-of-thought prompting's effectiveness be replicated in tasks that require more complex or nuanced reasoning, such as multi-step problem-solving or common sense reasoning?\nResults JSON:\n[{\"index\": 0, \"title\": \"Canvas-of-Thought: Grounding Reasoning via Mutable Structured ...\", \"domain\": \"arxiv.org\", \"url\": \"https://arxiv.org/html/2602.10494v1\", \"snippet\": \"The integration of Chain-of-Thought (CoT) prompting [wei2022chain] has significantly advanced the reasoning capabilities of Multimodal Large\"}, {\"index\": 1, \"title\": \"LLMs Exhibit Significantly Lower Uncertainty in Creative Writing Than Professional Writers\", \"domain\": \"arxiv.org\", \"url\": \"https://arxiv.org/html/2602.16162v1\", \"snippet\": \"# LLMs Exhibit Significantly Lower Uncertainty in Creative Writing Than Professional Writers\\n\\n###### Abstract\\n\\nWe argue that uncertainty is a key and understudied limitation of LLMs\\u2019 performance in creative writing, which is often characterized as trite and clich\\u00e9-ridden. Literary theory identifies uncertainty as a necessary condition for creative expression, while current alignment strategies steer models away from uncertain outputs to ensure factuality and reduce hallucination. We formalize th\"}, {\"index\": 2, \"title\": \"Scaling Reasoning Hop Exposes Weaknesses: Demystifying and Improving Hop Generalization in Large Language Models | OpenReview\", \"domain\": \"openreview.net\", \"url\": \"https://openreview.net/forum?id=qK4JKOu0Gx\", \"snippet\": \"![back arrow](/images/arrow_left.svg)\\n\\n## Scaling Reasoning Hop Exposes Weaknesses: Demystifying and Improving Hop Generalization in Large Language Models\\n\\n![Download PDF](/images/pdf_icon_blue.svg)\\n\\n### [Zhaoyi Li](/profile?id=~Zhaoyi_Li1 \\\"~Zhaoyi_Li1\\\"), [Jiatong Li](/profile?id=~Jiatong_Li5 \\\"~Jiatong_Li5\\\"), [Gangwei Jiang](/profile?id=~Gangwei_Jiang1 \\\"~Gangwei_Jiang1\\\"), [Linqi Song](/profile?id=~Linqi_Song1 \\\"~Linqi_Song1\\\"), [Defu Lian](/profile?id=~Defu_Lian1 \\\"~Defu_Lian1\\\"), [Ying Wei](/profil\"}, {\"index\": 3, \"title\": \"[PDF] Complexity-Based Prompting for Multi-Step Reasoning | Semantic Scholar\", \"domain\": \"api.semanticscholar.org\", \"url\": \"https://api.semanticscholar.org/arXiv:2210.00720\", \"snippet\": \"This work proposes complexity-based prompting, a simple and effective example selection scheme for multi-step reasoning that substantially improves multi- step reasoning accuracy and achieves new state-of-the-art (SOTA) performance on three math benchmarks and two BigBenchHard tasks. ### Boosting Language Models Reasoning with Chain-of-Knowledge Prompting. ### Active Prompting with Chain-of-Thought for Large Language Models. This paper proposes a new method to adapt LLMs to different tasks with \"}]",
+      "response_text": "{\"decisions\":[{\"index\":0,\"score\":2,\"reason\":\"The result discusses the improvement of reasoning capabilities of LLMs with Chain-of-Thought prompting, but does not directly address the replication of its effectiveness in complex or nuanced reasoning tasks.\"},{\"index\":1,\"score\":0,\"reason\":\"The result focuses on the uncertainty of LLMs in creative writing and does not relate to the sub-question.\"},{\"index\":2,\"score\":0,\"reason\":\"The result discusses the generalization of reasoning hop in LLMs but does not directly address the sub-question.\"},{\"index\":3,\"score\":3,\"reason\":\"The result proposes a method to improve multi-step reasoning accuracy in LLMs, which directly addresses the sub-question.\"}]}",
+      "meta": {
+        "candidate_count": 4,
+        "sub_question_text": "Can chain-of-thought prompting's effectiveness be replicated in tasks that require more complex or nuanced reasoning, such as multi-step problem-solving or common sense reasoning?"
+      },
+      "timestamp_utc": "2026-04-27T00:38:32.821956+00:00"
+    },
+    {
+      "id": "llm_00005",
+      "step": 1,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq2\nSource: https://arxiv.org/html/2602.10494v1\nSnippet: The integration of Chain-of-Thought (CoT) prompting [wei2022chain] has significantly advanced the reasoning capabilities of Multimodal Large",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"Chain-of-Thought (CoT) prompting has significantly advanced the reasoning capabilities of Multimodal Large\",\n    \"scope\": \"Multimodal Large\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"The integration of Chain-of-Thought (CoT) prompting [wei2022chain] has significantly advanced the reasoning capabilities of Multimodal Large\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq2",
+        "observation_id": "obs_4cf48f13",
+        "source_url": "https://arxiv.org/html/2602.10494v1"
+      },
+      "timestamp_utc": "2026-04-27T00:38:34.301000+00:00"
+    },
+    {
+      "id": "llm_00006",
+      "step": 1,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq2\nSource: https://api.semanticscholar.org/arXiv:2210.00720\nSnippet: This work proposes complexity-based prompting, a simple and effective example selection scheme for multi-step reasoning that substantially improves multi- step reasoning accuracy and achieves new state-of-the-art (SOTA) performance on three math benchmarks and two BigBenchHard tasks. ### Boosting Language Models Reasoning with Chain-of-Knowledge Prompting. ### Active Prompting with Chain-of-Thought for Large Language Models. This paper proposes a new method to adapt LLMs to different tasks with task-specific example prompts (annotated with human-designed CoT reasoning), and introduces several metrics to characterize the uncertainty so as to select the most uncertain questions for annotation. ### ChainLM: Empowering Large Language Models with Improved Chain-of-Thought Prompting. Xiaoxue Che",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"complexity-based prompting substantially improves multi-step reasoning accuracy\",\n    \"scope\": \"for multi-step reasoning tasks\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"substantially improves multi-step reasoning accuracy\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"complexity-based prompting achieves new state-of-the-art performance on math benchmarks and BigBenchHard tasks\",\n    \"scope\": \"on math benchmarks and BigBenchHard tasks\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"achieves new state-of-the-art (SOTA) performance on three math benchmarks and two BigBenchHard tasks\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"task-specific example prompts with human-designed CoT reasoning can adapt LLMs to different tasks\",\n    \"scope\": \"for adapting LLMs to different tasks\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"proposes a new method to adapt LLMs to different tasks with task-specific example prompts (annotated with human-designed CoT reasoning)\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"introducing several metrics to characterize uncertainty can select the most uncertain questions for annotation\",\n    \"scope\": \"for selecting the most uncertain questions for annotation\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"introduces several metrics to characterize the uncertainty so as to select the most uncertain questions for annotation\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq2",
+        "observation_id": "obs_5056a203",
+        "source_url": "https://api.semanticscholar.org/arXiv:2210.00720"
+      },
+      "timestamp_utc": "2026-04-27T00:38:40.041083+00:00"
+    },
+    {
+      "id": "llm_00007",
+      "step": 1,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Can chain-of-thought prompting's effectiveness be replicated in tasks that require more complex or nuanced reasoning, such as multi-step problem-solving or common sense reasoning?\nClaim text: Chain-of-Thought (CoT) prompting has significantly advanced the reasoning capabilities of Multimodal Large\nScope: Multimodal Large\nVerbatim: The integration of Chain-of-Thought (CoT) prompting [wei2022chain] has significantly advanced the reasoning capabilities of Multimodal Large",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text discusses the advancement of reasoning capabilities of Multimodal Large, which is related to the topic of complex or nuanced reasoning in the sub-question.\"}",
+      "meta": {
+        "claim_id": "clm_9358c318",
+        "sub_question_id": "sq2"
+      },
+      "timestamp_utc": "2026-04-27T00:38:45.567152+00:00"
+    },
+    {
+      "id": "llm_00008",
+      "step": 1,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Can chain-of-thought prompting's effectiveness be replicated in tasks that require more complex or nuanced reasoning, such as multi-step problem-solving or common sense reasoning?\nClaim text: complexity-based prompting substantially improves multi-step reasoning accuracy\nScope: for multi-step reasoning tasks\nVerbatim: substantially improves multi-step reasoning accuracy",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim text directly addresses the sub-question, citing an improvement in multi-step reasoning accuracy.\"}",
+      "meta": {
+        "claim_id": "clm_aa71917b",
+        "sub_question_id": "sq2"
+      },
+      "timestamp_utc": "2026-04-27T00:38:46.878815+00:00"
+    },
+    {
+      "id": "llm_00009",
+      "step": 1,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Can chain-of-thought prompting's effectiveness be replicated in tasks that require more complex or nuanced reasoning, such as multi-step problem-solving or common sense reasoning?\nClaim text: complexity-based prompting achieves new state-of-the-art performance on math benchmarks and BigBenchHard tasks\nScope: on math benchmarks and BigBenchHard tasks\nVerbatim: achieves new state-of-the-art (SOTA) performance on three math benchmarks and two BigBenchHard tasks",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text discusses a related concept (complexity-based prompting) that achieves state-of-the-art performance on tasks relevant to the sub-question (math benchmarks and BigBenchHard tasks), indicating a connection to the broader discussion on chain-of-thought prompting's effectiveness.\"}",
+      "meta": {
+        "claim_id": "clm_5bbba1b3",
+        "sub_question_id": "sq2"
+      },
+      "timestamp_utc": "2026-04-27T00:38:49.234992+00:00"
+    },
+    {
+      "id": "llm_00010",
+      "step": 1,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Can chain-of-thought prompting's effectiveness be replicated in tasks that require more complex or nuanced reasoning, such as multi-step problem-solving or common sense reasoning?\nClaim text: task-specific example prompts with human-designed CoT reasoning can adapt LLMs to different tasks\nScope: for adapting LLMs to different tasks\nVerbatim: proposes a new method to adapt LLMs to different tasks with task-specific example prompts (annotated with human-designed CoT reasoning)",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim text directly addresses the sub-question by providing an example of how chain-of-thought prompting can be adapted to different tasks, which is relevant to the sub-question's inquiry about replicating its effectiveness in tasks that require more complex reasoning.\"}",
+      "meta": {
+        "claim_id": "clm_2cdd2266",
+        "sub_question_id": "sq2"
+      },
+      "timestamp_utc": "2026-04-27T00:38:52.657256+00:00"
+    },
+    {
+      "id": "llm_00011",
+      "step": 1,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Can chain-of-thought prompting's effectiveness be replicated in tasks that require more complex or nuanced reasoning, such as multi-step problem-solving or common sense reasoning?\nClaim text: introducing several metrics to characterize uncertainty can select the most uncertain questions for annotation\nScope: for selecting the most uncertain questions for annotation\nVerbatim: introduces several metrics to characterize the uncertainty so as to select the most uncertain questions for annotation",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text is related to the broader topic of chain-of-thought prompting, but it is focused on a specific application (selecting uncertain questions for annotation) rather than the effectiveness of the strategy in complex tasks, which is the focus of the sub-question.\"}",
+      "meta": {
+        "claim_id": "clm_a8238fca",
+        "sub_question_id": "sq2"
+      },
+      "timestamp_utc": "2026-04-27T00:38:55.057745+00:00"
+    },
+    {
+      "id": "llm_00012",
+      "step": 2,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq3\nSource: https://dl.acm.org/doi/10.1145/3785022.3785122\nSnippet: Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs. In",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"We employ chain-of-thought (CoT) prompting\",\n    \"scope\": \"to elicit the step-by-step reasoning abilities of LLMs\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs.\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq3",
+        "observation_id": "obs_65383079",
+        "source_url": "https://dl.acm.org/doi/10.1145/3785022.3785122"
+      },
+      "timestamp_utc": "2026-04-27T00:38:58.469434+00:00"
+    },
+    {
+      "id": "llm_00013",
+      "step": 2,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: How do the linguistic properties of tasks influence the impact of chain-of-thought prompting on LLM performance, particularly in cases where the task requires more explicit or implicit reasoning?\nClaim text: We employ chain-of-thought (CoT) prompting\nScope: to elicit the step-by-step reasoning abilities of LLMs\nVerbatim: We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs.",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text is closely related to the sub-question as it discusses the influence of task properties on the impact of chain-of-thought prompting, which is a key aspect of the sub-question.\"}",
+      "meta": {
+        "claim_id": "clm_037dc329",
+        "sub_question_id": "sq3"
+      },
+      "timestamp_utc": "2026-04-27T00:39:02.107552+00:00"
+    },
+    {
+      "id": "llm_00014",
+      "step": 3,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq4\nSource: https://learnprompting.org/docs/intermediate/chain_of_thought?srsltid=AfmBOornbQWutAiHuOwHUEWE4ye5c6zZudci1l05B-H8bL_heSAmJ32x\nSnippet: **Compete in HackAPrompt 2.0, the world's largest AI Red-Teaming competition!**\n\n[Check it out \u2192](https://www.hackaprompt.com)\n\n* [AI Courses\n\n  Master AI and prompt engineering](/courses)[Get Certified in AI](/certificates)\n\n  ### DIFFICULTY LEVEL\n\n  [Beginner Courses](/courses?level=beginner#course-grid)[Intermediate Courses](/courses?level=intermediate#course-grid)[Advanced Courses](/courses?level=advanced#course-grid)\n\n  [View All Courses](/courses)\n\n  ### RECOMMENDED COURSES\n\n  [NEW\n\n  #### ChatGPT for Everyone\n\n  Master ChatGPT fundamentals and advanced techniques\n\n  Start Learning](/courses/chatgpt-for-everyone)[NEW\n\n  #### Introduction to Prompt Engineering\n\n  Learn the fundamentals of crafting effective prompts\n\n  Start Learning](/courses/introduction-to-prompt-engineering)[ON-DEM",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"HackAPrompt 2.0 is the world's largest AI Red-Teaming competition.\",\n    \"scope\": \"HackAPrompt 2.0\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"Compete in HackAPrompt 2.0, the world's largest AI Red-Teaming competition!\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq4",
+        "observation_id": "obs_aeb4a68a",
+        "source_url": "https://learnprompting.org/docs/intermediate/chain_of_thought?srsltid=AfmBOornbQWutAiHuOwHUEWE4ye5c6zZudci1l05B-H8bL_heSAmJ32x"
+      },
+      "timestamp_utc": "2026-04-27T00:39:07.504194+00:00"
+    },
+    {
+      "id": "llm_00015",
+      "step": 3,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq4\nSource: https://www.ibm.com/think/topics/chain-of-thoughts\nSnippet: # What is chain of thought (CoT) prompting? | IBM\n\nSupport\n\n[What's new](https://www.ibm.com/new)\n\n*   [Overview Resolve product issues with self-service tools](https://www.ibm.com/mysupport/s/?language=en_US&lnk=flathl)\n*   [Community Share knowledge in a collaborative environment to unlock innovation](https://community.ibm.com/community/user/community?lnk=flathl)\n*   [Developer Access digital resources, code samples and code trials](https://developer.ibm.com/?lnk=flathl)\n*   [Documentation Understand, develop and deploy our products with comprehensive technical resources](https://www.ibm.com/docs/en?lnk=flathl)\n*   [IBM Cloud platform Access subject matter experts and content to address questions and issues about IBM Cloud](https://www.ibm.com/products/cloud/support?lnk=flathl)\n*   [Impl",
+      "response_text": "[]",
+      "meta": {
+        "sub_question_id": "sq4",
+        "observation_id": "obs_0cd6258d",
+        "source_url": "https://www.ibm.com/think/topics/chain-of-thoughts"
+      },
+      "timestamp_utc": "2026-04-27T00:39:13.327698+00:00"
+    },
+    {
+      "id": "llm_00016",
+      "step": 3,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq4\nSource: https://openreview.net/forum?id=va7nzRsbA4\nSnippet: [![back arrow](/images/arrow_left.svg)Go to **EMNLP 2023 Conference** homepage](/group?id=EMNLP/2023/Conference \"Venue Homepage\")\n\n## What Makes Chain-of-Thought Prompting Effective? A Counterfactual Study\n\n[![Download PDF](/images/pdf_icon_blue.svg)](/pdf?id=va7nzRsbA4 \"Download PDF\")\n\n### [Aman Madaan](/profile?id=~Aman_Madaan1 \"~Aman_Madaan1\"), [Katherine Hermann](/profile?id=~Katherine_Hermann1 \"~Katherine_Hermann1\"), [Amir Yazdanbakhsh](/profile?id=~Amir_Yazdanbakhsh1 \"~Amir_Yazdanbakhsh1\")\n\nPublished: 07 Oct 2023, Last Modified: 01 Dec 2023EMNLP 2023 FindingsEveryone[Revisions](/revisions?id=va7nzRsbA4)[BibTeX](#)\n\n**Submission Type:** Regular Long Paper\n\n**Submission Track:** Language Modeling and Analysis of Language Models\n\n**Submission Track 2:** Interpretability, Interactivity, ",
+      "response_text": "[]",
+      "meta": {
+        "sub_question_id": "sq4",
+        "observation_id": "obs_d6e33bc7",
+        "source_url": "https://openreview.net/forum?id=va7nzRsbA4"
+      },
+      "timestamp_utc": "2026-04-27T00:39:18.734906+00:00"
+    },
+    {
+      "id": "llm_00017",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: HackAPrompt 2.0 is the world's largest AI Red-Teaming competition.\nScope: HackAPrompt 2.0\nVerbatim: Compete in HackAPrompt 2.0, the world's largest AI Red-Teaming competition!",
+      "response_text": "{\"label\":\"irrelevant\",\"reason\":\"The claim text is unrelated to the sub-question, which focuses on the effects of dataset size on chain-of-thought prompting for LLMs, whereas the claim text discusses an AI Red-Teaming competition.\"}",
+      "meta": {
+        "claim_id": "clm_26b44d07",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:39:20.078458+00:00"
+    },
+    {
+      "id": "llm_00018",
+      "step": 3,
+      "component": "reranker",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a result reranker for research retrieval.\nReturn JSON only: {\"decisions\":[{\"index\":0,\"score\":0-3,\"reason\":\"...\"}]}\nScore strict relevance to the sub-question (3=highly relevant, 0=irrelevant).",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nResults JSON:\n[{\"index\": 0, \"title\": \"Active Prompting with Chain-of-Thought for Large Language Models\", \"domain\": \"arxiv.org\", \"url\": \"https://arxiv.org/pdf/2302.12246v4\", \"snippet\": \"Active Prompting with Chain-of-Thought for Large Language Models Shizhe Diao\\u2660, Pengcheng Wang\\u2661, Yong Lin\\u2660, Rui Pan\\u2660, Xiang Liu\\u2663, Tong Zhang\\u2666 \\u2660The Hong Kong University of Science and Technology \\u2661University of Toronto \\u2663The University of Hong Kong \\u2666University of Illinois Urbana-Champaign {sdiaoaa, ylindf, rpan}@connect.ust.hk pcheng.wang@mail.utoronto.ca xiang.liu@connect.hku.hk tozhang@illinois.edu Abstract The increasing scale of large language mod-els (LLMs) brings emergent abilities to vari-ous\"}, {\"index\": 1, \"title\": \"Chain-of-Thought Prompting Obscures Hallucination Cues ...\", \"domain\": \"www.arxiv.org\", \"url\": \"https://www.arxiv.org/pdf/2506.17088v2\", \"snippet\": \"Chain-of-Thought Prompting Obscures Hallucination Cues in Large Language Models: An Empirical Evaluation Jiahao Cheng1 Tiancheng Su1 Jia Yuan1 Guoxiu He1* Jiawei Liu2 Xinqi Tao3 Jingwen Xie3 Huaxia Li3 1 East China Normal University, Shanghai, China 2Wuhan University, Wuhan, China 3Xiaohsongshu Inc., Shanghai, China chengjiahao@stu.ecnu.edu.cn, gxhe@fem.ecnu.edu.cn Abstract Large Language Models (LLMs) often exhibit hallucinations, generating factually incorrect or semantically irrelevant conten\"}, {\"index\": 2, \"title\": \"Paper page - BadChain: Backdoor Chain-of-Thought Prompting for Large Language Models\", \"domain\": \"huggingface.co\", \"url\": \"https://huggingface.co/papers/2401.12242\", \"snippet\": \"![Hugging Face's logo](/front/assets/huggingface_logo-noborder.svg)\\n\\n# BadChain: Backdoor Chain-of-Thought Prompting for Large Language Models\\n\\n![](https://cdn-avatars.huggingface.co/v1/production/uploads/6531e1021dd8ebbdc1a6fd8e/lIcl7zCPtzRsfiUh6uY1o.jpeg)\\n![](/avatars/2acdf2597eaabeded7e8125401063129.svg)\\n![](https://cdn-avatars.huggingface.co/v1/production/uploads/6531e1021dd8ebbdc1a6fd8e/lIcl7zCPtzRsfiUh6uY1o.jpeg)\\n\\n## Abstract\\n\\nBadChain is a novel backdoor attack targeting large language mo\"}]",
+      "response_text": "{\"decisions\":[{\"index\":0,\"score\":1,\"reason\":\"The paper discusses the effectiveness of active prompting with chain-of-thought for large language models, which is relevant to the sub-question of whether the benefits of chain-of-thought prompting diminish when the model is trained on a large dataset versus a smaller, more curated dataset.\"},{\"index\":1,\"score\":3,\"reason\":\"The paper directly addresses the sub-question by discussing how chain-of-thought prompting can obscure hallucination cues in large language models, which is relevant to the effectiveness of chain-of-thought prompting and the potential differences in results depending on the dataset size.\"},{\"index\":2,\"score\":0,\"reason\":\"The paper appears to be about a backdoor attack targeting large language models, which is not directly related to the effectiveness of chain-of-thought prompting or the sub-question about the impact of dataset size.\"}]",
+      "meta": {
+        "candidate_count": 3,
+        "sub_question_text": "Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?"
+      },
+      "timestamp_utc": "2026-04-27T00:46:01.521562+00:00"
+    },
+    {
+      "id": "llm_00019",
+      "step": 3,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq4\nSource: https://arxiv.org/pdf/2302.12246v4\nSnippet: Active Prompting with Chain-of-Thought for Large Language Models Shizhe Diao\u2660, Pengcheng Wang\u2661, Yong Lin\u2660, Rui Pan\u2660, Xiang Liu\u2663, Tong Zhang\u2666 \u2660The Hong Kong University of Science and Technology \u2661University of Toronto \u2663The University of Hong Kong \u2666University of Illinois Urbana-Champaign {sdiaoaa, ylindf, rpan}@connect.ust.hk pcheng.wang@mail.utoronto.ca xiang.liu@connect.hku.hk tozhang@illinois.edu Abstract The increasing scale of large language mod-els (LLMs) brings emergent abilities to vari-ous complex tasks requiring reasoning, such as arithmetic and commonsense reasoning. It is known that the effective design of task-specific prompts is critical for LLMs\u2019 ability to produce high-quality answers. In particular, an effective approach for complex question-and-answering tasks is example-bas",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"The increasing scale of large language models brings emergent abilities to various complex tasks requiring reasoning.\",\n    \"scope\": \"for large language models\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"The increasing scale of large language models (LLMs) brings emergent abilities to various complex tasks requiring reasoning\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"The effective design of task-specific prompts is critical for LLMs' ability to produce high-quality answers.\",\n    \"scope\": \"for LLMs\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"It is known that the effective design of task-specific prompts is critical for LLMs' ability to produce high-quality answers\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"Example-based prompts are an effective approach for complex question-and-answering tasks.\",\n    \"scope\": \"for complex question-and-answering tasks\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"an effective approach for complex question-and-answering tasks is example-based\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq4",
+        "observation_id": "obs_5479adbc",
+        "source_url": "https://arxiv.org/pdf/2302.12246v4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:02.073920+00:00"
+    },
+    {
+      "id": "llm_00020",
+      "step": 3,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq4\nSource: https://www.arxiv.org/pdf/2506.17088v2\nSnippet: Chain-of-Thought Prompting Obscures Hallucination Cues in Large Language Models: An Empirical Evaluation Jiahao Cheng1 Tiancheng Su1 Jia Yuan1 Guoxiu He1* Jiawei Liu2 Xinqi Tao3 Jingwen Xie3 Huaxia Li3 1 East China Normal University, Shanghai, China 2Wuhan University, Wuhan, China 3Xiaohsongshu Inc., Shanghai, China chengjiahao@stu.ecnu.edu.cn, gxhe@fem.ecnu.edu.cn Abstract Large Language Models (LLMs) often exhibit hallucinations, generating factually incorrect or semantically irrelevant content in response to prompts. Chain-of-Thought (CoT) prompt-ing can mitigate hallucinations by encouraging step-by-step reasoning, but its impact on hallu-cination detection remains underexplored. To bridge this gap, we conduct a systematic em-pirical evaluation. We begin with a pilot ex-periment, revea",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"Large Language Models (LLMs) often exhibit hallucinations\",\n    \"scope\": \"\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"Large Language Models (LLMs) often exhibit hallucinations, generating factually incorrect or semantically irrelevant content in response to prompts.\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"Chain-of-Thought prompting can mitigate hallucinations\",\n    \"scope\": \"\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"Chain-of-Thought (CoT) prompting can mitigate hallucinations by encouraging step-by-step reasoning,\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"hallucinations detection is underexplored\",\n    \"scope\": \"\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"but its impact on hallucination detection remains underexplored.\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq4",
+        "observation_id": "obs_e4a9b0c5",
+        "source_url": "https://www.arxiv.org/pdf/2506.17088v2"
+      },
+      "timestamp_utc": "2026-04-27T00:46:04.680292+00:00"
+    },
+    {
+      "id": "llm_00021",
+      "step": 3,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq4\nSource: https://huggingface.co/papers/2401.12242\nSnippet: ![Hugging Face's logo](/front/assets/huggingface_logo-noborder.svg)\n\n# BadChain: Backdoor Chain-of-Thought Prompting for Large Language Models\n\n![](https://cdn-avatars.huggingface.co/v1/production/uploads/6531e1021dd8ebbdc1a6fd8e/lIcl7zCPtzRsfiUh6uY1o.jpeg)\n![](/avatars/2acdf2597eaabeded7e8125401063129.svg)\n![](https://cdn-avatars.huggingface.co/v1/production/uploads/6531e1021dd8ebbdc1a6fd8e/lIcl7zCPtzRsfiUh6uY1o.jpeg)\n\n## Abstract\n\nBadChain is a novel backdoor attack targeting large language models using chain-of-thought prompting, demonstrating high effectiveness across various reasoning tasks and models, while proposed defenses are shown to be ineffective.\n\nLarge language models ([LLMs](/papers?q=LLMs)) are shown to benefit from chain-of-thought (COT)\nprompting, particularly when tackli",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"BadChain is a novel backdoor attack targeting large language models using chain-of-thought prompting\",\n    \"scope\": \"for large language models\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"BadChain is a novel backdoor attack targeting large language models using chain-of-thought prompting\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"BadChain demonstrates high effectiveness across various reasoning tasks and models\",\n    \"scope\": \"for various reasoning tasks and models\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"demonstrating high effectiveness across various reasoning tasks and models\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"proposed defenses are shown to be ineffective\",\n    \"scope\": \"for BadChain attacks\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"while proposed defenses are shown to be ineffective\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"Large language models benefit from chain-of-thought prompting\",\n    \"scope\": \"particularly when tackling complex tasks\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"Large language models ([LLMs](/papers?q=LLMs)) are shown to benefit from chain-of-thought (COT) prompting\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq4",
+        "observation_id": "obs_5c2bb517",
+        "source_url": "https://huggingface.co/papers/2401.12242"
+      },
+      "timestamp_utc": "2026-04-27T00:46:12.385429+00:00"
+    },
+    {
+      "id": "llm_00022",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: The increasing scale of large language models brings emergent abilities to various complex tasks requiring reasoning.\nScope: for large language models\nVerbatim: The increasing scale of large language models (LLMs) brings emergent abilities to various complex tasks requiring reasoning",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text is related to the sub-question as it discusses the abilities of large language models, which is relevant to the sub-question's focus on how the size of the dataset affects the benefits of chain-of-thought prompting for LLMs.\"}",
+      "meta": {
+        "claim_id": "clm_42ccfde0",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:12.912401+00:00"
+    },
+    {
+      "id": "llm_00023",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: The effective design of task-specific prompts is critical for LLMs' ability to produce high-quality answers.\nScope: for LLMs\nVerbatim: It is known that the effective design of task-specific prompts is critical for LLMs' ability to produce high-quality answers",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text discusses the importance of task-specific prompts for LLMs, which is a related concept to chain-of-thought prompting, as both involve designing prompts to elicit effective reasoning from LLMs.\"}",
+      "meta": {
+        "claim_id": "clm_89b892d9",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:13.394846+00:00"
+    },
+    {
+      "id": "llm_00024",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: Example-based prompts are an effective approach for complex question-and-answering tasks.\nScope: for complex question-and-answering tasks\nVerbatim: an effective approach for complex question-and-answering tasks is example-based",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text discusses example-based prompts, which is related to chain-of-thought prompting, as both involve using specific examples to aid LLMs in question-answering tasks, but they are distinct strategies. The sub-question focuses on the impact of dataset size on the effectiveness of chain-of-thought prompting, making it adjacent to the claim text.\"}",
+      "meta": {
+        "claim_id": "clm_155edb56",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:13.799705+00:00"
+    },
+    {
+      "id": "llm_00025",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: Large Language Models (LLMs) often exhibit hallucinations\nScope: \nVerbatim: Large Language Models (LLMs) often exhibit hallucinations, generating factually incorrect or semantically irrelevant content in response to prompts.",
+      "response_text": "{\"label\":\"irrelevant\",\"reason\":\"The claim text discusses hallucinations in LLMs, which is a separate issue from the sub-question about the effectiveness of chain-of-thought prompting on different dataset sizes.\"}",
+      "meta": {
+        "claim_id": "clm_62f4b866",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:25.175101+00:00"
+    },
+    {
+      "id": "llm_00026",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: Chain-of-Thought prompting can mitigate hallucinations\nScope: \nVerbatim: Chain-of-Thought (CoT) prompting can mitigate hallucinations by encouraging step-by-step reasoning,",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim text directly addresses the potential benefits of chain-of-thought prompting, specifically its ability to mitigate hallucinations, which is related to the effectiveness of the strategy for LLMs.\"}",
+      "meta": {
+        "claim_id": "clm_2321ad94",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:25.446086+00:00"
+    },
+    {
+      "id": "llm_00027",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: hallucinations detection is underexplored\nScope: \nVerbatim: but its impact on hallucination detection remains underexplored.",
+      "response_text": "{\"label\":\"irrelevant\",\"reason\":\"The claim text discusses hallucinations detection, which is not directly related to the sub-question about the benefits of chain-of-thought prompting diminishing when the model is trained on a large dataset versus a smaller one.\"}",
+      "meta": {
+        "claim_id": "clm_f0ce4d2f",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:25.748118+00:00"
+    },
+    {
+      "id": "llm_00028",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: BadChain is a novel backdoor attack targeting large language models using chain-of-thought prompting\nScope: for large language models\nVerbatim: BadChain is a novel backdoor attack targeting large language models using chain-of-thought prompting",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text discusses a specific application of chain-of-thought prompting, which is relevant to the sub-question about the effectiveness of chain-of-thought prompting for large language models.\"}",
+      "meta": {
+        "claim_id": "clm_7ad80963",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:26.035013+00:00"
+    },
+    {
+      "id": "llm_00029",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: BadChain demonstrates high effectiveness across various reasoning tasks and models\nScope: for various reasoning tasks and models\nVerbatim: demonstrating high effectiveness across various reasoning tasks and models",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim text is a direct response to the sub-question, as it discusses the effectiveness of chain-of-thought prompting for various reasoning tasks and models, which is relevant to the sub-question's inquiry about diminishing benefits with dataset size.\"}",
+      "meta": {
+        "claim_id": "clm_27681651",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:34.394906+00:00"
+    },
+    {
+      "id": "llm_00030",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: proposed defenses are shown to be ineffective\nScope: for BadChain attacks\nVerbatim: while proposed defenses are shown to be ineffective",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text is related to the broader topic of chain-of-thought prompting for LLMs, but specifically addresses the effectiveness of proposed defenses against BadChain attacks, which is adjacent to the sub-question about the benefits of chain-of-thought prompting diminishing with dataset size.\"}",
+      "meta": {
+        "claim_id": "clm_a49e7d75",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:34.759750+00:00"
+    },
+    {
+      "id": "llm_00031",
+      "step": 3,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference?\nClaim text: Large language models benefit from chain-of-thought prompting\nScope: particularly when tackling complex tasks\nVerbatim: Large language models ([LLMs](/papers?q=LLMs)) are shown to benefit from chain-of-thought (COT) prompting",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim directly addresses the sub-question of whether the benefits of chain-of-thought prompting diminish when the model is trained on a large dataset versus a smaller, more curated dataset.\"}",
+      "meta": {
+        "claim_id": "clm_6dd2284e",
+        "sub_question_id": "sq4"
+      },
+      "timestamp_utc": "2026-04-27T00:46:34.984156+00:00"
+    },
+    {
+      "id": "llm_00032",
+      "step": 3,
+      "component": "conflict",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You compare two research claims and classify their relationship.\nReturn exactly one word: SUPPORT, CONTRADICT, COMPATIBLE, or UNRELATED.\n\nSUPPORT: Claim B directly confirms or reinforces Claim A.\nCONTRADICT: Claim B directly negates or is inconsistent with Claim A.\nCOMPATIBLE: Claims can both be true but address different angles.\nUNRELATED: Claims are about different things.",
+      "user_prompt": "Claim A: Chain-of-Thought prompting can mitigate hallucinations (scope: )\nClaim B: Large language models benefit from chain-of-thought prompting (scope: particularly when tackling complex tasks)",
+      "response_text": "COMPATIBLE\n\nClaim A focuses on the effect of chain-of-thought prompting on hallucinations, while Claim B highlights its benefits for large language models, particularly when dealing with complex tasks. Although they address different aspects, they are related and can be seen as complementary.",
+      "meta": {
+        "sub_question_id": "sq4",
+        "new_claim_id": "clm_6dd2284e",
+        "existing_group_id": "grp_8786daff",
+        "new_group_id": "grp_c9441633"
+      },
+      "timestamp_utc": "2026-04-27T00:46:35.232693+00:00"
+    },
+    {
+      "id": "llm_00033",
+      "step": 4,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq5\nSource: https://letsdatascience.com/blog\nSnippet: Using Python and datasets like ldsstatsprobability.csv, practitioners can correct for confounding factors to determine the true efficacy of interventions.",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"practitioners can correct for confounding factors\",\n    \"scope\": \"when using Python and datasets like ldsstatsprobability.csv\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"practitioners can correct for confounding factors to determine the true efficacy of interventions\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"practitioners can determine the true efficacy of interventions\",\n    \"scope\": \"when using Python and datasets like ldsstatsprobability.csv\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"practitioners can correct for confounding factors to determine the true efficacy of interventions\"\n  },\n  {\n    \"source_index\": 0,\n    \"text\": \"interventions have true efficacy\",\n    \"scope\": \"when corrected for confounding factors, using Python and datasets like ldsstatsprobability.csv\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"practitioners can correct for confounding factors to determine the true efficacy of interventions\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq5",
+        "observation_id": "obs_16a5dd5a",
+        "source_url": "https://letsdatascience.com/blog"
+      },
+      "timestamp_utc": "2026-04-27T00:46:35.846082+00:00"
+    },
+    {
+      "id": "llm_00034",
+      "step": 4,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Can the alleged benefits of chain-of-thought prompting for LLMs be attributed to confounding variables, such as differences in model architecture or hyperparameter tuning, and if so, how can these be controlled for in future studies?\nClaim text: practitioners can correct for confounding factors\nScope: when using Python and datasets like ldsstatsprobability.csv\nVerbatim: practitioners can correct for confounding factors to determine the true efficacy of interventions",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim text directly addresses the sub-question by suggesting a method to control for confounding variables, which is relevant to understanding the effectiveness of chain-of-thought prompting.\"}",
+      "meta": {
+        "claim_id": "clm_3ce70b04",
+        "sub_question_id": "sq5"
+      },
+      "timestamp_utc": "2026-04-27T00:46:39.286568+00:00"
+    },
+    {
+      "id": "llm_00035",
+      "step": 4,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Can the alleged benefits of chain-of-thought prompting for LLMs be attributed to confounding variables, such as differences in model architecture or hyperparameter tuning, and if so, how can these be controlled for in future studies?\nClaim text: practitioners can determine the true efficacy of interventions\nScope: when using Python and datasets like ldsstatsprobability.csv\nVerbatim: practitioners can correct for confounding factors to determine the true efficacy of interventions",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text is directly related to the sub-question, as it discusses controlling for confounding variables to determine the true efficacy of interventions, which is a key aspect of the sub-question.\"}",
+      "meta": {
+        "claim_id": "clm_11ba4807",
+        "sub_question_id": "sq5"
+      },
+      "timestamp_utc": "2026-04-27T00:46:51.769695+00:00"
+    },
+    {
+      "id": "llm_00036",
+      "step": 4,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: Can the alleged benefits of chain-of-thought prompting for LLMs be attributed to confounding variables, such as differences in model architecture or hyperparameter tuning, and if so, how can these be controlled for in future studies?\nClaim text: interventions have true efficacy\nScope: when corrected for confounding factors, using Python and datasets like ldsstatsprobability.csv\nVerbatim: practitioners can correct for confounding factors to determine the true efficacy of interventions",
+      "response_text": "{\"label\":\"adjacent\",\"reason\":\"The claim text directly addresses the sub-question by discussing the correction of confounding factors to determine the true efficacy of interventions, which is a key point of interest in the sub-question.\"}",
+      "meta": {
+        "claim_id": "clm_dd47e3c6",
+        "sub_question_id": "sq5"
+      },
+      "timestamp_utc": "2026-04-27T00:46:52.239903+00:00"
+    },
+    {
+      "id": "llm_00037",
+      "step": 5,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq3\nSource: https://dl.acm.org/doi/10.1145/3785022.3785122\nSnippet: Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs. In",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"We employ chain-of-thought (CoT) prompting\",\n    \"scope\": \"for eliciting the step-by-step reasoning abilities of LLMs\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq3",
+        "observation_id": "obs_cbd3a9b2",
+        "source_url": "https://dl.acm.org/doi/10.1145/3785022.3785122"
+      },
+      "timestamp_utc": "2026-04-27T00:46:57.652064+00:00"
+    },
+    {
+      "id": "llm_00038",
+      "step": 5,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: How do the linguistic properties of tasks influence the impact of chain-of-thought prompting on LLM performance, particularly in cases where the task requires more explicit or implicit reasoning?\nClaim text: We employ chain-of-thought (CoT) prompting\nScope: for eliciting the step-by-step reasoning abilities of LLMs\nVerbatim: Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim directly addresses the linguistic properties of tasks and how they influence the impact of chain-of-thought prompting on LLM performance.\"}",
+      "meta": {
+        "claim_id": "clm_535cb631",
+        "sub_question_id": "sq3"
+      },
+      "timestamp_utc": "2026-04-27T00:46:57.869951+00:00"
+    },
+    {
+      "id": "llm_00039",
+      "step": 6,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq3\nSource: https://dl.acm.org/doi/10.1145/3785022.3785122\nSnippet: Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs. In",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"We employ chain-of-thought (CoT) prompting\",\n    \"scope\": \"to elicit the step-by-step reasoning abilities of LLMs\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs.\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq3",
+        "observation_id": "obs_b10e33af",
+        "source_url": "https://dl.acm.org/doi/10.1145/3785022.3785122"
+      },
+      "timestamp_utc": "2026-04-27T00:46:58.130507+00:00"
+    },
+    {
+      "id": "llm_00040",
+      "step": 6,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: How do the linguistic properties of tasks influence the impact of chain-of-thought prompting on LLM performance, particularly in cases where the task requires more explicit or implicit reasoning?\nClaim text: We employ chain-of-thought (CoT) prompting\nScope: to elicit the step-by-step reasoning abilities of LLMs\nVerbatim: We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs.",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim text directly addresses the sub-question by discussing how the linguistic properties of tasks influence the impact of chain-of-thought prompting on LLM performance, specifically in cases where the task requires more explicit or implicit reasoning.\"}",
+      "meta": {
+        "claim_id": "clm_1765a987",
+        "sub_question_id": "sq3"
+      },
+      "timestamp_utc": "2026-04-27T00:46:58.381974+00:00"
+    },
+    {
+      "id": "llm_00041",
+      "step": 7,
+      "component": "extractor",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a claim extractor. You will receive multiple research snippets numbered [0], [1], [2], etc.\nExtract structured claims from ALL snippets. Return only a single JSON array.\nEach element must have exactly these keys:\n  \"source_index\" \u2014 integer index of the snippet this claim came from (0, 1, 2, ...)\n  \"text\"         \u2014 one independently testable statement (not a paragraph, not a list)\n  \"scope\"        \u2014 the conditions under which this claim holds (e.g., \"for complex reasoning tasks\")\n  \"claim_type\"   \u2014 \"empirical\" (measured or observed) or \"speculative\" (argued or predicted)\n  \"verbatim\"     \u2014 the exact quote from the snippet that supports this claim\n\nRules:\n- Extract only what each snippet explicitly states. Do not infer or generalize.\n- One claim per independently testable statement. Break compound statements apart.\n- Return [] if no extractable claims exist across all snippets.\nReturn only the JSON array, no prose.",
+      "user_prompt": "[0] Sub-question ID: sq3\nSource: https://dl.acm.org/doi/10.1145/3785022.3785122\nSnippet: Chain-of Thought Reasoning. We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs. In",
+      "response_text": "[\n  {\n    \"source_index\": 0,\n    \"text\": \"We employ chain-of-thought (CoT) prompting\",\n    \"scope\": \"to elicit the step-by-step reasoning abilities of LLMs\",\n    \"claim_type\": \"empirical\",\n    \"verbatim\": \"We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs.\"\n  }\n]",
+      "meta": {
+        "sub_question_id": "sq3",
+        "observation_id": "obs_d47b27f4",
+        "source_url": "https://dl.acm.org/doi/10.1145/3785022.3785122"
+      },
+      "timestamp_utc": "2026-04-27T00:47:04.040040+00:00"
+    },
+    {
+      "id": "llm_00042",
+      "step": 7,
+      "component": "claim_filter",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a strict relevance judge.\nClassify claim relevance to the sub-question.\nReturn JSON only: {\"label\":\"direct|adjacent|irrelevant\",\"reason\":\"...\"}.",
+      "user_prompt": "Top query: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-question: How do the linguistic properties of tasks influence the impact of chain-of-thought prompting on LLM performance, particularly in cases where the task requires more explicit or implicit reasoning?\nClaim text: We employ chain-of-thought (CoT) prompting\nScope: to elicit the step-by-step reasoning abilities of LLMs\nVerbatim: We employ chain-of-thought (CoT) prompting [37] to elicit the step-by-step reasoning abilities of LLMs.",
+      "response_text": "{\"label\":\"direct\",\"reason\":\"The claim directly mentions the use of chain-of-thought prompting, which is a key concept in the top query and directly addresses the sub-question about linguistic properties of tasks influencing the impact of CoT prompting on LLM performance.\"}",
+      "meta": {
+        "claim_id": "clm_3bc524c5",
+        "sub_question_id": "sq3"
+      },
+      "timestamp_utc": "2026-04-27T00:47:04.645753+00:00"
+    },
+    {
+      "id": "llm_00043",
+      "step": 8,
+      "component": "report",
+      "provider": "groq",
+      "model": "llama-3.1-8b-instant",
+      "system_prompt": "You are a research analyst. Write a 2-3 sentence summary of research findings.\nBe honest about uncertainty and limitations. Do not overstate confidence.\nDo not add claims not present in the provided evidence. Write in plain prose.",
+      "user_prompt": "Evidence state:\nQuery: Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.\nSub-questions: 5\n  [covered] What are the key differences in experimental design between studies that found chain-of-thought prompting effective for LLMs versus those that attributed its benefits to output formatting? (supporting)\n    - Chain of thought prompting: few-shot, zero-shot, and many many follow-up works [low, weak]\n  [covered] Can chain-of-thought prompting's effectiveness be replicated in tasks that require more complex or nuanced reasoning, such as multi-step problem-solving or common sense reasoning? (supporting)\n    - complexity-based prompting substantially improves multi-step reasoning accuracy [low, weak]\n    - task-specific example prompts with human-designed CoT reasoning can adapt LLMs to different tasks [low, weak]\n  [uncovered] How do the linguistic properties of tasks influence the impact of chain-of-thought prompting on LLM performance, particularly in cases where the task requires more explicit or implicit reasoning? (supporting)\n  [covered] Do the benefits of chain-of-thought prompting for LLMs diminish when the model is trained on a large dataset versus a smaller, more curated dataset, and if so, what accounts for this difference? (adversarial)\n    - Chain-of-Thought prompting can mitigate hallucinations [low, weak]\n    - BadChain demonstrates high effectiveness across various reasoning tasks and models [low, weak]\n    - Large language models benefit from chain-of-thought prompting [low, weak]\n  [uncovered] Can the alleged benefits of chain-of-thought prompting for LLMs be attributed to confounding variables, such as differences in model architecture or hyperparameter tuning, and if so, how can these be controlled for in future studies? (adversarial)\nDisputes: 0\nTermination: DIMINISHING_RETURNS",
+      "response_text": "Our research suggests that chain-of-thought (CoT) prompting may have a positive impact on large language model (LLM) performance, particularly in tasks requiring multi-step problem-solving or common sense reasoning. However, the existing literature is inconsistent, and further investigation is needed to determine the extent to which CoT prompting is effective versus simply improving output formatting. While some studies have found that CoT prompting can improve LLM performance, the results are not uniform across tasks and experimental designs, and potential confounding variables have not been fully controlled for.",
+      "meta": {
+        "query": "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results."
+      },
+      "timestamp_utc": "2026-04-27T00:47:12.422609+00:00"
+    }
+  ],
+  "termination_reason": "DIMINISHING_RETURNS"
+}

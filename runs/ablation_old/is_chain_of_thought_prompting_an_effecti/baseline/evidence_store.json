@@ -1,0 +1,248 @@
+{
+  "query": "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.",
+  "sub_questions": [
+    {
+      "id": "sq1",
+      "text": "What empirical studies demonstrate that chain-of-thought prompting improves reasoning accuracy on complex tasks like arithmetic or logical reasoning?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq2",
+      "text": "How do controlled experiments distinguish between improvements in reasoning versus improvements in output formatting when comparing chain-of-thought vs. direct-answer prompting?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq3",
+      "text": "In what domains or task types does chain-of-thought prompting fail to produce measurable reasoning improvements compared to alternative prompting strategies?",
+      "kind": "adversarial",
+      "has_evidence": false
+    },
+    {
+      "id": "sq4",
+      "text": "What evidence suggests that perceived 'reasoning' improvements from chain-of-thought prompting might actually reflect better answer formatting rather than deeper cognitive processing?",
+      "kind": "adversarial",
+      "has_evidence": false
+    },
+    {
+      "id": "sq5",
+      "text": "How do variations in model architecture (e.g., scale, pretraining data) moderate the effectiveness of chain-of-thought prompting as a reasoning strategy?",
+      "kind": "supporting",
+      "has_evidence": false
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs_4360972f",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "http://research.google/blog/language-models-perform-reasoning-via-chain-of-thought",
+      "source_title": "Language Models Perform Reasoning via Chain of Thought",
+      "domain": "research.google",
+      "snippet": "[Jump to Content](#page-content)\n\n[Research](/ \"Google Research\")\n\n\n\n![](https://storage.googleapis.com/gweb-research2023-media/original_images/8a16b7eee6b4708eb244336077430e64-chainofthought.png)\n\n# Language Models Perform Reasoning via Chain of Thought\n\nMay 11, 2022\n\nPosted by Jason Wei and Denny Zhou, Research Scientists, Google Research, Brain team\n\n## Quick links\n\n* + \u00d7\n\nIn recent years, [scaling up the size of language models](https://arxiv.org/abs/2005.14165) has been shown to be a reliable way to improve performance on a range of natural language processing (NLP) tasks. Today\u2019s language models at the scale of 100B or more parameters achieve strong performance on tasks like [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) and machine translation, [even with lit"
+    },
+    {
+      "id": "obs_13aabde1",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://research.google/pubs/self-consistency-improves-chain-of-thought-reasoning-in-language-models/",
+      "source_title": "Self-Consistency Improves Chain of Thought Reasoning in ...",
+      "domain": "research.google",
+      "snippet": "[Jump to Content](#page-content)\n\n[Research](/ \"Google Research\")\n\n\n\n# Self-Consistency Improves Chain of Thought Reasoning in Language Models\n\n[Xuezhi Wang](/people/105995/)\n\nJason Wei\n\n[Dale Schuurmans](/people/daleschuurmans/)\n\n[Quoc V. Le](/people/quocle/)\n\n[Ed H. Chi](/people/edchi/)\n\nSharan Narang\n\nAakanksha Chowdhery\n\nDenny Zhou\n\nICLR 2023 (to appear)\n\n[Download](https://arxiv.org/abs/2203.11171)   [Google Scholar](https://scholar.google.com/scholar?lr&ie=UTF-8&oe=UTF-8&q=Self-Consistency Improves Chain of Thought Reasoning in Language Models Xuezhi Wang Ed H. Chi Denny Zhou Jason Wei Dale Schuurmans Aakanksha Chowdhery Quoc V. Le Sharan Narang)\n\nChain-of-thought prompting combined with pre-trained large language models has achieved encouraging results on complex reasoning tasks. In"
+    },
+    {
+      "id": "obs_aef1d7b6",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://arxiv.org/pdf/2604.12599",
+      "source_title": "[PDF] The Full Lifecycle of Foundation Models on HPC Systems - arXiv",
+      "domain": "arxiv.org",
+      "snippet": "Beyond Pre-Training: The Full Lifecycle of Foundation Models on HPC Systems Dino Conciatore Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Elia Oggian Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Federico Da Forno Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Stefano Schuppli Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Jerome Tissieres Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Joost VandeVondele Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Maxime Martinasso Swiss National Supercomputing Centre, ETH Zurich Lugano, Switzerland Abstract Large-scale pre-training of Foundational Models (FM) constitutes a computationally intensive first phase for enabli"
+    },
+    {
+      "id": "obs_650d5dac",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://arxiv.org/html/2604.12599v1",
+      "source_title": "The Full Lifecycle of Foundation Models on HPC Systems - arXiv",
+      "domain": "arxiv.org",
+      "snippet": "##### Report GitHub Issue\n\nContent selection saved. Describe the issue below:\n\n![arXiv logo](/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg)\n\n# Beyond Pre-Training: The Full Lifecycle of Foundation Models on HPC Systems\n\n###### Abstract.\n\nLarge-scale pre-training of Foundational Models (FM) constitutes a computationally intensive first phase for enabling AI across diverse scientific and societal applications. This first phase has positioned High-Performance Computing (HPC) facilities as indispensable backbones of \u201cSovereign AI\u201d initiatives. While the massive throughput requirements of FM pre-training align with the traditional capability-oriented mission of HPC, subsequent phases of the AI lifecycle, typically referred to as fine-tuning and inference, introduce operational para"
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_d8a025b5",
+      "text": "Scaling up the size of language models improves performance on natural language processing tasks.",
+      "scope": "for natural language processing (NLP) tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_4360972f",
+      "verbatim": "scaling up the size of language models has been shown to be a reliable way to improve performance on a range of natural language processing (NLP) tasks",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_56a54627",
+      "text": "Language models with 100B+ parameters achieve strong performance on tasks like sentiment analysis and machine translation.",
+      "scope": "for tasks like sentiment analysis and machine translation",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_4360972f",
+      "verbatim": "Today\u2019s language models at the scale of 100B or more parameters achieve strong performance on tasks like [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) and machine translation",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_98a9adec",
+      "text": "Chain-of-thought prompting combined with pre-trained large language models achieves encouraging results on complex reasoning tasks.",
+      "scope": "for complex reasoning tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_13aabde1",
+      "verbatim": "Chain-of-thought prompting combined with pre-trained large language models has achieved encouraging results on complex reasoning tasks.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_6de6e221",
+      "text": "Large-scale pre-training of Foundation Models (FM) is computationally intensive.",
+      "scope": "for enabling AI across diverse scientific and societal applications",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_aef1d7b6",
+      "verbatim": "Large-scale pre-training of Foundational Models (FM) constitutes a computationally intensive first phase for enabli",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_1be4bea7",
+      "text": "High-Performance Computing (HPC) facilities are indispensable backbones of 'Sovereign AI' initiatives.",
+      "scope": "during FM pre-training",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_aef1d7b6",
+      "verbatim": "This first phase has positioned High-Performance Computing (HPC) facilities as indispensable backbones of 'Sovereign AI' initiatives.",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_4dc9c9dc",
+      "text": "Subsequent phases of the AI lifecycle (fine-tuning and inference) introduce operational paradigms.",
+      "scope": "compared to the traditional capability-oriented mission of HPC",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_650d5dac",
+      "verbatim": "subsequent phases of the AI lifecycle, typically referred to as fine-tuning and inference, introduce operational para",
+      "sub_question_id": "sq2",
+      "step": 1
+    }
+  ],
+  "claim_groups": [
+    {
+      "id": "grp_3185f7c5",
+      "canonical_text": "Scaling up the size of language models improves performance on natural language processing tasks.",
+      "scope": "for natural language processing (NLP) tasks",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_d8a025b5"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "research.google"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_e56cc2cc",
+      "canonical_text": "Language models with 100B+ parameters achieve strong performance on tasks like sentiment analysis and machine translation.",
+      "scope": "for tasks like sentiment analysis and machine translation",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_56a54627"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "research.google"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_7a4630a6",
+      "canonical_text": "Chain-of-thought prompting combined with pre-trained large language models achieves encouraging results on complex reasoning tasks.",
+      "scope": "for complex reasoning tasks",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_98a9adec"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "research.google"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_1f974d87",
+      "canonical_text": "Large-scale pre-training of Foundation Models (FM) is computationally intensive.",
+      "scope": "for enabling AI across diverse scientific and societal applications",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_6de6e221"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_9ced91c9",
+      "canonical_text": "High-Performance Computing (HPC) facilities are indispensable backbones of 'Sovereign AI' initiatives.",
+      "scope": "during FM pre-training",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_1be4bea7"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_a8a34e9d",
+      "canonical_text": "Subsequent phases of the AI lifecycle (fine-tuning and inference) introduce operational paradigms.",
+      "scope": "compared to the traditional capability-oriented mission of HPC",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_4dc9c9dc"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    }
+  ],
+  "step_history": [
+    {
+      "step": 0,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 1,
+      "action": "search:sq2",
+      "sub_question_id": "sq2",
+      "result": "NEW_EVIDENCE"
+    }
+  ],
+  "termination_reason": null
+}

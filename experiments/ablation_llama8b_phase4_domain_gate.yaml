@@ -1,0 +1,61 @@
+name: ablation_llama8b_phase4_domain_gate
+description: "Baseline vs guided with domain gate relaxed (min_direct_domain_score=0.3) on MiniMax"
+
+llm:
+  provider: minimax
+  model: MiniMax-M2.7
+
+search:
+  backend: tavily
+  max_results: 8
+  research_mode: false
+
+agent:
+  recovery_max_attempts: 3
+  query_rewrite_variants: 2
+  rerank_top_k: 5
+  enable_claim_filter: true
+  diminishing_window: 5
+  min_coverage_for_diminishing: 0.4
+
+domain_policy:
+  # Keep domain scoring profile unchanged for clean threshold ablation.
+  research_domains:
+    - arxiv.org
+    - semanticscholar.org
+    - aclanthology.org
+    - openreview.net
+    - proceedings.mlr.press
+    - jmlr.org
+    - neurips.cc
+    - research.google
+    - anthropic.com
+    - openai.com
+    - deepmind.google
+    - deepmind.com
+    - ai.meta.com
+    - huggingface.co
+    - mistral.ai
+  low_trust_domains:
+    - researchgate.net
+    - emergentmind.com
+    - aipromptsdirectory.com
+    - analytics.usa.gov
+    - linkedin.com
+  high_score: 0.9
+  medium_high_score: 0.75
+  medium_score: 0.5
+  low_score: 0.2
+
+output_dir: runs
+
+runs:
+  - query: "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees—find the real fault lines and explain what accounts for the conflicting results."
+    modes: [baseline, guided]
+    max_steps: 15
+    shared_sources: false
+
+  - query: "What are the real-world risks and benefits of using synthetic data to train or fine-tune large language models? Focus on data quality, bias, and evaluation."
+    modes: [baseline, guided]
+    max_steps: 15
+    shared_sources: true

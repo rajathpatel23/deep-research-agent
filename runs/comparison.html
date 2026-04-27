@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deep Research Agent — Comparison Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.25rem; }
+  h2 { font-size: 1rem; font-weight: 600; color: #94a3b8; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #1e293b; border-radius: 8px; overflow: hidden; }
+  .data-table th { background: #334155; padding: 0.6rem 0.8rem; text-align: left; font-size: 0.72rem; text-transform: uppercase; color: #94a3b8; }
+  .data-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #334155; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .chart-container { background: #1e293b; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  canvas { max-height: 320px; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1>Deep Research Agent — Cross-Run Comparison</h1>
+  <p style="color:#64748b;margin-bottom:2rem;font-size:0.85rem">10 runs loaded</p>
+
+  <h2>Metrics Chart</h2>
+  <div class="chart-container">
+    <canvas id="chart"></canvas>
+  </div>
+
+  <h2>All Runs</h2>
+  <table class="data-table">
+    <thead><tr>
+      <th>Path</th><th>Mode</th><th>Model</th><th>Steps</th>
+      <th>Coverage</th><th>Efficiency</th><th>Conflict Surfacing</th><th>Stopping Quality</th>
+      <th>Termination</th>
+    </tr></thead>
+    <tbody><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">rag_factuality/does_retrieval_augmented_gener</td>
+          <td><span style="color:#6366f1;font-weight:600">baseline</span></td>
+          <td style="font-size:0.8rem">qwen/qwen3-32b</td>
+          <td>10</td>
+          <td style='color:#f59e0b;font-weight:600'>60%</td><td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">BUDGET_EXHAUSTED</td>
+        </tr><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">rag_factuality/does_retrieval_augmented_gener</td>
+          <td><span style="color:#22c55e;font-weight:600">guided</span></td>
+          <td style="font-size:0.8rem">qwen/qwen3-32b</td>
+          <td>5</td>
+          <td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">COVERAGE_MET</td>
+        </tr><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">rag_ollama/does_retrieval_augmented_generatio</td>
+          <td><span style="color:#22c55e;font-weight:600">guided</span></td>
+          <td style="font-size:0.8rem">qwen3:8b</td>
+          <td>5</td>
+          <td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">COVERAGE_MET</td>
+        </tr><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">smoke_test_guided</td>
+          <td><span style="color:#22c55e;font-weight:600">guided</span></td>
+          <td style="font-size:0.8rem"></td>
+          <td>5</td>
+          <td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">BUDGET_EXHAUSTED</td>
+        </tr><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">smoke_v2</td>
+          <td><span style="color:#22c55e;font-weight:600">guided</span></td>
+          <td style="font-size:0.8rem"></td>
+          <td>5</td>
+          <td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">BUDGET_EXHAUSTED</td>
+        </tr><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">smoke_v3</td>
+          <td><span style="color:#22c55e;font-weight:600">guided</span></td>
+          <td style="font-size:0.8rem"></td>
+          <td>5</td>
+          <td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">BUDGET_EXHAUSTED</td>
+        </tr><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">smoke_v4</td>
+          <td><span style="color:#22c55e;font-weight:600">guided</span></td>
+          <td style="font-size:0.8rem"></td>
+          <td>2</td>
+          <td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">BUDGET_EXHAUSTED</td>
+        </tr><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">smoke_v5</td>
+          <td><span style="color:#22c55e;font-weight:600">guided</span></td>
+          <td style="font-size:0.8rem"></td>
+          <td>2</td>
+          <td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">BUDGET_EXHAUSTED</td>
+        </tr><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">test_citations</td>
+          <td><span style="color:#22c55e;font-weight:600">guided</span></td>
+          <td style="font-size:0.8rem">qwen/qwen3-32b</td>
+          <td>2</td>
+          <td style='color:#f59e0b;font-weight:600'>67%</td><td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">BUDGET_EXHAUSTED</td>
+        </tr><tr>
+          <td style="font-size:0.75rem;color:#94a3b8">test_dashboard</td>
+          <td><span style="color:#22c55e;font-weight:600">guided</span></td>
+          <td style="font-size:0.8rem">qwen/qwen3-32b</td>
+          <td>3</td>
+          <td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#22c55e;font-weight:600'>100%</td><td style='color:#ef4444;font-weight:600'>0%</td>
+          <td style="font-size:0.75rem">BUDGET_EXHAUSTED</td>
+        </tr></tbody>
+  </table>
+</div>
+<script>
+const data = [{"label": "baseline / qwen/qwen3-3 / rag_factuality", "values": [60, 100, 0, 0], "color": "#6366f1"}, {"label": "guided / qwen/qwen3-3 / rag_factuality", "values": [100, 100, 100, 0], "color": "#22c55e"}, {"label": "guided / qwen3:8b / rag_ollama", "values": [100, 100, 100, 0], "color": "#22c55e"}, {"label": "guided /  / smoke_test_guided", "values": [0, 0, 0, 0], "color": "#22c55e"}, {"label": "guided /  / smoke_v2", "values": [0, 0, 0, 0], "color": "#22c55e"}, {"label": "guided /  / smoke_v3", "values": [0, 0, 0, 0], "color": "#22c55e"}, {"label": "guided /  / smoke_v4", "values": [0, 0, 0, 0], "color": "#22c55e"}, {"label": "guided /  / smoke_v5", "values": [0, 0, 0, 0], "color": "#22c55e"}, {"label": "guided / qwen/qwen3-3 / test_citations", "values": [67, 100, 100, 0], "color": "#22c55e"}, {"label": "guided / qwen/qwen3-3 / test_dashboard", "values": [100, 100, 100, 0], "color": "#22c55e"}];
+const labels = ["Coverage", "Efficiency", "Conflict Surfacing", "Stopping Quality"];
+new Chart(document.getElementById('chart'), {
+  type: 'bar',
+  data: {
+    labels: labels,
+    datasets: data.map(d => ({
+      label: d.label,
+      data: d.values,
+      backgroundColor: d.color + 'cc',
+      borderColor: d.color,
+      borderWidth: 1,
+      borderRadius: 4,
+    }))
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { labels: { color: '#e2e8f0' } } },
+    scales: {
+      x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+      y: { min: 0, max: 100, ticks: { color: '#94a3b8', callback: v => v + '%' }, grid: { color: '#334155' } }
+    }
+  }
+});
+</script>
+</body>
+</html>

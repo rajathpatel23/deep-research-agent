@@ -1,0 +1,729 @@
+{
+  "query": "What are the main failure modes and limitations of retrieval-augmented generation?",
+  "sub_questions": [
+    {
+      "id": "sq1",
+      "text": "Under what conditions does retrieval-augmented generation produce factually incorrect outputs due to reliance on outdated or irrelevant retrieved documents?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq2",
+      "text": "How do retrieval system limitations (e.g., query-irrelevant document ranking) directly impact the quality of generated responses in RAG frameworks?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq3",
+      "text": "In what scenarios does retrieval-augmented generation fail to detect hallucinations or inconsistencies between retrieved documents and generated content?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq4",
+      "text": "Are there cases where retrieval-augmented generation performs comparably to or better than pure generation models despite its inherent limitations?",
+      "kind": "adversarial",
+      "has_evidence": true
+    },
+    {
+      "id": "sq5",
+      "text": "How do computational or latency constraints in retrieval systems limit the scalability of retrieval-augmented generation in real-time applications?",
+      "kind": "adversarial",
+      "has_evidence": true
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs_f277f0b9",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://medium.com/@sudheshholla15/where-retrieval-augmented-generation-rag-fails-8d3a2bad8e07",
+      "source_title": "Where Retrieval-Augmented Generation (RAG) Fails - Medium",
+      "domain": "medium.com",
+      "snippet": "If the index is stale, the retriever surfaces outdated or incorrect information. ... Your system can retrieve documents, augment a query\u2026 Aug 22,"
+    },
+    {
+      "id": "obs_26288bb0",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://www.linkedin.com/pulse/how-irrelevant-retrieval-leads-hallucination-rag-models-varaisys-4idyc",
+      "source_title": "How Irrelevant Retrieval Leads to Hallucination in RAG Models",
+      "domain": "www.linkedin.com",
+      "snippet": "When the retrieval component fails to fetch relevant documents, the generative component may produce responses that are: Factually Incorrect:"
+    },
+    {
+      "id": "obs_f70dfb5d",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://www.leximancer.com/blog/everything-wrong-with-retrieval-augmented-generation",
+      "source_title": "Everything Wrong with Retrieval-Augmented Generation - Leximancer",
+      "domain": "www.leximancer.com",
+      "snippet": "Retrieval-Augmented Generation (RAG) has emerged as a promising solution to some of the biggest challenges facing large language models (LLMs). By combining the creative power of generative AI with the precision of information retrieval, RAG aims to reduce hallucinations and provide more grounded, trustworthy outputs. At the heart of RAG lies the retrieval component, which is responsible for fetching relevant information. * **Computation Overhead**: Generating responses after retrieving and proc"
+    },
+    {
+      "id": "obs_2d85a769",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://generativeai.pub/rag-the-quality-of-responses-starts-with-the-quality-of-documents-4c3a732be413",
+      "source_title": "RAG: The quality of responses starts with the quality of documents",
+      "domain": "generativeai.pub",
+      "snippet": "The quality of document ingestion and understanding directly affects the system's ability to retrieve relevant information and generate accurate"
+    },
+    {
+      "id": "obs_e45cb0c7",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://www.stack-ai.com/blog/rag-limitations",
+      "source_title": "RAG Limitations: 7 Critical Challenges You Need to Know in 2026",
+      "domain": "www.stack-ai.com",
+      "snippet": "[](https://www.stack-ai.com/). [Get a Demo](https://www.stack-ai.com/demo). [Blog](https://www.stack-ai.com/blog). [AI Fundamentals](https://www.stack-ai.com/blog/category/ai-fundamentals). We're going to walk through the main headaches you'll encounter with [RAG systems](https://www.stack-ai.com/blog/retrieval-augmented-generation-(rag)-explained), breaking them down into clear categories so you understand exactly where things can go sideways and why. If your knowledge base is full of outdated "
+    },
+    {
+      "id": "obs_ff1c1cac",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://arxiv.org/html/2411.19463v1",
+      "source_title": "Towards Understanding Retrieval Accuracy and Prompt Quality in RAG Systems",
+      "domain": "arxiv.org",
+      "snippet": "In this work, we conduct an early exploratory study toward a better understanding of the mechanism of RAG systems, covering three code datasets, three QA datasets, and two LLMs. We focus on four design factors: retrieval document type, retrieval recall, document selection, and prompt techniques. We found that the effectiveness of prompting techniques is highly context-specific when impacting the performance of LLM-driven RAG systems, varying across different models and tasks. As illustrated in T"
+    },
+    {
+      "id": "obs_5b3e2ff8",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://medium.com/@sudheshholla15/where-retrieval-augmented-generation-rag-fails-8d3a2bad8e07",
+      "source_title": "Where Retrieval-Augmented Generation (RAG) Fails - Medium",
+      "domain": "medium.com",
+      "snippet": "Track document versioning and enforce recency-based ranking. 5. Hallucinations from Weak Context. The Problem: When retrieved chunks are weak,"
+    },
+    {
+      "id": "obs_bcb09c5a",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://arxiv.org/html/2403.08904v1",
+      "source_title": "Detecting Hallucination and Coverage Errors in Retrieval Augmented Generation for Controversial Topics",
+      "domain": "arxiv.org",
+      "snippet": "We propose three methods for detecting hallucination and coverage errors in generated responses: ROUGE, salience, and LLM-based classifiers. For a given response from the NPOV Response Generator, ROUGE calculates the proportion of response words that are matched in the input arguments (ROUGE-1 precision) and the proportion of input argument words that are matched in the response (ROUGE-1 recall).555We also implemented a hallucination and coverage error detection method that matched input and res"
+    },
+    {
+      "id": "obs_060b5ed3",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://medium.com/illumination/how-does-rag-help-in-limiting-the-problem-of-ai-hallucinations-b082fc7ce28e",
+      "source_title": "How Does RAG Help in Limiting the Problem of AI Hallucinations?",
+      "domain": "medium.com",
+      "snippet": "Because at this stage, even a small hallucination can lead to costly errors. That's why we need Retrieval Augmented Generation to power"
+    },
+    {
+      "id": "obs_3aeff848",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://www.infoworld.com/article/2518705/retrieval-augmented-generation-refined-and-reinforced.html",
+      "source_title": "Retrieval-augmented generation refined and reinforced",
+      "domain": "www.infoworld.com",
+      "snippet": "Retrieval-augmented generation (RAG) has emerged as an innovative approach that pairs the inherent abilities of LLMs with the rich, ever-updating content from"
+    },
+    {
+      "id": "obs_7b4ca89d",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://tiancaixinxin.medium.com/future-of-retrieval-augmented-generation-rag-will-it-be-replaced-dea30e9ab678",
+      "source_title": "Future of Retrieval-Augmented Generation (RAG), Will It be ...",
+      "domain": "tiancaixinxin.medium.com",
+      "snippet": "It seems from research outcomes and startup practices that, RAG is the most effective way so far and will not be replaced in the next five years."
+    },
+    {
+      "id": "obs_6e41eafc",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://arxiv.org/html/2502.20245v1",
+      "source_title": "From Retrieval to Generation: Comparing Different ...",
+      "domain": "arxiv.org",
+      "snippet": "Our results show that dense retrievers, particularly DPR, achieve strong performance in ODQA with a top-1 accuracy of 50.17% on NQ, while hybrid"
+    },
+    {
+      "id": "obs_d7086676",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://www.chatbench.org/assessing-ai-system-efficiency/",
+      "source_title": "Assessing AI System Efficiency: 15 Metrics You Can't Ignore (2026)",
+      "domain": "www.chatbench.org",
+      "snippet": "Latency often matters more than raw accuracy in real-time applications. ... RAG (Retrieval-Augmented Generation) Optimization. For LMs"
+    },
+    {
+      "id": "obs_e8962621",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://medium.com/@myscale/challenges-of-scaling-retrieval-augmented-generation-applications-25fe4abc0f3e",
+      "source_title": "Challenges of Scaling Retrieval-Augmented Generation Applications",
+      "domain": "medium.com",
+      "snippet": "In this blog, we will explore the various challenges encountered when scaling RAG applications, along with effective solutions to address them."
+    },
+    {
+      "id": "obs_3b40c8ff",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://grokipedia.com/page/Latency_optimization_in_retrieval-augmented_generation",
+      "source_title": "Latency optimization in retrieval-augmented generation \u2014 Grokipedia",
+      "domain": "grokipedia.com",
+      "snippet": "By approximating the nearest neighbors, ANN methods can reduce query times from seconds to milliseconds while maintaining high recall rates suitable for interactive applications.](#ref-58) One key algorithm is Locality-Sensitive Hashing (LSH), which facilitates sublinear-time approximate nearest neighbor searches by hashing similar items into the same buckets with high probability, contrasting with the linear O(N) time complexity of exact searches.](#ref-57) LSH operates by projecting high-dimen"
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_f624cf2e",
+      "text": "If the index is stale, the retriever surfaces outdated or incorrect information.",
+      "scope": "when the index is stale",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_f277f0b9",
+      "verbatim": "If the index is stale, the retriever surfaces outdated or incorrect information.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_780dc358",
+      "text": "The generative component may produce factually incorrect responses when the retrieval component fails to fetch relevant documents.",
+      "scope": "when the retrieval component fails to fetch relevant documents",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_26288bb0",
+      "verbatim": "When the retrieval component fails to fetch relevant documents, the generative component may produce responses that are: Factually Incorrect:",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_f7f98cd1",
+      "text": "Retrieval-Augmented Generation (RAG) has emerged as a promising solution to some of the biggest challenges facing large language models (LLMs).",
+      "scope": "for addressing challenges in large language models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_f70dfb5d",
+      "verbatim": "Retrieval-Augmented Generation (RAG) has emerged as a promising solution to some of the biggest challenges facing large language models (LLMs).",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_a3295d93",
+      "text": "RAG aims to reduce hallucinations and provide more grounded, trustworthy outputs by combining the creative power of generative AI with the precision of information retrieval.",
+      "scope": "for improving the reliability of AI-generated outputs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_f70dfb5d",
+      "verbatim": "By combining the creative power of generative AI with the precision of information retrieval, RAG aims to reduce hallucinations and provide more grounded, trustworthy outputs.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_2cbc45d8",
+      "text": "The retrieval component is responsible for fetching relevant information in Retrieval-Augmented Generation (RAG).",
+      "scope": "in the architecture of RAG systems",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_f70dfb5d",
+      "verbatim": "At the heart of RAG lies the retrieval component, which is responsible for fetching relevant information.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_caf2f9f4",
+      "text": "The quality of document ingestion and understanding directly affects the system's ability to retrieve relevant information.",
+      "scope": "general",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_2d85a769",
+      "verbatim": "The quality of document ingestion and understanding directly affects the system's ability to retrieve relevant information",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_30bdec77",
+      "text": "RAG systems encounter main headaches that can be categorized to understand issues.",
+      "scope": "for users implementing RAG systems",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_e45cb0c7",
+      "verbatim": "We're going to walk through the main headaches you'll encounter with [RAG systems]",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_de3dd9a7",
+      "text": "RAG systems can experience failures in knowledge base management.",
+      "scope": "when knowledge bases contain outdated information",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_e45cb0c7",
+      "verbatim": "If your knowledge base is full of outdated",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_7845be58",
+      "text": "The effectiveness of prompting techniques varies across different models and tasks in LLM-driven RAG systems.",
+      "scope": "across different models and tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_ff1c1cac",
+      "verbatim": "We found that the effectiveness of prompting techniques is highly context-specific when impacting the performance of LLM-driven RAG systems, varying across different models and tasks.",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_982e8829",
+      "text": "ROUGE calculates the proportion of response words matched in input arguments (ROUGE-1 precision) and the proportion of input argument words matched in the response (ROUGE-1 recall).",
+      "scope": "for detecting hallucination and coverage errors in generated responses",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_bcb09c5a",
+      "verbatim": "ROUGE calculates the proportion of response words that are matched in the input arguments (ROUGE-1 precision) and the proportion of input argument words that are matched in the response (ROUGE-1 recall).",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_db50ec1c",
+      "text": "A small hallucination can lead to costly errors in AI systems.",
+      "scope": "at this stage",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_060b5ed3",
+      "verbatim": "Because at this stage, even a small hallucination can lead to costly errors.",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_90a0bb4a",
+      "text": "Retrieval Augmented Generation is needed to address the problem of hallucinations.",
+      "scope": "to power",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_060b5ed3",
+      "verbatim": "That's why we need Retrieval Augmented Generation to power",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_4e6bd12e",
+      "text": "Retrieval-augmented generation (RAG) pairs the inherent abilities of LLMs with the rich, ever-updating content",
+      "scope": "as an innovative approach",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_3aeff848",
+      "verbatim": "Retrieval-augmented generation (RAG) has emerged as an innovative approach that pairs the inherent abilities of LLMs with the rich, ever-updating content from",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_ee737c7a",
+      "text": "RAG is the most effective way so far",
+      "scope": "for the current state of research outcomes and startup practices",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7b4ca89d",
+      "verbatim": "RAG is the most effective way so far",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_37d1e963",
+      "text": "RAG will not be replaced in the next five years",
+      "scope": "within the next five-year timeframe",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_7b4ca89d",
+      "verbatim": "will not be replaced in the next five years",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_22b1fb9a",
+      "text": "DPR achieves a top-1 accuracy of 50.17% on NQ for ODQA",
+      "scope": "for ODQA (Open-Domain Question Answering) tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_6e41eafc",
+      "verbatim": "Our results show that dense retrievers, particularly DPR, achieve strong performance in ODQA with a top-1 accuracy of 50.17% on NQ",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_e3de1da5",
+      "text": "Latency often matters more than raw accuracy in real-time applications",
+      "scope": "real-time applications",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_d7086676",
+      "verbatim": "Latency often matters more than raw accuracy in real-time applications.",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_2ad0eb3b",
+      "text": "Approximate nearest neighbor (ANN) methods reduce query times from seconds to milliseconds while maintaining high recall rates.",
+      "scope": "for interactive applications",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_3b40c8ff",
+      "verbatim": "By approximating the nearest neighbors, ANN methods can reduce query times from seconds to milliseconds while maintaining high recall rates suitable for interactive applications.",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_f59e01db",
+      "text": "Locality-Sensitive Hashing (LSH) enables sublinear-time approximate nearest neighbor searches by hashing similar items into the same buckets with high probability.",
+      "scope": "for approximate nearest neighbor searches",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_3b40c8ff",
+      "verbatim": "One key algorithm is Locality-Sensitive Hashing (LSH), which facilitates sublinear-time approximate nearest neighbor searches by hashing similar items into the same buckets with high probability",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_d1fd2833",
+      "text": "Exact nearest neighbor searches have linear O(N) time complexity.",
+      "scope": "for exact searches",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_3b40c8ff",
+      "verbatim": "contrasting with the linear O(N) time complexity of exact searches.",
+      "sub_question_id": "sq5",
+      "step": 4
+    }
+  ],
+  "claim_groups": [
+    {
+      "id": "grp_66aa86e9",
+      "canonical_text": "If the index is stale, the retriever surfaces outdated or incorrect information.",
+      "scope": "when the index is stale",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_f624cf2e"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_f1938f59",
+      "canonical_text": "The generative component may produce factually incorrect responses when the retrieval component fails to fetch relevant documents.",
+      "scope": "when the retrieval component fails to fetch relevant documents",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_780dc358"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.linkedin.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_b97a0153",
+      "canonical_text": "Retrieval-Augmented Generation (RAG) has emerged as a promising solution to some of the biggest challenges facing large language models (LLMs).",
+      "scope": "for addressing challenges in large language models",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_f7f98cd1"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.leximancer.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_4c90e331",
+      "canonical_text": "RAG aims to reduce hallucinations and provide more grounded, trustworthy outputs by combining the creative power of generative AI with the precision of information retrieval.",
+      "scope": "for improving the reliability of AI-generated outputs",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_a3295d93"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.leximancer.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_cd0990a6",
+      "canonical_text": "The retrieval component is responsible for fetching relevant information in Retrieval-Augmented Generation (RAG).",
+      "scope": "in the architecture of RAG systems",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_2cbc45d8"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.leximancer.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_c2331e1a",
+      "canonical_text": "The quality of document ingestion and understanding directly affects the system's ability to retrieve relevant information.",
+      "scope": "general",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_caf2f9f4"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "generativeai.pub"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_f8129dc1",
+      "canonical_text": "RAG systems encounter main headaches that can be categorized to understand issues.",
+      "scope": "for users implementing RAG systems",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_30bdec77"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.stack-ai.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_b0ce22aa",
+      "canonical_text": "RAG systems can experience failures in knowledge base management.",
+      "scope": "when knowledge bases contain outdated information",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_de3dd9a7"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.stack-ai.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_6b0a58c8",
+      "canonical_text": "The effectiveness of prompting techniques varies across different models and tasks in LLM-driven RAG systems.",
+      "scope": "across different models and tasks",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_7845be58"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_221c4bbe",
+      "canonical_text": "ROUGE calculates the proportion of response words matched in input arguments (ROUGE-1 precision) and the proportion of input argument words matched in the response (ROUGE-1 recall).",
+      "scope": "for detecting hallucination and coverage errors in generated responses",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_982e8829"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_647e8325",
+      "canonical_text": "A small hallucination can lead to costly errors in AI systems.",
+      "scope": "at this stage",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_db50ec1c"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_818d90c0",
+      "canonical_text": "Retrieval Augmented Generation is needed to address the problem of hallucinations.",
+      "scope": "to power",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_90a0bb4a"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_20cbff21",
+      "canonical_text": "Retrieval-augmented generation (RAG) pairs the inherent abilities of LLMs with the rich, ever-updating content",
+      "scope": "as an innovative approach",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_4e6bd12e"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.infoworld.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_fac00591",
+      "canonical_text": "RAG is the most effective way so far",
+      "scope": "for the current state of research outcomes and startup practices",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_ee737c7a"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "tiancaixinxin.medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_7f1a96df",
+      "canonical_text": "RAG will not be replaced in the next five years",
+      "scope": "within the next five-year timeframe",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_37d1e963"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "tiancaixinxin.medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_1bb09f37",
+      "canonical_text": "DPR achieves a top-1 accuracy of 50.17% on NQ for ODQA",
+      "scope": "for ODQA (Open-Domain Question Answering) tasks",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_22b1fb9a"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_bba104bb",
+      "canonical_text": "Latency often matters more than raw accuracy in real-time applications",
+      "scope": "real-time applications",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_e3de1da5"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.chatbench.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_383b54e6",
+      "canonical_text": "Approximate nearest neighbor (ANN) methods reduce query times from seconds to milliseconds while maintaining high recall rates.",
+      "scope": "for interactive applications",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_2ad0eb3b"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "grokipedia.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_509f2f8a",
+      "canonical_text": "Locality-Sensitive Hashing (LSH) enables sublinear-time approximate nearest neighbor searches by hashing similar items into the same buckets with high probability.",
+      "scope": "for approximate nearest neighbor searches",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_f59e01db"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "grokipedia.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_19b60762",
+      "canonical_text": "Exact nearest neighbor searches have linear O(N) time complexity.",
+      "scope": "for exact searches",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_d1fd2833"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "grokipedia.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    }
+  ],
+  "step_history": [
+    {
+      "step": 0,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 1,
+      "action": "search:sq2",
+      "sub_question_id": "sq2",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 2,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 3,
+      "action": "search:sq4",
+      "sub_question_id": "sq4",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 4,
+      "action": "search:sq5",
+      "sub_question_id": "sq5",
+      "result": "NEW_EVIDENCE"
+    }
+  ],
+  "termination_reason": null
+}

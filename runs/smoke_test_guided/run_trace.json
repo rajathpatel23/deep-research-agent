@@ -1,0 +1,17 @@
+{
+  "query": "Does retrieval-augmented generation improve factual accuracy in LLMs?",
+  "mode": "guided",
+  "total_steps": 5,
+  "termination_reason": "BUDGET_EXHAUSTED",
+  "sub_questions_total": 3,
+  "sub_questions_covered": 3,
+  "claim_groups_total": 6,
+  "disputes": 0,
+  "step_results": [
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "REDUNDANT",
+    "REDUNDANT"
+  ]
+}

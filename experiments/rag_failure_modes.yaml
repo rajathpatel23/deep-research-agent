@@ -1,0 +1,17 @@
+name: rag_factuality
+description: "Query 2 only — RAG failure modes"
+
+llm:
+  provider: groq
+  model: qwen/qwen3-32b
+
+search:
+  backend: tavily
+  max_results: 3
+
+output_dir: runs
+
+runs:
+  - query: "What are the main failure modes and limitations of retrieval-augmented generation?"
+    modes: [baseline, guided]
+    max_steps: 10

@@ -1,0 +1,29 @@
+{
+  "query": "What are the real-world risks and benefits of using synthetic data to train or fine-tune large language models? Focus on data quality, bias, and evaluation.",
+  "mode": "guided",
+  "llm_model": "qwen/qwen3-32b",
+  "total_steps": 5,
+  "termination_reason": "DIMINISHING_RETURNS",
+  "sub_questions_total": 5,
+  "sub_questions_covered": 0,
+  "claim_groups_total": 0,
+  "disputes": 0,
+  "step_results": [
+    "DEAD_END",
+    "DEAD_END",
+    "DEAD_END",
+    "DEAD_END",
+    "DEAD_END"
+  ],
+  "prompt_versions": {
+    "extractor": "v2-batch",
+    "report": "v1"
+  },
+  "coverage_completeness": 0.0,
+  "search_efficiency": 0.0,
+  "conflict_surfacing_rate": 1.0,
+  "stopping_quality": 1.0,
+  "summary_grounding_rate": 0.0,
+  "source_diversity_mean": 0.0,
+  "confidence_calibration": 1.0
+}

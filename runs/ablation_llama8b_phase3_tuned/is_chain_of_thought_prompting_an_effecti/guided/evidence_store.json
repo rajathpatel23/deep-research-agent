@@ -1,0 +1,101 @@
+{
+  "query": "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.",
+  "sub_questions": [
+    {
+      "id": "sq1",
+      "text": "What are the specific reasoning tasks where chain-of-thought prompting consistently demonstrates significant improvement in LLMs' performance compared to non-chain-of-thought methods?",
+      "kind": "supporting",
+      "has_evidence": false
+    },
+    {
+      "id": "sq2",
+      "text": "Do studies using simple language generation tasks or those with low cognitive demands find chain-of-thought prompting to be more effective than formatting-focused improvements, and why?",
+      "kind": "supporting",
+      "has_evidence": false
+    },
+    {
+      "id": "sq3",
+      "text": "Can chain-of-thought prompting exacerbate the known issue of LLMs' overreliance on statistical patterns rather than genuine reasoning, and what are the implications for downstream applications?",
+      "kind": "adversarial",
+      "has_evidence": false
+    },
+    {
+      "id": "sq4",
+      "text": "Are there specific LLM architectures or training protocols that are more susceptible to chain-of-thought prompting's limitations in improving actual reasoning abilities, and what design choices contribute to these vulnerabilities?",
+      "kind": "adversarial",
+      "has_evidence": false
+    },
+    {
+      "id": "sq5",
+      "text": "What are the potential biases in the existing literature on chain-of-thought prompting that might be driving the conflicting results, such as differences in task selection, evaluation metrics, or experimental design?",
+      "kind": "adversarial",
+      "has_evidence": false
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs_3b4b9628",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://iafor.org/archives/conference-programmes/aceid/aceid-programme-2026.pdf",
+      "source_title": "[PDF] aceid-programme-2026.pdf",
+      "domain": "iafor.org",
+      "snippet": "iafor.org/about/partners IAFOR Partners International Academic Board Professor Anne Boddington, IAFOR, Japan (IAB Chair) Dr Joseph Haldane, IAFOR and The University of Osaka, Japan & University College London, United Kingdom Professor Jun Arima, IAFOR & The University of Tokyo, Japan Professor Virgil Hawkins, IAFOR Research Centre & The University of Osaka, Japan Mr Lowell Sheppard, IAFOR & Never Too Late Academy, Japan Professor Umberto Ansaldo, VinUniversity, Vietnam Dr Susana Barreto, University of Porto, Portugal Professor Grant Black, Chuo University, Japan Dr Evangelia Chrysikou, Bartlett School of Sustainable Construction, University College London, United Kingdom Professor Donald E. Hall, Binghamton University, United States Professor Brendan Howe, Ewha Womans University, South Kor",
+      "domain_score": 0.5
+    },
+    {
+      "id": "obs_bccf9725",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://ceramics.org/wp-content/uploads/2026/03/3.23.SPRING26_Abstracts-3-002.pdf",
+      "source_title": "[PDF] The American Ceramic Society Spring Meeting 2026 ABSTRACT ...",
+      "domain": "ceramics.org",
+      "snippet": "The American Ceramic Society Spring Meeting 2026 ABSTRACT BOOK April 12\u201317, 2026 Bellevue, Washington Please note- this abstract book is current as of March 20, 2026. There may have been withdrawn abstracts or slight changes. Always consult the app for the most up to date schedule.\n2 Spring Meeting 2026 MEETING REGULATIONS The American Ceramic Society is a nonprofit scientific organization that facilitates the exchange of knowledge meetings and publication of papers for future reference. The Society owns and retains full right to control its publications and its meetings. The Society has an obligation to protect its members and meetings from intrusion by others who may wish to use the meetings for their own private promotion purpose. Literature found not to be in agreement with the Society",
+      "domain_score": 0.5
+    },
+    {
+      "id": "obs_e74b8b15",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://arxiv.org/pdf/2511.09785",
+      "source_title": "[PDF] AI Annotation Orchestration: Evaluating LLM Verifiers to Improve the ...",
+      "domain": "arxiv.org",
+      "snippet": "AI Annotation Orchestration: Evaluating LLM Verifiers to Improve the Quality of LLM Annotations in Learning Analytics Bakhtawar Ahtisham Cornell University Ithaca, USA ba453@cornell.edu Kirk Vanacore Cornell University Ithaca, USA kpv27@cornell.edu Jinsook Lee Cornell University Ithaca, USA jl3369@cornell.edu Zhuqian Zhou Cornell University Ithaca, USA zz968@cornel.edu Doug Pietrzak Freshcognate LLC Somerville, USA doug@freshcognate.com Rene F. Kizilcec Cornell University Ithaca, USA kizilcec@cornell.edu Abstract Large Language Models (LLMs) are increasingly used to annotate learning interactions, yet concerns about reliability limit their util-ity. We test whether verification-oriented orchestration\u2014prompting models to check their own labels (self-verification) or audit one another (cross",
+      "domain_score": 0.9
+    }
+  ],
+  "claims": [],
+  "adjacent_claims": [],
+  "claim_groups": [],
+  "step_history": [
+    {
+      "step": 0,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NO_EXTRACTABLE_CLAIMS",
+      "retrieved_results": 2,
+      "observations_added": 3,
+      "extracted_claims": 0,
+      "result_reason": "Results existed, but extractor produced zero claims.",
+      "recovery_attempts": 1,
+      "recovery_strategy": "extractor_rescue_pivot",
+      "query_variants_tried": 3,
+      "rerank_in_count": 2,
+      "rerank_out_count": 1,
+      "claims_filtered_out": 15,
+      "adjacent_claims_added": 0,
+      "direct_claims_added": 0,
+      "direct_claim_conversion_rate": 0.0,
+      "query_compression_attempts": 3,
+      "query_compression_llm_successes": 3,
+      "query_compression_fallback_truncations": 0,
+      "query_compression_chars_saved": 772
+    }
+  ],
+  "llm_calls": [],
+  "conflict_candidates_considered": 0,
+  "conflict_llm_checks": 0,
+  "conflict_scope_filtered": 0,
+  "conflict_contradictions_found": 0,
+  "termination_reason": null
+}

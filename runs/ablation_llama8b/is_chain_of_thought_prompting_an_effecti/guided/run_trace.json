@@ -1,0 +1,36 @@
+{
+  "query": "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees\u2014find the real fault lines and explain what accounts for the conflicting results.",
+  "mode": "guided",
+  "llm_model": "llama-3.1-8b-instant",
+  "total_steps": 8,
+  "termination_reason": "DIMINISHING_RETURNS",
+  "sub_questions_total": 5,
+  "sub_questions_covered": 3,
+  "claim_groups_total": 7,
+  "disputes": 0,
+  "step_results": [
+    "DEAD_END",
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "DEAD_END",
+    "DEAD_END",
+    "DEAD_END",
+    "DEAD_END"
+  ],
+  "prompt_versions": {
+    "extractor": "v2-batch",
+    "report": "v1"
+  },
+  "coverage_completeness": 0.6,
+  "search_efficiency": 0.375,
+  "conflict_surfacing_rate": 1.0,
+  "stopping_quality": 1.0,
+  "summary_grounding_rate": 0.0,
+  "unsupported_summary_rate": 1.0,
+  "unresolved_disclosure_rate": 1.0,
+  "uncertainty_calibration_score": 0.0,
+  "epistemic_honesty_score": 0.3,
+  "source_diversity_mean": 1.0,
+  "confidence_calibration": 0.0
+}

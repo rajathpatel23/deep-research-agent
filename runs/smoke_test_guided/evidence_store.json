@@ -1,0 +1,629 @@
+{
+  "query": "Does retrieval-augmented generation improve factual accuracy in LLMs?",
+  "sub_questions": [
+    {
+      "id": "sq1",
+      "text": "What is the primary evidence supporting this topic?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq2",
+      "text": "What are the main criticisms or limitations?",
+      "kind": "adversarial",
+      "has_evidence": true
+    },
+    {
+      "id": "sq3",
+      "text": "What empirical studies exist on this topic?",
+      "kind": "supporting",
+      "has_evidence": true
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs_8653ec40",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://source-1.example.com/research",
+      "source_title": "Research on What is the primary evidence supporting  \u2014 Source 1",
+      "domain": "source-1.example.com",
+      "snippet": "Empirical study 1: Research on 'What is the primary evidence supporting ' shows measurable effects in controlled conditions. Source 1 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    },
+    {
+      "id": "obs_650deeed",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://source-2.example.com/research",
+      "source_title": "Research on What is the primary evidence supporting  \u2014 Source 2",
+      "domain": "source-2.example.com",
+      "snippet": "Critical review 2: While initial findings on 'What is the primary evidence supporting ' appear promising, several methodological concerns limit generalizability. Effect sizes vary considerably across populations and settings."
+    },
+    {
+      "id": "obs_7ee6c07f",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://source-3.example.com/research",
+      "source_title": "Research on What is the primary evidence supporting  \u2014 Source 3",
+      "domain": "source-3.example.com",
+      "snippet": "Empirical study 3: Research on 'What is the primary evidence supporting ' shows measurable effects in controlled conditions. Source 3 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    },
+    {
+      "id": "obs_954538d3",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://source-1.example.com/research",
+      "source_title": "Research on What are the main criticisms or limitati \u2014 Source 1",
+      "domain": "source-1.example.com",
+      "snippet": "Empirical study 1: Research on 'What are the main criticisms or limitati' shows measurable effects in controlled conditions. Source 1 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    },
+    {
+      "id": "obs_e4710c53",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://source-2.example.com/research",
+      "source_title": "Research on What are the main criticisms or limitati \u2014 Source 2",
+      "domain": "source-2.example.com",
+      "snippet": "Critical review 2: While initial findings on 'What are the main criticisms or limitati' appear promising, several methodological concerns limit generalizability. Effect sizes vary considerably across populations and settings."
+    },
+    {
+      "id": "obs_f7e827ce",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://source-3.example.com/research",
+      "source_title": "Research on What are the main criticisms or limitati \u2014 Source 3",
+      "domain": "source-3.example.com",
+      "snippet": "Empirical study 3: Research on 'What are the main criticisms or limitati' shows measurable effects in controlled conditions. Source 3 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    },
+    {
+      "id": "obs_5ec68ab5",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://source-1.example.com/research",
+      "source_title": "Research on What empirical studies exist on this top \u2014 Source 1",
+      "domain": "source-1.example.com",
+      "snippet": "Empirical study 1: Research on 'What empirical studies exist on this top' shows measurable effects in controlled conditions. Source 1 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    },
+    {
+      "id": "obs_69a170f2",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://source-2.example.com/research",
+      "source_title": "Research on What empirical studies exist on this top \u2014 Source 2",
+      "domain": "source-2.example.com",
+      "snippet": "Critical review 2: While initial findings on 'What empirical studies exist on this top' appear promising, several methodological concerns limit generalizability. Effect sizes vary considerably across populations and settings."
+    },
+    {
+      "id": "obs_e33a98b0",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://source-3.example.com/research",
+      "source_title": "Research on What empirical studies exist on this top \u2014 Source 3",
+      "domain": "source-3.example.com",
+      "snippet": "Empirical study 3: Research on 'What empirical studies exist on this top' shows measurable effects in controlled conditions. Source 3 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    },
+    {
+      "id": "obs_20ac29cb",
+      "step": 3,
+      "sub_question_id": "sq1",
+      "source_url": "https://source-1.example.com/research",
+      "source_title": "Research on limitations criticisms failures of: The  \u2014 Source 1",
+      "domain": "source-1.example.com",
+      "snippet": "Empirical study 1: Research on 'limitations criticisms failures of: The ' shows measurable effects in controlled conditions. Source 1 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    },
+    {
+      "id": "obs_7567232c",
+      "step": 3,
+      "sub_question_id": "sq1",
+      "source_url": "https://source-2.example.com/research",
+      "source_title": "Research on limitations criticisms failures of: The  \u2014 Source 2",
+      "domain": "source-2.example.com",
+      "snippet": "Critical review 2: While initial findings on 'limitations criticisms failures of: The ' appear promising, several methodological concerns limit generalizability. Effect sizes vary considerably across populations and settings."
+    },
+    {
+      "id": "obs_72a1f6b0",
+      "step": 3,
+      "sub_question_id": "sq1",
+      "source_url": "https://source-3.example.com/research",
+      "source_title": "Research on limitations criticisms failures of: The  \u2014 Source 3",
+      "domain": "source-3.example.com",
+      "snippet": "Empirical study 3: Research on 'limitations criticisms failures of: The ' shows measurable effects in controlled conditions. Source 3 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    },
+    {
+      "id": "obs_7ba71850",
+      "step": 4,
+      "sub_question_id": "sq3",
+      "source_url": "https://source-1.example.com/research",
+      "source_title": "Research on limitations criticisms failures of: The  \u2014 Source 1",
+      "domain": "source-1.example.com",
+      "snippet": "Empirical study 1: Research on 'limitations criticisms failures of: The ' shows measurable effects in controlled conditions. Source 1 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    },
+    {
+      "id": "obs_e5b58283",
+      "step": 4,
+      "sub_question_id": "sq3",
+      "source_url": "https://source-2.example.com/research",
+      "source_title": "Research on limitations criticisms failures of: The  \u2014 Source 2",
+      "domain": "source-2.example.com",
+      "snippet": "Critical review 2: While initial findings on 'limitations criticisms failures of: The ' appear promising, several methodological concerns limit generalizability. Effect sizes vary considerably across populations and settings."
+    },
+    {
+      "id": "obs_9fe90234",
+      "step": 4,
+      "sub_question_id": "sq3",
+      "source_url": "https://source-3.example.com/research",
+      "source_title": "Research on limitations criticisms failures of: The  \u2014 Source 3",
+      "domain": "source-3.example.com",
+      "snippet": "Empirical study 3: Research on 'limitations criticisms failures of: The ' shows measurable effects in controlled conditions. Source 3 provides independent replication with sample size n=200. Limitations include short follow-up period."
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_a1b129ab",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_8653ec40",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_c0fcad58",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_8653ec40",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_167d8a15",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_650deeed",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_ef902c22",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_650deeed",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_dd99b040",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7ee6c07f",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_d4ba84b5",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_7ee6c07f",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_8f095e90",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_954538d3",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_b93452c0",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_954538d3",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_123521be",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_e4710c53",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_8304d4c7",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_e4710c53",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_cb63e582",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_f7e827ce",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_68eca8df",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_f7e827ce",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_3870a779",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5ec68ab5",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_80e0d4cd",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_5ec68ab5",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_9cdaca41",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_69a170f2",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_ec860780",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_69a170f2",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_f901fcbb",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_e33a98b0",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_a82672dc",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_e33a98b0",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_b9a7f7f0",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_20ac29cb",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq1",
+      "step": 3
+    },
+    {
+      "id": "clm_e18565a0",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_20ac29cb",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq1",
+      "step": 3
+    },
+    {
+      "id": "clm_3c6e29d0",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7567232c",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq1",
+      "step": 3
+    },
+    {
+      "id": "clm_9e2ccb4c",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_7567232c",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq1",
+      "step": 3
+    },
+    {
+      "id": "clm_5b9dd57a",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_72a1f6b0",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq1",
+      "step": 3
+    },
+    {
+      "id": "clm_6579e757",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_72a1f6b0",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq1",
+      "step": 3
+    },
+    {
+      "id": "clm_0e2dc3d7",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7ba71850",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq3",
+      "step": 4
+    },
+    {
+      "id": "clm_acd48411",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_7ba71850",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq3",
+      "step": 4
+    },
+    {
+      "id": "clm_01713500",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_e5b58283",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq3",
+      "step": 4
+    },
+    {
+      "id": "clm_3d3037ce",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_e5b58283",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq3",
+      "step": 4
+    },
+    {
+      "id": "clm_a051d68b",
+      "text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_9fe90234",
+      "verbatim": "Mock verbatim: studies show positive effects",
+      "sub_question_id": "sq3",
+      "step": 4
+    },
+    {
+      "id": "clm_9dbeb2f6",
+      "text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_9fe90234",
+      "verbatim": "Mock verbatim: generalizability remains uncertain",
+      "sub_question_id": "sq3",
+      "step": 4
+    }
+  ],
+  "claim_groups": [
+    {
+      "id": "grp_2057df1f",
+      "canonical_text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_a1b129ab",
+        "clm_167d8a15",
+        "clm_dd99b040",
+        "clm_b9a7f7f0",
+        "clm_3c6e29d0",
+        "clm_5b9dd57a"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "source-1.example.com",
+        "source-2.example.com",
+        "source-3.example.com"
+      ],
+      "aggregate_confidence": "high",
+      "status": "supported",
+      "challenge_status": "challenged_no_conflict"
+    },
+    {
+      "id": "grp_0f2e7c3b",
+      "canonical_text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_c0fcad58",
+        "clm_ef902c22",
+        "clm_d4ba84b5",
+        "clm_e18565a0",
+        "clm_9e2ccb4c",
+        "clm_6579e757"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "source-1.example.com",
+        "source-2.example.com",
+        "source-3.example.com"
+      ],
+      "aggregate_confidence": "medium",
+      "status": "supported",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_5ff1eee4",
+      "canonical_text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_8f095e90",
+        "clm_123521be",
+        "clm_cb63e582"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "source-1.example.com",
+        "source-2.example.com",
+        "source-3.example.com"
+      ],
+      "aggregate_confidence": "high",
+      "status": "supported",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_245abc15",
+      "canonical_text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_b93452c0",
+        "clm_8304d4c7",
+        "clm_68eca8df"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "source-1.example.com",
+        "source-2.example.com",
+        "source-3.example.com"
+      ],
+      "aggregate_confidence": "medium",
+      "status": "supported",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_51e2d6e6",
+      "canonical_text": "The topic shows measurable positive effects in controlled studies",
+      "scope": "laboratory settings with standardized protocols",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_3870a779",
+        "clm_9cdaca41",
+        "clm_f901fcbb",
+        "clm_0e2dc3d7",
+        "clm_01713500",
+        "clm_a051d68b"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "source-1.example.com",
+        "source-2.example.com",
+        "source-3.example.com"
+      ],
+      "aggregate_confidence": "high",
+      "status": "supported",
+      "challenge_status": "challenged_no_conflict"
+    },
+    {
+      "id": "grp_214f1e37",
+      "canonical_text": "Effects may not generalize beyond controlled conditions",
+      "scope": "real-world applications",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_80e0d4cd",
+        "clm_ec860780",
+        "clm_a82672dc",
+        "clm_acd48411",
+        "clm_3d3037ce",
+        "clm_9dbeb2f6"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "source-1.example.com",
+        "source-2.example.com",
+        "source-3.example.com"
+      ],
+      "aggregate_confidence": "medium",
+      "status": "supported",
+      "challenge_status": "unchallenged"
+    }
+  ],
+  "step_history": [
+    {
+      "step": 0,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 1,
+      "action": "search:sq2",
+      "sub_question_id": "sq2",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 2,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 3,
+      "action": "challenge:grp_2057df1f",
+      "sub_question_id": "sq1",
+      "result": "REDUNDANT"
+    },
+    {
+      "step": 4,
+      "action": "challenge:grp_51e2d6e6",
+      "sub_question_id": "sq3",
+      "result": "REDUNDANT"
+    }
+  ],
+  "termination_reason": "BUDGET_EXHAUSTED"
+}

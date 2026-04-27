@@ -1,0 +1,33 @@
+{
+  "query": "Does retrieval-augmented generation improve factual accuracy in large language models?",
+  "mode": "baseline",
+  "total_steps": 10,
+  "termination_reason": "BUDGET_EXHAUSTED",
+  "sub_questions_total": 5,
+  "sub_questions_covered": 5,
+  "claim_groups_total": 39,
+  "disputes": 0,
+  "step_results": [
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "REDUNDANT",
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "NEW_EVIDENCE",
+    "REDUNDANT"
+  ],
+  "prompt_versions": {
+    "decomposer": "v1",
+    "extractor": "v1",
+    "conflict": "v1",
+    "report": "v1"
+  },
+  "coverage_completeness": 0.6,
+  "search_efficiency": 1.0,
+  "conflict_surfacing_rate": 0.0,
+  "stopping_quality": 0.0,
+  "llm_model": "qwen/qwen3-32b"
+}

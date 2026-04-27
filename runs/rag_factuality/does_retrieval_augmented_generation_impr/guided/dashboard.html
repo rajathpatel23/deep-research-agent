@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Research Agent — Guided Run</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.5; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.25rem; }
+  h2 { font-size: 1.1rem; font-weight: 600; color: #94a3b8; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta { font-size: 0.85rem; color: #64748b; margin-bottom: 2rem; }
+  .meta span { margin-right: 1.5rem; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .metric-card { background: #1e293b; border-radius: 8px; padding: 1.25rem; }
+  .metric-value { font-size: 2rem; font-weight: 700; }
+  .metric-name { font-size: 0.8rem; color: #64748b; margin: 0.25rem 0 0.5rem; }
+  .metric-bar-bg { background: #334155; border-radius: 4px; height: 6px; }
+  .metric-bar-fill { height: 6px; border-radius: 4px; transition: width 0.3s; }
+  .timeline { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .pill { padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; color: white; cursor: default; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #1e293b; border-radius: 8px; overflow: hidden; }
+  .data-table th { background: #334155; padding: 0.6rem 0.8rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; }
+  .data-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #334155; vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; font-weight: 600; }
+  .badge-red { background: #450a0a; color: #fca5a5; }
+  .badge-blue { background: #1e3a5f; color: #93c5fd; }
+  .badge-orange { background: #431407; color: #fdba74; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+  .section { background: #1e293b; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; overflow-x: auto; }
+  .summary-bar { display: flex; gap: 1.5rem; background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 0.85rem; }
+  .summary-item { display: flex; flex-direction: column; }
+  .summary-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-val { font-weight: 700; color: #f8fafc; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Does retrieval-augmented generation improve factual accuracy in large language models?</h1>
+  <div class="meta">
+    <span>Mode: <strong>guided</strong></span>
+    <span>Model: <strong>qwen/qwen3-32b</strong></span>
+    <span>Termination: <strong style="color:#22c55e">COVERAGE_MET</strong></span>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-item"><span class="summary-label">Steps</span><span class="summary-val">5</span></div>
+    <div class="summary-item"><span class="summary-label">Sub-questions</span><span class="summary-val">5/5</span></div>
+    <div class="summary-item"><span class="summary-label">Claim Groups</span><span class="summary-val">45</span></div>
+    <div class="summary-item"><span class="summary-label">Disputes</span><span class="summary-val">0</span></div>
+  </div>
+
+  <div class="metrics-grid">
+    
+        <div class="metric-card">
+          <div class="metric-value" style="color:#6366f1">100%</div>
+          <div class="metric-name">Coverage</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:100%; background:#6366f1"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#22c55e">100%</div>
+          <div class="metric-name">Efficiency</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:100%; background:#22c55e"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#ef4444">100%</div>
+          <div class="metric-name">Conflict Surfacing</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:100%; background:#ef4444"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#f59e0b">0%</div>
+          <div class="metric-name">Stopping Quality</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:0%; background:#f59e0b"></div>
+      </div>
+        </div>
+  </div>
+
+  <h2>Step Timeline</h2>
+  <div class="section">
+    <div class='timeline'><span class="pill" style="background:#22c55e" title="Step 0: search:sq1">0 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 1: search:sq2">1 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 2: search:sq3">2 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 3: search:sq4">3 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 4: search:sq5">4 SEA NEW</span></div>
+    <div style="margin-top:0.75rem;font-size:0.75rem;color:#64748b;display:flex;gap:1rem">
+      <span><span class="dot" style="background:#22c55e"></span>New Evidence</span>
+      <span><span class="dot" style="background:#ef4444"></span>Conflict Found</span>
+      <span><span class="dot" style="background:#f59e0b"></span>Redundant</span>
+      <span><span class="dot" style="background:#6b7280"></span>Dead End</span>
+    </div>
+  </div>
+
+  <h2>Sub-questions</h2>
+  <div class="section">
+    <table class='data-table'><thead><tr><th></th><th>Sub-question</th><th>Kind</th><th>Groups</th><th>Disputes</th></tr></thead><tbody>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What empirical studies demonstrate measurable improvements in factual accuracy when using retrieval-augmented generation (RAG) compared to standard language models?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>9</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>How do retrieval mechanisms in RAG systems handle outdated or contradictory sources, and does this impact factual accuracy in practice?</td>
+            <td><span class="badge badge-orange">adversarial</span></td>
+            <td>9</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>Are there specific domains (e.g., medicine, law) where RAG significantly outperforms non-RAG models in factual correctness?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>7</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What limitations in retrieval pipeline design (e.g., latency, noise) reduce the effectiveness of RAG for factual accuracy?</td>
+            <td><span class="badge badge-orange">adversarial</span></td>
+            <td>14</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>How does the quality of retrieved documents (e.g., source credibility, recency) correlate with factual accuracy improvements in RAG?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>6</td>
+            <td></td>
+          </tr></tbody></table>
+  </div>
+
+  <h2>Claim Groups (45)</h2>
+  <div class="section">
+    <table class='data-table'><thead><tr><th>Claim</th><th>Confidence</th><th>Status</th><th>Sources</th><th>Supporting</th><th>Contradicting</th></tr></thead><tbody>
+          <tr>
+            <td>RAG models overcome limitations of traditional LLMs by adding a retrieval system…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">labelyourdata.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>After retrieval, the identified documents are passed to a generation model (usua…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">labelyourdata.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG enhances traditional LLMs by incorporating a retrieval mechanism that pulls …</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">labelyourdata.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Applying RAG improved the accuracy of every model by an average of 39.7%</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">pubmed.ncbi.nlm.nih.gov</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Meta's open-source Llama3 was the highest performing model when using RAG</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">pubmed.ncbi.nlm.nih.gov</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Misinformation can be worse than no information at all for LLMs.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.scholarlyreview.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>LLMs ideally perform the same regardless of how much context they are given.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.scholarlyreview.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Retrievers can feed LLMs as much context as needed for them to utilize necessary…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.scholarlyreview.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>LLMs suffer decreased performance in accuracy for tasks when given more context.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.scholarlyreview.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG systems are intended to solve the data freshness problem</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.reddit.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG systems still require significant manual upkeep</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.reddit.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The guide covers retrieval quality evaluation in RAG systems.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The guide includes groundedness evaluation as part of RAG system assessment.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>LLM evaluation is addressed in the practical guide for RAG systems.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>2</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>System metrics are covered in the guide for evaluating RAG systems.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Advanced RAG strategies and query translation techniques improve reliability and…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Corrective Retrieval-Augmented Generation (C-RAG) is motivated by the idea of ad…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Retrieval-Augmented Generation (RAG) enhances large language models by providing…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG significantly improves factual accuracy</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG models often outperform non-RAG approaches</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The performance of RAG models is not always guaranteed</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG boosts factual accuracy in the biomedical domain</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">intuitionlabs.ai</td>
+            <td>2</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG improves LLM accuracy by connecting large language models to external knowle…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.larkinfolab.nl</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG combines the conversational abilities of large language models with real-tim…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.larkinfolab.nl</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The RAG system works through three core components: a retrieval mechanism, an em…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.larkinfolab.nl</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG supports fine-grained control over data access.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Organizations do not have to retrain the underlying AI model for output to refle…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG has retrieval irrelevance as a limitation.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG has residual hallucination as a challenge.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG has latency and performance bottlenecks.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG has debugging complexity.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG has operational and infrastructure complexity.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG has performance monitoring issues.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG has data control and security issues.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG has industry-specific considerations.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.techtarget.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG integrates retrieval-based methods with generation-based methods</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">cloudkitect.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG is a hybrid AI framework that combines retrieval systems with generative AI …</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">cloudkitect.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG is unable to determine if retrieved data is the most relevant information ne…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Current RAG implementations lack the capability of an iterative reasoning proces…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>RAG greatly increases factual accuracy</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">intuitionlabs.ai</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The quality of retrieved documents in a Retrieval-Augmented Generation (RAG) sys…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">milvus.io</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Context relevance scores (human or automated) can be used as metrics to highligh…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">milvus.io</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The next step after retrieving relevant context in the RA pipeline is Generation…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.linkedin.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The retrieved information is combined with the user’s question to create a struc…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.linkedin.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The structured prompt is sent to the LLM as part of the RA pipeline.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.linkedin.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr></tbody></table>
+  </div>
+</div>
+</body>
+</html>

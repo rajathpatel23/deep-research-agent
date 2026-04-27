@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Research Agent — Baseline Run</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.5; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.25rem; }
+  h2 { font-size: 1.1rem; font-weight: 600; color: #94a3b8; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta { font-size: 0.85rem; color: #64748b; margin-bottom: 2rem; }
+  .meta span { margin-right: 1.5rem; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .metric-card { background: #1e293b; border-radius: 8px; padding: 1.25rem; }
+  .metric-value { font-size: 2rem; font-weight: 700; }
+  .metric-name { font-size: 0.8rem; color: #64748b; margin: 0.25rem 0 0.5rem; }
+  .metric-bar-bg { background: #334155; border-radius: 4px; height: 6px; }
+  .metric-bar-fill { height: 6px; border-radius: 4px; transition: width 0.3s; }
+  .timeline { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .pill { padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; color: white; cursor: default; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #1e293b; border-radius: 8px; overflow: hidden; }
+  .data-table th { background: #334155; padding: 0.6rem 0.8rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; }
+  .data-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #334155; vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; font-weight: 600; }
+  .badge-red { background: #450a0a; color: #fca5a5; }
+  .badge-blue { background: #1e3a5f; color: #93c5fd; }
+  .badge-orange { background: #431407; color: #fdba74; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+  .section { background: #1e293b; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; overflow-x: auto; }
+  .summary-bar { display: flex; gap: 1.5rem; background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 0.85rem; }
+  .summary-item { display: flex; flex-direction: column; }
+  .summary-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-val { font-weight: 700; color: #f8fafc; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>What are the real-world risks and benefits of using synthetic data to train or fine-tune large language models? Focus on data quality, bias, and evaluation.</h1>
+  <div class="meta">
+    <span>Mode: <strong>baseline</strong></span>
+    <span>Model: <strong>llama-3.1-8b-instant</strong></span>
+    <span>Termination: <strong style="color:#6b7280">BUDGET_EXHAUSTED</strong></span>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-item"><span class="summary-label">Steps</span><span class="summary-val">15</span></div>
+    <div class="summary-item"><span class="summary-label">Sub-questions</span><span class="summary-val">4/5</span></div>
+    <div class="summary-item"><span class="summary-label">Claim Groups</span><span class="summary-val">17</span></div>
+    <div class="summary-item"><span class="summary-label">Disputes</span><span class="summary-val">0</span></div>
+  </div>
+
+  <div class="metrics-grid">
+    
+        <div class="metric-card">
+          <div class="metric-value" style="color:#6366f1">80%</div>
+          <div class="metric-name">Coverage</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:80%; background:#6366f1"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#22c55e">60%</div>
+          <div class="metric-name">Efficiency</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:60%; background:#22c55e"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#ef4444">100%</div>
+          <div class="metric-name">Conflict Surfacing</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:100%; background:#ef4444"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#f59e0b">0%</div>
+          <div class="metric-name">Stopping Quality</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:0%; background:#f59e0b"></div>
+      </div>
+        </div>
+  </div>
+
+  <h2>Step Timeline</h2>
+  <div class="section">
+    <div class='timeline'><span class="pill" style="background:#0ea5e9" title="Step 0: search:sq1">0 SEA NO CLAIMS</span><span class="pill" style="background:#6b7280" title="Step 1: search:sq2">1 SEA DEAD END</span><span class="pill" style="background:#0ea5e9" title="Step 2: search:sq3">2 SEA NO CLAIMS</span><span class="pill" style="background:#22c55e" title="Step 3: search:sq4">3 SEA NEW</span><span class="pill" style="background:#6b7280" title="Step 4: search:sq5">4 SEA DEAD END</span><span class="pill" style="background:#22c55e" title="Step 5: search:sq1">5 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 6: search:sq2">6 SEA NEW</span><span class="pill" style="background:#0ea5e9" title="Step 7: search:sq3">7 SEA NO CLAIMS</span><span class="pill" style="background:#22c55e" title="Step 8: search:sq4">8 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 9: search:sq5">9 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 10: search:sq1">10 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 11: search:sq2">11 SEA NEW</span><span class="pill" style="background:#0ea5e9" title="Step 12: search:sq3">12 SEA NO CLAIMS</span><span class="pill" style="background:#22c55e" title="Step 13: search:sq4">13 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 14: search:sq5">14 SEA NEW</span></div>
+    <div style="margin-top:0.75rem;font-size:0.75rem;color:#64748b;display:flex;gap:1rem">
+      <span><span class="dot" style="background:#22c55e"></span>New Evidence</span>
+      <span><span class="dot" style="background:#ef4444"></span>Conflict Found</span>
+      <span><span class="dot" style="background:#f59e0b"></span>Redundant</span>
+      <span><span class="dot" style="background:#6b7280"></span>Dead End</span>
+      <span><span class="dot" style="background:#475569"></span>No Retrieval Results</span>
+      <span><span class="dot" style="background:#0ea5e9"></span>No Extractable Claims</span>
+    </div>
+  </div>
+
+  <h2>Sub-questions</h2>
+  <div class="section">
+    <table class='data-table'><thead><tr><th></th><th>Sub-question</th><th>Kind</th><th>Groups</th><th>Disputes</th></tr></thead><tbody>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What are the synthetic data generation techniques and algorithms that achieve the highest perplexity, accuracy, and fluency scores in empirical studies evaluating large language models trained on synthetic data versus real-world data?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>3</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What empirical studies investigate the impact of synthetic data on bias and fairness metrics in large language models across various real-world applications, using established benchmarks such as GLUE, SQuAD, and SuperGLUE, and evaluating performance using metrics like accuracy, F1 score, and mean squared error?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>6</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#9ca3af;font-weight:bold">○</td>
+            <td>Can synthetic data be used to evaluate and mitigate the negative consequences of large language model fine-tuning on real-world data?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>0</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What empirical studies and benchmarks quantify the accuracy, reliability, and bias of large language models trained or fine-tuned with synthetic data across various high-stakes applications, considering data quality metrics, failure rates, and real-world performance metrics?</td>
+            <td><span class="badge badge-orange">adversarial</span></td>
+            <td>5</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What is the empirical evidence on the relationship between synthetic data quality, large language model performance, and evaluation metrics in real-world applications, and how do variations in synthetic data quality impact deployment benchmarks across diverse datasets and tasks?</td>
+            <td><span class="badge badge-orange">adversarial</span></td>
+            <td>3</td>
+            <td></td>
+          </tr></tbody></table>
+  </div>
+
+  <h2>Claim Groups (17)</h2>
+  <div class="section">
+    <table class='data-table'><thead><tr><th>Claim</th><th>Confidence</th><th>Status</th><th>Sources</th><th>Supporting</th><th>Contradicting</th></tr></thead><tbody>
+          <tr>
+            <td>Synthetic data can overcome data bottlenecks.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.ibm.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Synthetic data can address privacy concerns.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.ibm.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Fidelity gaps are a challenge for using synthetic data for LLMS.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">medium.com</td>
+            <td>5</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>fair distribution of bias</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">cse.iitm.ac.in</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Evaluating and mitigating such biases is paramount to ensuring the ethical and e…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">incubity.ambilio.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Evaluating and mitigating such biases is paramount.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">incubity.ambilio.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Hybrid evaluation combines human and automatic methods to provide a comprehensiv…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">incubity.ambilio.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The evaluation of large language models is crucial to assess their performance a…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.jmlr.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>We created a synthetic dataset.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">cse.iitm.ac.in</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Large language models are transforming synthetic training data generation</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.researchgate.net</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Synthetic data is transforming how developers and organizations fine-tune large …</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.newline.co</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>developers are grappling with a shortage of high-quality, real-world data to tra…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.ibm.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>synthetic data is emerging as a potential solution</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.ibm.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>No LLM is free from bias.</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">www.semanticscholar.org</td>
+            <td>2</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Recent study raises key concerns</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">openreview.net</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>data is scarce due to collection costs or privacy constraints</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">openreview.net</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>the Synthetic Dataset Quality Estimation (SYNQUE) problem can be solved using li…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">openreview.net</td>
+            <td>1</td>
+            <td>0</td>
+          </tr></tbody></table>
+  </div>
+</div>
+</body>
+</html>

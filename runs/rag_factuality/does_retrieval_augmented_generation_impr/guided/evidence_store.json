@@ -1,0 +1,1401 @@
+{
+  "query": "Does retrieval-augmented generation improve factual accuracy in large language models?",
+  "sub_questions": [
+    {
+      "id": "sq1",
+      "text": "What empirical studies demonstrate measurable improvements in factual accuracy when using retrieval-augmented generation (RAG) compared to standard language models?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq2",
+      "text": "How do retrieval mechanisms in RAG systems handle outdated or contradictory sources, and does this impact factual accuracy in practice?",
+      "kind": "adversarial",
+      "has_evidence": true
+    },
+    {
+      "id": "sq3",
+      "text": "Are there specific domains (e.g., medicine, law) where RAG significantly outperforms non-RAG models in factual correctness?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq4",
+      "text": "What limitations in retrieval pipeline design (e.g., latency, noise) reduce the effectiveness of RAG for factual accuracy?",
+      "kind": "adversarial",
+      "has_evidence": true
+    },
+    {
+      "id": "sq5",
+      "text": "How does the quality of retrieved documents (e.g., source credibility, recency) correlate with factual accuracy improvements in RAG?",
+      "kind": "supporting",
+      "has_evidence": true
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs_a4872f15",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://labelyourdata.com/articles/llm-fine-tuning/rag-llm",
+      "source_title": "RAG LLM: Revolutionizing Data Retrieval in 2026 | Label Your Data",
+      "domain": "labelyourdata.com",
+      "snippet": "Instead, RAG model LLM overcomes this by adding a retrieval system that pulls relevant documents or data from an external source in real-time. After the retrieval mechanism identifies the most relevant documents, they are passed to the generation model, usually an LLM, which uses this data to craft a response and improve the overall output quality. RAG (Retrieval-Augmented Generation) enhances traditional LLMs (Large Language Models) by incorporating a retrieval mechanism that pulls in relevant "
+    },
+    {
+      "id": "obs_299732bc",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://pubmed.ncbi.nlm.nih.gov/39521391/",
+      "source_title": "Custom Large Language Models Improve Accuracy - PubMed",
+      "domain": "pubmed.ncbi.nlm.nih.gov",
+      "snippet": "Applying RAG improved the accuracy of every model by an average 39.7%. The highest performing model with just RAG was Meta's open-source Llama3"
+    },
+    {
+      "id": "obs_9bfeccdb",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://www.scholarlyreview.org/article/158711-the-role-of-retrieval-augmented-generation-in-improving-factual-accuracy-for-medical-large-language-models.pdf",
+      "source_title": "[PDF] 158711-the-role-of-retrieval-augmented-generation-in-improving ...",
+      "domain": "www.scholarlyreview.org",
+      "snippet": "(2023) noted, for LLMs, \u201cMisinformation can be worse than no information at all.\u201d\u200b \u200b How\u200b\u200b LLMs\u200b\u200b handle\u200b\u200b context\u200b\u200b is\u200b\u200b another\u200b\u200b limitation.\u200b\u200b In\u200b\u200b an\u200b\u200b ideal\u200b\u200b scenario,\u200b\u200b LLMs\u200b\u200b would\u200b\u200b perform\u200b\u200b the\u200b\u200b same\u200b \u200b regardless\u200b\u200b of\u200b\u200b how\u200b\u200b much\u200b\u200b context\u200b\u200b they\u200b\u200b are\u200b\u200b given,\u200b\u200b so\u200b\u200b retrievers\u200b\u200b can\u200b\u200b feed\u200b\u200b the\u200b\u200b LLM\u200b\u200b as\u200b\u200b much\u200b\u200b context\u200b\u200b as\u200b\u200b it\u200b\u200b needs\u200b\u200b and\u200b \u200b have\u200b\u200b it\u200b\u200b utilize\u200b\u200b the\u200b\u200b necessary\u200b\u200b snippets.\u200b\u200b However,\u200b\u200b LLMs\u200b\u200b suffer\u200b\u200b decreased\u200b\u200b performance\u200b\u200b in\u200b\u200b accuracy\u200b\u200b for\u200b\u200b tasks"
+    },
+    {
+      "id": "obs_5af52536",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://www.reddit.com/r/AI_Agents/comments/1rlcwi6/rag_systems_why_am_i_still_seeing_outdated_info/",
+      "source_title": "RAG Systems: Why Am I Still Seeing Outdated Info? - Reddit",
+      "domain": "www.reddit.com",
+      "snippet": "I thought RAG was supposed to solve the data freshness problem, but it seems like it still needs a lot of manual upkeep."
+    },
+    {
+      "id": "obs_3d099bd6",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://medium.com/@harsh0701/introduction-8a2bac0b3c7a",
+      "source_title": "Evaluating RAG Systems Beyond Accuracy: Retrieval, Grounding ...",
+      "domain": "medium.com",
+      "snippet": "A practical guide to evaluating RAG systems covering retrieval quality, groundedness, LLM evaluation, system metrics, and continuous"
+    },
+    {
+      "id": "obs_5095832e",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://medium.com/@inkollusrivarsha0287/corrective-rag-fixing-retrieval-failures-in-rag-systems-85dd2b079fbb",
+      "source_title": "Corrective RAG: Fixing Retrieval Failures in RAG Systems",
+      "domain": "medium.com",
+      "snippet": "We walked through how a typical RAG pipeline works, from embeddings and vector retrieval to context injection and generation, and briefly introduced several **advanced RAG strategies and query translation techniques**that extend the basic architecture to improve reliability and performance. That idea is exactly what motivates **Corrective Retrieval-Augmented Generation (C-RAG)**. Retrieval-Augmented Generation (RAG) is a framework that enhances large language models by feeding them relevant docu"
+    },
+    {
+      "id": "obs_8f69fe76",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://arxiv.org/html/2601.15429v1",
+      "source_title": "Domain-Specific Knowledge Graphs in RAG-Enhanced Healthcare ...",
+      "domain": "arxiv.org",
+      "snippet": "... RAG significantly improves factual accuracy [21] . ... While RAG models often outperform non-RAG approaches, this is not always guaranteed."
+    },
+    {
+      "id": "obs_65c476fc",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://intuitionlabs.ai/articles/rag-performance-pharmaceutical-documents",
+      "source_title": "Performance of Retrieval-Augmented Generation (RAG) on ...",
+      "domain": "intuitionlabs.ai",
+      "snippet": "These results demonstrate a clear trend: RAG boosts factual accuracy and answer recall in the biomedical domain, especially for questions that"
+    },
+    {
+      "id": "obs_876c1dbd",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://www.larkinfolab.nl/2026/01/05/how-does-rag-improve-llm-accuracy/",
+      "source_title": "How does RAG improve LLM accuracy? - LARKinfolab",
+      "domain": "www.larkinfolab.nl",
+      "snippet": "RAG (Retrieval-Augmented Generation) improves LLM accuracy by connecting large language models to external knowledge sources, reducing hallucinations and outdated information. RAG combines the conversational abilities of large language models with real-time information retrieval from external sources. The system works through three core components: a retrieval mechanism that searches external knowledge bases, an embedding system that matches user queries with relevant information, and an integra"
+    },
+    {
+      "id": "obs_7850ffc4",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://www.techtarget.com/searchenterpriseai/tip/Understanding-the-limitations-and-challenges-of-RAG-systems",
+      "source_title": "Understanding the limitations and challenges of RAG systems",
+      "domain": "www.techtarget.com",
+      "snippet": "RAG also supports fine-grained control over data access, and organizations don't have to retrain the underlying AI model for output to reflect updated enterprise content. However, RAG has limitations and challenges for organizations to consider: retrieval irrelevance, residual hallucination, latency and performance bottlenecks, debugging complexity, operational and infrastructure complexity, performance monitoring, data control and security issues, and industry-specific considerations. Effective"
+    },
+    {
+      "id": "obs_f66e9342",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://cloudkitect.com/how-rag-works-limitations-and-strategies-for-accuracy/",
+      "source_title": "RAG: How It Works Its Limitations & Strategies for Accuracy",
+      "domain": "cloudkitect.com",
+      "snippet": "# RAG (Retrieval-Augmented Generation): How It Works, Its Limitations, and Strategies for Accurate Results. RAG integrates **retrieval-based methods** with **generation-based methods**, enabling more informed and context-aware responses. ## What is Retrieval-Augmented Generation (RAG)? Retrieval-Augmented Generation is a hybrid AI framework that combines the strengths of **retrieval systems** (like search engines) with **generative AI models** (like GPT). Instead of relying solely on the generat"
+    },
+    {
+      "id": "obs_6c7d8372",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://medium.com/data-science/the-limitations-and-advantages-of-retrieval-augmented-generation-rag-9ec9b4ae3729",
+      "source_title": "The Practical Limitations and Advantages of Retrieval Augmented Generation (RAG) | by Sandi Besen | TDS Archive | Medium",
+      "domain": "medium.com",
+      "snippet": "RAG is unable to fully understand whether the data that is being retrieved is the most relevant information the language model needs to effectively solve the problem. This iterative reasoning process \u2014 understanding the problem, formulating a more targeted search strategy, and then retrieving the most useful information \u2014 is a capability that current RAG implementations lack. **Accessing Domain Specific and Confidential Information:** One of the key advantages of RAG is the ability to leverage d"
+    },
+    {
+      "id": "obs_96f4d833",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://intuitionlabs.ai/articles/rag-performance-pharmaceutical-documents",
+      "source_title": "Performance of Retrieval-Augmented Generation (RAG) on ...",
+      "domain": "intuitionlabs.ai",
+      "snippet": "Improved Accuracy and Reduced Hallucinations: By grounding answers in retrieved documents, RAG greatly increases factual accuracy. The model"
+    },
+    {
+      "id": "obs_2bd741a6",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://milvus.io/ai-quick-reference/how-does-the-quality-relevance-of-retrieved-documents-impact-the-final-answer-accuracy-in-rag-and-what-metrics-could-highlight-this-impact",
+      "source_title": "How does the quality (relevance) of retrieved documents impact the final answer accuracy in RAG, and what metrics could highlight this impact?",
+      "domain": "milvus.io",
+      "snippet": "How does the quality (relevance) of retrieved documents impact the final answer accuracy in RAG, and what metrics could highlight this impact? # How does the quality (relevance) of retrieved documents impact the final answer accuracy in RAG, and what metrics could highlight this impact? The quality of retrieved documents in a Retrieval-Augmented Generation (RAG) system directly impacts the accuracy of its final answers. To link retrieval and generation, **context relevance scores** (human or aut"
+    },
+    {
+      "id": "obs_83f3b0ce",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://www.linkedin.com/posts/fdegni_evaluating-retrieval-quality-in-rag-activity-7258679341176250372-O3Qx",
+      "source_title": "Evaluating Retrieval Quality in RAG | Fabrizio Degni",
+      "domain": "www.linkedin.com",
+      "snippet": "LLM Generation \u2014 The Final Step in the RA Pipeline After storing and retrieving relevant context from the vector database, the next step is Generation, where the Large Language Model (LLM) comes into play. 2\ufe0f\u20e3 Build a Context-Aware Prompt The retrieved information is combined with the user\u2019s question to create a prompt that looks something like this: Context: [Relevant text from retrieved documents] Question: [User\u2019s input question] 3\ufe0f\u20e3 Send the Prompt to the LLM The structured prompt is passed "
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_3c5f850f",
+      "text": "RAG models overcome limitations of traditional LLMs by adding a retrieval system that pulls relevant documents or data from an external source in real-time.",
+      "scope": "for overcoming limitations in traditional LLMs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_a4872f15",
+      "verbatim": "Instead, RAG model LLM overcomes this by adding a retrieval system that pulls relevant documents or data from an external source in real-time.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_c5b5f507",
+      "text": "After retrieval, the identified documents are passed to a generation model (usually an LLM) to craft a response and improve output quality.",
+      "scope": "when the retrieval mechanism identifies relevant documents",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_a4872f15",
+      "verbatim": "After the retrieval mechanism identifies the most relevant documents, they are passed to the generation model, usually an LLM, which uses this data to craft a response and improve the overall output quality.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_ca33b09a",
+      "text": "RAG enhances traditional LLMs by incorporating a retrieval mechanism that pulls in relevant data.",
+      "scope": "for enhancing traditional LLMs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_a4872f15",
+      "verbatim": "RAG (Retrieval-Augmented Generation) enhances traditional LLMs (Large Language Models) by incorporating a retrieval mechanism that pulls in relevant",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_4f5448ce",
+      "text": "Applying RAG improved the accuracy of every model by an average of 39.7%",
+      "scope": "for every model",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_299732bc",
+      "verbatim": "Applying RAG improved the accuracy of every model by an average 39.7%",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_dfda5c81",
+      "text": "Meta's open-source Llama3 was the highest performing model when using RAG",
+      "scope": "with just RAG",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_299732bc",
+      "verbatim": "The highest performing model with just RAG was Meta's open-source Llama3",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_a691aedf",
+      "text": "Misinformation can be worse than no information at all for LLMs.",
+      "scope": "in general",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_9bfeccdb",
+      "verbatim": "\u201cMisinformation can be worse than no information at all.\u201d",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_c3eaf9db",
+      "text": "LLMs ideally perform the same regardless of how much context they are given.",
+      "scope": "in an ideal scenario",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_9bfeccdb",
+      "verbatim": "In an ideal scenario, LLMs would perform the same regardless of how much context they are given,",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_68fdd168",
+      "text": "Retrievers can feed LLMs as much context as needed for them to utilize necessary snippets.",
+      "scope": "in an ideal scenario",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_9bfeccdb",
+      "verbatim": "so retrievers can feed the LLM as much context as it needs and have it utilize the necessary snippets.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_0760e344",
+      "text": "LLMs suffer decreased performance in accuracy for tasks when given more context.",
+      "scope": "for tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_9bfeccdb",
+      "verbatim": "However, LLMs suffer decreased performance in accuracy for tasks",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_a7476bb5",
+      "text": "RAG systems are intended to solve the data freshness problem",
+      "scope": "data freshness problem",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_5af52536",
+      "verbatim": "I thought RAG was supposed to solve the data freshness problem",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_804284cc",
+      "text": "RAG systems still require significant manual upkeep",
+      "scope": "current implementation of RAG systems",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5af52536",
+      "verbatim": "it seems like it still needs a lot of manual upkeep",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_3131b583",
+      "text": "The guide covers retrieval quality evaluation in RAG systems.",
+      "scope": "within the practical guide",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_3d099bd6",
+      "verbatim": "covering retrieval quality",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_90f9a525",
+      "text": "The guide includes groundedness evaluation as part of RAG system assessment.",
+      "scope": "within the practical guide",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_3d099bd6",
+      "verbatim": "covering groundedness",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_5c4e9830",
+      "text": "LLM evaluation is addressed in the practical guide for RAG systems.",
+      "scope": "within the practical guide",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_3d099bd6",
+      "verbatim": "LLM evaluation",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_f4dc34b2",
+      "text": "System metrics are covered in the guide for evaluating RAG systems.",
+      "scope": "within the practical guide",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_3d099bd6",
+      "verbatim": "system metrics",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_372289fb",
+      "text": "Continuous evaluation methods are included in the practical guide for RAG systems.",
+      "scope": "within the practical guide",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_3d099bd6",
+      "verbatim": "continuous",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_81446592",
+      "text": "Advanced RAG strategies and query translation techniques improve reliability and performance of RAG systems.",
+      "scope": "by extending the basic architecture",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5095832e",
+      "verbatim": "advanced RAG strategies and query translation techniques that extend the basic architecture to improve reliability and performance",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_cdac31b2",
+      "text": "Corrective Retrieval-Augmented Generation (C-RAG) is motivated by the idea of advanced RAG strategies and query translation techniques.",
+      "scope": "as a framework design",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5095832e",
+      "verbatim": "That idea is exactly what motivates Corrective Retrieval-Augmented Generation (C-RAG)",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_d72dcfa6",
+      "text": "Retrieval-Augmented Generation (RAG) enhances large language models by providing relevant documents.",
+      "scope": "as a framework",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5095832e",
+      "verbatim": "Retrieval-Augmented Generation (RAG) is a framework that enhances large language models by feeding them relevant docu",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_06b1602a",
+      "text": "RAG significantly improves factual accuracy",
+      "scope": "for factual accuracy",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_8f69fe76",
+      "verbatim": "RAG significantly improves factual accuracy [21]",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_1480e5b9",
+      "text": "RAG models often outperform non-RAG approaches",
+      "scope": "in general",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_8f69fe76",
+      "verbatim": "While RAG models often outperform non-RAG approaches",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_5a8dd8f2",
+      "text": "The performance of RAG models is not always guaranteed",
+      "scope": "in all cases",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_8f69fe76",
+      "verbatim": "this is not always guaranteed",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_4ba99e11",
+      "text": "RAG boosts factual accuracy in the biomedical domain",
+      "scope": "biomedical domain",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_65c476fc",
+      "verbatim": "These results demonstrate a clear trend: RAG boosts factual accuracy and answer recall in the biomedical domain",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_391a061b",
+      "text": "RAG boosts answer recall in the biomedical domain",
+      "scope": "biomedical domain",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_65c476fc",
+      "verbatim": "These results demonstrate a clear trend: RAG boosts factual accuracy and answer recall in the biomedical domain",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_80af88d7",
+      "text": "RAG improves LLM accuracy by connecting large language models to external knowledge sources.",
+      "scope": "for reducing hallucinations and outdated information",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_876c1dbd",
+      "verbatim": "RAG (Retrieval-Augmented Generation) improves LLM accuracy by connecting large language models to external knowledge sources, reducing hallucinations and outdated information.",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_cbbe6b35",
+      "text": "RAG combines the conversational abilities of large language models with real-time information retrieval from external sources.",
+      "scope": "for integrating real-time data",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_876c1dbd",
+      "verbatim": "RAG combines the conversational abilities of large language models with real-time information retrieval from external sources.",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_1ef1f835",
+      "text": "The RAG system works through three core components: a retrieval mechanism, an embedding system, and an integration component.",
+      "scope": "for system operation",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_876c1dbd",
+      "verbatim": "The system works through three core components: a retrieval mechanism that searches external knowledge bases, an embedding system that matches user queries with relevant information, and an integra",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_a305c90c",
+      "text": "RAG supports fine-grained control over data access.",
+      "scope": "for data access",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "RAG also supports fine-grained control over data access, and organizations don't have to retrain the underlying AI model for output to reflect updated enterprise content.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_02d76daa",
+      "text": "Organizations do not have to retrain the underlying AI model for output to reflect updated enterprise content.",
+      "scope": "for updated enterprise content",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "RAG also supports fine-grained control over data access, and organizations don't have to retrain the underlying AI model for output to reflect updated enterprise content.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_ad5ccc8b",
+      "text": "RAG has retrieval irrelevance as a limitation.",
+      "scope": "for organizations to consider",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "However, RAG has limitations and challenges for organizations to consider: retrieval irrelevance, residual hallucination, latency and performance bottlenecks, debugging complexity, operational and infrastructure complexity, performance monitoring, data control and security issues, and industry-specific considerations.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_f88f92d7",
+      "text": "RAG has residual hallucination as a challenge.",
+      "scope": "for organizations to consider",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "However, RAG has limitations and challenges for organizations to consider: retrieval irrelevance, residual hallucination, latency and performance bottlenecks, debugging complexity, operational and infrastructure complexity, performance monitoring, data control and security issues, and industry-specific considerations.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_43edeecd",
+      "text": "RAG has latency and performance bottlenecks.",
+      "scope": "for organizations to consider",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "However, RAG has limitations and challenges for organizations to consider: retrieval irrelevance, residual hallucination, latency and performance bottlenecks, debugging complexity, operational and infrastructure complexity, performance monitoring, data control and security issues, and industry-specific considerations.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_dbbb400e",
+      "text": "RAG has debugging complexity.",
+      "scope": "for organizations to consider",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "However, RAG has limitations and challenges for organizations to consider: retrieval irrelevance, residual hallucination, latency and performance bottlenecks, debugging complexity, operational and infrastructure complexity, performance monitoring, data control and security issues, and industry-specific considerations.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_c2fbf0bb",
+      "text": "RAG has operational and infrastructure complexity.",
+      "scope": "for organizations to consider",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "However, RAG has limitations and challenges for organizations to consider: retrieval irrelevance, residual hallucination, latency and performance bottlenecks, debugging complexity, operational and infrastructure complexity, performance monitoring, data control and security issues, and industry-specific considerations.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_b10cbdf7",
+      "text": "RAG has performance monitoring issues.",
+      "scope": "for organizations to consider",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "However, RAG has limitations and challenges for organizations to consider: retrieval irrelevance, residual hallucination, latency and performance bottlenecks, debugging complexity, operational and infrastructure complexity, performance monitoring, data control and security issues, and industry-specific considerations.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_cfdaee0b",
+      "text": "RAG has data control and security issues.",
+      "scope": "for organizations to consider",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "However, RAG has limitations and challenges for organizations to consider: retrieval irrelevance, residual hallucination, latency and performance bottlenecks, debugging complexity, operational and infrastructure complexity, performance monitoring, data control and security issues, and industry-specific considerations.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_717e312c",
+      "text": "RAG has industry-specific considerations.",
+      "scope": "for organizations to consider",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_7850ffc4",
+      "verbatim": "However, RAG has limitations and challenges for organizations to consider: retrieval irrelevance, residual hallucination, latency and performance bottlenecks, debugging complexity, operational and infrastructure complexity, performance monitoring, data control and security issues, and industry-specific considerations.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_81b359c7",
+      "text": "RAG integrates retrieval-based methods with generation-based methods",
+      "scope": "for enabling more informed and context-aware responses",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_f66e9342",
+      "verbatim": "RAG integrates retrieval-based methods with generation-based methods, enabling more informed and context-aware responses.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_7a62824b",
+      "text": "RAG is a hybrid AI framework that combines retrieval systems with generative AI models",
+      "scope": "as a hybrid AI framework",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_f66e9342",
+      "verbatim": "Retrieval-Augmented Generation is a hybrid AI framework that combines the strengths of retrieval systems (like search engines) with generative AI models (like GPT).",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_41fffdef",
+      "text": "RAG is unable to determine if retrieved data is the most relevant information needed to solve a problem.",
+      "scope": "in general",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_6c7d8372",
+      "verbatim": "RAG is unable to fully understand whether the data that is being retrieved is the most relevant information the language model needs to effectively solve the problem.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_57cda648",
+      "text": "Current RAG implementations lack the capability of an iterative reasoning process involving problem understanding, targeted search strategy formulation, and retrieval of useful information.",
+      "scope": "for current RAG implementations",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_6c7d8372",
+      "verbatim": "This iterative reasoning process \u2014 understanding the problem, formulating a more targeted search strategy, and then retrieving the most useful information \u2014 is a capability that current RAG implementations lack.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_9e51615f",
+      "text": "RAG greatly increases factual accuracy",
+      "scope": "by grounding answers in retrieved documents",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_96f4d833",
+      "verbatim": "By grounding answers in retrieved documents, RAG greatly increases factual accuracy.",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_fd89a0da",
+      "text": "The quality of retrieved documents in a Retrieval-Augmented Generation (RAG) system directly impacts the accuracy of its final answers.",
+      "scope": "for Retrieval-Augmented Generation (RAG) systems",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_2bd741a6",
+      "verbatim": "The quality of retrieved documents in a Retrieval-Augmented Generation (RAG) system directly impacts the accuracy of its final answers.",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_86eee2a8",
+      "text": "Context relevance scores (human or automated) can be used as metrics to highlight the impact of retrieved document quality on final answer accuracy.",
+      "scope": "for metrics to highlight the impact of retrieved document quality in RAG",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_2bd741a6",
+      "verbatim": "**context relevance scores** (human or aut",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_b6324c04",
+      "text": "The next step after retrieving relevant context in the RA pipeline is Generation, where the Large Language Model (LLM) is used.",
+      "scope": "in the RA pipeline",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_83f3b0ce",
+      "verbatim": "LLM Generation \u2014 The Final Step in the RA Pipeline After storing and retrieving relevant context from the vector database, the next step is Generation, where the Large Language Model (LLM) comes into play.",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_c65119fe",
+      "text": "The retrieved information is combined with the user\u2019s question to create a structured prompt for the LLM.",
+      "scope": "for building a context-aware prompt",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_83f3b0ce",
+      "verbatim": "2\ufe0f\u20e3 Build a Context-Aware Prompt The retrieved information is combined with the user\u2019s question to create a prompt that looks something like this: Context: [Relevant text from retrieved documents] Question: [User\u2019s input question]",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_077d17f4",
+      "text": "The structured prompt is sent to the LLM as part of the RA pipeline.",
+      "scope": "in the RA pipeline",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_83f3b0ce",
+      "verbatim": "3\ufe0f\u20e3 Send the Prompt to the LLM The structured prompt is passed",
+      "sub_question_id": "sq5",
+      "step": 4
+    }
+  ],
+  "claim_groups": [
+    {
+      "id": "grp_e279d030",
+      "canonical_text": "RAG models overcome limitations of traditional LLMs by adding a retrieval system that pulls relevant documents or data from an external source in real-time.",
+      "scope": "for overcoming limitations in traditional LLMs",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_3c5f850f"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "labelyourdata.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_c23aa0ff",
+      "canonical_text": "After retrieval, the identified documents are passed to a generation model (usually an LLM) to craft a response and improve output quality.",
+      "scope": "when the retrieval mechanism identifies relevant documents",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_c5b5f507"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "labelyourdata.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_9cb6ceaf",
+      "canonical_text": "RAG enhances traditional LLMs by incorporating a retrieval mechanism that pulls in relevant data.",
+      "scope": "for enhancing traditional LLMs",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_ca33b09a"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "labelyourdata.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_a4b32f95",
+      "canonical_text": "Applying RAG improved the accuracy of every model by an average of 39.7%",
+      "scope": "for every model",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_4f5448ce"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "pubmed.ncbi.nlm.nih.gov"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_da694017",
+      "canonical_text": "Meta's open-source Llama3 was the highest performing model when using RAG",
+      "scope": "with just RAG",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_dfda5c81"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "pubmed.ncbi.nlm.nih.gov"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_3c072ce6",
+      "canonical_text": "Misinformation can be worse than no information at all for LLMs.",
+      "scope": "in general",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_a691aedf"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.scholarlyreview.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_e77d1ccd",
+      "canonical_text": "LLMs ideally perform the same regardless of how much context they are given.",
+      "scope": "in an ideal scenario",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_c3eaf9db"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.scholarlyreview.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_52a8880f",
+      "canonical_text": "Retrievers can feed LLMs as much context as needed for them to utilize necessary snippets.",
+      "scope": "in an ideal scenario",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_68fdd168"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.scholarlyreview.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_63f2fc89",
+      "canonical_text": "LLMs suffer decreased performance in accuracy for tasks when given more context.",
+      "scope": "for tasks",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_0760e344"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.scholarlyreview.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_f28ab4df",
+      "canonical_text": "RAG systems are intended to solve the data freshness problem",
+      "scope": "data freshness problem",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_a7476bb5"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.reddit.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_4480df68",
+      "canonical_text": "RAG systems still require significant manual upkeep",
+      "scope": "current implementation of RAG systems",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_804284cc"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.reddit.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_4ad3edd7",
+      "canonical_text": "The guide covers retrieval quality evaluation in RAG systems.",
+      "scope": "within the practical guide",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_3131b583"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_1bda6932",
+      "canonical_text": "The guide includes groundedness evaluation as part of RAG system assessment.",
+      "scope": "within the practical guide",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_90f9a525"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_6a3cafdd",
+      "canonical_text": "LLM evaluation is addressed in the practical guide for RAG systems.",
+      "scope": "within the practical guide",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_5c4e9830",
+        "clm_372289fb"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_190b1dbb",
+      "canonical_text": "System metrics are covered in the guide for evaluating RAG systems.",
+      "scope": "within the practical guide",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_f4dc34b2"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_a143dbc8",
+      "canonical_text": "Advanced RAG strategies and query translation techniques improve reliability and performance of RAG systems.",
+      "scope": "by extending the basic architecture",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_81446592"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_cda77b12",
+      "canonical_text": "Corrective Retrieval-Augmented Generation (C-RAG) is motivated by the idea of advanced RAG strategies and query translation techniques.",
+      "scope": "as a framework design",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_cdac31b2"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_0ad14911",
+      "canonical_text": "Retrieval-Augmented Generation (RAG) enhances large language models by providing relevant documents.",
+      "scope": "as a framework",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_d72dcfa6"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_d08ed955",
+      "canonical_text": "RAG significantly improves factual accuracy",
+      "scope": "for factual accuracy",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_06b1602a"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_2656635a",
+      "canonical_text": "RAG models often outperform non-RAG approaches",
+      "scope": "in general",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_1480e5b9"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_3ac507d9",
+      "canonical_text": "The performance of RAG models is not always guaranteed",
+      "scope": "in all cases",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_5a8dd8f2"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_b2149606",
+      "canonical_text": "RAG boosts factual accuracy in the biomedical domain",
+      "scope": "biomedical domain",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_4ba99e11",
+        "clm_391a061b"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "intuitionlabs.ai"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_52bc4b5d",
+      "canonical_text": "RAG improves LLM accuracy by connecting large language models to external knowledge sources.",
+      "scope": "for reducing hallucinations and outdated information",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_80af88d7"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.larkinfolab.nl"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_1d376aae",
+      "canonical_text": "RAG combines the conversational abilities of large language models with real-time information retrieval from external sources.",
+      "scope": "for integrating real-time data",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_cbbe6b35"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.larkinfolab.nl"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_93c2d010",
+      "canonical_text": "The RAG system works through three core components: a retrieval mechanism, an embedding system, and an integration component.",
+      "scope": "for system operation",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_1ef1f835"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.larkinfolab.nl"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_05bc9b09",
+      "canonical_text": "RAG supports fine-grained control over data access.",
+      "scope": "for data access",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_a305c90c"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_8224aab1",
+      "canonical_text": "Organizations do not have to retrain the underlying AI model for output to reflect updated enterprise content.",
+      "scope": "for updated enterprise content",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_02d76daa"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_fe7e21e9",
+      "canonical_text": "RAG has retrieval irrelevance as a limitation.",
+      "scope": "for organizations to consider",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_ad5ccc8b"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_b76ae374",
+      "canonical_text": "RAG has residual hallucination as a challenge.",
+      "scope": "for organizations to consider",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_f88f92d7"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_87196c7b",
+      "canonical_text": "RAG has latency and performance bottlenecks.",
+      "scope": "for organizations to consider",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_43edeecd"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_55df83ac",
+      "canonical_text": "RAG has debugging complexity.",
+      "scope": "for organizations to consider",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_dbbb400e"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_c98cee76",
+      "canonical_text": "RAG has operational and infrastructure complexity.",
+      "scope": "for organizations to consider",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_c2fbf0bb"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_cf82b47e",
+      "canonical_text": "RAG has performance monitoring issues.",
+      "scope": "for organizations to consider",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_b10cbdf7"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_77e67c39",
+      "canonical_text": "RAG has data control and security issues.",
+      "scope": "for organizations to consider",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_cfdaee0b"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_06053f0b",
+      "canonical_text": "RAG has industry-specific considerations.",
+      "scope": "for organizations to consider",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_717e312c"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.techtarget.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_f1413cbe",
+      "canonical_text": "RAG integrates retrieval-based methods with generation-based methods",
+      "scope": "for enabling more informed and context-aware responses",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_81b359c7"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "cloudkitect.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_2c83e350",
+      "canonical_text": "RAG is a hybrid AI framework that combines retrieval systems with generative AI models",
+      "scope": "as a hybrid AI framework",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_7a62824b"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "cloudkitect.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_54437d83",
+      "canonical_text": "RAG is unable to determine if retrieved data is the most relevant information needed to solve a problem.",
+      "scope": "in general",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_41fffdef"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_1f30946b",
+      "canonical_text": "Current RAG implementations lack the capability of an iterative reasoning process involving problem understanding, targeted search strategy formulation, and retrieval of useful information.",
+      "scope": "for current RAG implementations",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_57cda648"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_cb969cc0",
+      "canonical_text": "RAG greatly increases factual accuracy",
+      "scope": "by grounding answers in retrieved documents",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_9e51615f"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "intuitionlabs.ai"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_52919f67",
+      "canonical_text": "The quality of retrieved documents in a Retrieval-Augmented Generation (RAG) system directly impacts the accuracy of its final answers.",
+      "scope": "for Retrieval-Augmented Generation (RAG) systems",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_fd89a0da"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "milvus.io"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_aa0dd2e3",
+      "canonical_text": "Context relevance scores (human or automated) can be used as metrics to highlight the impact of retrieved document quality on final answer accuracy.",
+      "scope": "for metrics to highlight the impact of retrieved document quality in RAG",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_86eee2a8"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "milvus.io"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_728a4991",
+      "canonical_text": "The next step after retrieving relevant context in the RA pipeline is Generation, where the Large Language Model (LLM) is used.",
+      "scope": "in the RA pipeline",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_b6324c04"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.linkedin.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_6d65b6ab",
+      "canonical_text": "The retrieved information is combined with the user\u2019s question to create a structured prompt for the LLM.",
+      "scope": "for building a context-aware prompt",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_c65119fe"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.linkedin.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_c05143d6",
+      "canonical_text": "The structured prompt is sent to the LLM as part of the RA pipeline.",
+      "scope": "in the RA pipeline",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_077d17f4"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.linkedin.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    }
+  ],
+  "step_history": [
+    {
+      "step": 0,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 1,
+      "action": "search:sq2",
+      "sub_question_id": "sq2",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 2,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 3,
+      "action": "search:sq4",
+      "sub_question_id": "sq4",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 4,
+      "action": "search:sq5",
+      "sub_question_id": "sq5",
+      "result": "NEW_EVIDENCE"
+    }
+  ],
+  "termination_reason": "COVERAGE_MET"
+}
