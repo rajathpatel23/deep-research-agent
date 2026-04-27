@@ -89,7 +89,7 @@ def test_run_propagates_domain_score_and_applies_direct_gating(tmp_path, monkeyp
         ]
     }
 
-    def _fake_extract_claims(new_obs, llm):
+    def _fake_extract_claims(new_obs, llm, parallelism=1):
         obs = new_obs[0]
         return [
             Claim(
@@ -114,6 +114,7 @@ def test_run_propagates_domain_score_and_applies_direct_gating(tmp_path, monkeyp
         groq_api_key=None,
         anthropic_api_key=None,
         nebius_api_key=None,
+        minimax_api_key=None,
         tavily_api_key=None,
         mock_mode=True,
         enable_claim_filter=False,

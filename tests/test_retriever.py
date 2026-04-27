@@ -10,6 +10,7 @@ def _config() -> Config:
         groq_api_key=None,
         anthropic_api_key=None,
         nebius_api_key=None,
+        minimax_api_key=None,
         tavily_api_key=None,
         mock_mode=True,
     )
@@ -63,15 +64,18 @@ def test_thin_snippet_is_blocked():
 def test_prepare_query_normalizes_whitespace():
     retriever = Retriever(_config())
     query = "  chain-of-thought   reasoning \n\n benchmarks  "
-    assert retriever._prepare_query(query) == "chain-of-thought reasoning benchmarks"
+    prepared, meta = retriever._prepare_query(query)
+    assert prepared == "chain-of-thought reasoning benchmarks"
+    assert meta["compression_attempted"] is False
 
 
 def test_prepare_query_truncates_to_tavily_limit():
     retriever = Retriever(_config())
     long_query = "token " * 120  # > 400 chars
-    prepared = retriever._prepare_query(long_query)
+    prepared, meta = retriever._prepare_query(long_query)
     assert len(prepared) <= 400
     assert prepared.endswith("token")
+    assert meta["compression_attempted"] is True
 
 
 def test_prepare_query_prefers_compressed_query_when_available():
@@ -83,15 +87,15 @@ def test_prepare_query_prefers_compressed_query_when_available():
 
     retriever._query_compressor = _Compressor()
     long_query = "token " * 120
-    prepared = retriever._prepare_query(long_query)
+    prepared, meta = retriever._prepare_query(long_query)
     assert prepared == "compressed query about cot benchmarks failures and limitations"
+    assert meta["compression_method"] == "llm"
 
 
 def test_prepare_query_sets_compression_metadata():
     retriever = Retriever(_config())
     long_query = "token " * 120
-    _ = retriever._prepare_query(long_query)
-    meta = retriever._last_query_prep_meta
+    _, meta = retriever._prepare_query(long_query)
     assert meta["compression_attempted"] is True
     assert meta["compressed_query_len"] <= 400
     assert meta["compression_saved_chars"] > 0
