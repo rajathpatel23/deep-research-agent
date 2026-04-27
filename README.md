@@ -125,8 +125,11 @@ The system has three main configuration layers:
 
 ### Supported Search Backends
 
-- `tavily`
-- `mock`
+- `tavily` — full-page raw content for downstream extraction
+- `minimax` — coding-plan web search (snippets only; no raw page content)
+- `mock` — deterministic offline fixtures
+
+Backends are pluggable via the `SearchClient` strategy in `src/agent/search_clients.py`. To add a new backend, implement the protocol and register it in `build_search_client`.
 
 ## Outputs and Artifacts
 

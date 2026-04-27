@@ -13,8 +13,11 @@ Set keys/provider in `.env`:
 
 - `LLM_PROVIDER` (`groq|anthropic|nebius|minimax|ollama|mock`)
 - `LLM_MODEL`
-- `SEARCH_BACKEND` (`tavily|mock`)
+- `SEARCH_BACKEND` (`tavily|minimax|mock`)
 - provider keys (`GROQ_API_KEY`, `ANTHROPIC_API_KEY`, `NEBIUS_API_KEY`, `MINIMAX_API_KEY`, `TAVILY_API_KEY`)
+- `MINIMAX_API_HOST` (optional; defaults to `https://api.minimax.io`)
+
+> Backend choice affects evidence quality. `tavily` returns full page text; `minimax` returns snippets only and emits a one-time runtime warning. See `published_docs/results.md` Run 3 for measured impact on `summary_grounding_rate`.
 
 ## Single Query Run
 

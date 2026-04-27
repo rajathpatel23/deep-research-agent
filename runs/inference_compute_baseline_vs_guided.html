@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Research Agent — Baseline vs Guided</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.5; }
+  .container { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.5rem; }
+  h2 { font-size: 0.9rem; font-weight: 600; color: #94a3b8; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .query-box { background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 1rem; color: #f1f5f9; border-left: 3px solid #6366f1; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .col-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .mode-badge { padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+  .badge-baseline { background: #312e81; color: #a5b4fc; }
+  .badge-guided { background: #14532d; color: #86efac; }
+  .stat-row { display: flex; gap: 1.5rem; margin-bottom: 1rem; }
+  .stat { background: #1e293b; border-radius: 6px; padding: 0.6rem 1rem; flex: 1; }
+  .stat-val { font-size: 1.4rem; font-weight: 700; }
+  .stat-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; }
+  .step-card { background: #1e293b; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; }
+  .step-header { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.3rem; }
+  .step-num { font-size: 0.7rem; color: #475569; font-weight: 600; min-width: 40px; }
+  .step-action { font-size: 0.75rem; font-weight: 600; color: #94a3b8; }
+  .step-result { font-size: 0.7rem; font-weight: 700; margin-left: auto; }
+  .step-question { font-size: 0.78rem; color: #64748b; line-height: 1.4; }
+  .metric-row { background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+  .metric-label strong { display: block; font-size: 0.85rem; margin-bottom: 0.2rem; }
+  .metric-explain { font-size: 0.72rem; color: #475569; line-height: 1.4; display: block; margin-bottom: 0.75rem; }
+  .bar-group { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+  .bar-label { font-size: 0.7rem; color: #64748b; min-width: 55px; }
+  .bar-track { flex: 1; background: #334155; border-radius: 3px; height: 8px; }
+  .bar-fill { height: 8px; border-radius: 3px; }
+  .bar-val { font-size: 0.78rem; font-weight: 600; min-width: 55px; }
+  .report-box { background: #1e293b; border-radius: 8px; padding: 1.25rem; font-size: 0.82rem; color: #cbd5e1; line-height: 1.7; max-height: 600px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+  .r-h2 { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin: 1.2rem 0 0.4rem; border-bottom: 1px solid #334155; padding-bottom: 0.25rem; }
+  .r-h3 { font-size: 0.88rem; font-weight: 700; color: #a5b4fc; margin: 1rem 0 0.3rem; }
+  .r-h4 { font-size: 0.82rem; font-weight: 600; color: #7dd3fc; margin: 0.8rem 0 0.2rem; }
+  .r-p { margin-bottom: 0.5rem; }
+  .r-gap { height: 0.4rem; }
+  li { margin-left: 1.2rem; margin-bottom: 0.25rem; }
+  .conflict-card { background: #1e293b; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid #ef4444; }
+  .conflict-claim { font-size: 0.82rem; margin-bottom: 0.3rem; }
+  .conflict-meta { font-size: 0.72rem; color: #64748b; }
+  .dim { color: #475569; font-size: 0.82rem; }
+  .section { margin-bottom: 2.5rem; }
+  .full-width { grid-column: 1 / -1; }
+  .insight-box { background: #172033; border: 1px solid #334155; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; }
+  .insight-box h3 { font-size: 0.8rem; color: #6366f1; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .insight-box p { font-size: 0.85rem; color: #94a3b8; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Deep Research Agent — Baseline vs. Guided Comparison</h1>
+  <div class="query-box">What is the current state of inference-time compute scaling for LLM reasoning? Separate what has been empirically validated from what is still speculative, and identify where the evidence is too thin to draw conclusions.</div>
+
+  <div class="insight-box">
+    <h3>What this comparison shows</h3>
+    <p>
+      Both modes ran on the same query with the same model (MiniMax-M2.7).
+      <strong>Baseline</strong> cycles sub-questions in fixed order, never challenges claims, stops only when budget runs out.
+      <strong>Guided</strong> reads the evidence state at each step — prioritizing uncovered angles, challenging high-confidence claims,
+      and stopping when evidence is genuinely exhausted.
+      The step journeys below show where they diverged and why the metrics differ.
+    </p>
+  </div>
+
+  <h2>Step Journey</h2>
+  <div class="cols section">
+    <div>
+      <div class="col-header">
+        <span class="mode-badge badge-baseline">BASELINE</span>
+        <span style="font-size:0.8rem;color:#64748b">10 steps · 9 claim groups · 0 disputes</span>
+      </div>
+      
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 0</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What empirical evidence shows inference-time compute scaling improves LLM reasoning performance on b…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #0ea5e9">
+          <div class="step-header">
+            <span class="step-num">Step 1</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#0ea5e9">NO_EXTRACTABLE_CLAIMS</span>
+          </div>
+          <div class="step-question">Which inference-time techniques like chain-of-thought, process reward models, and best-of-N sampling…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #6b7280">
+          <div class="step-header">
+            <span class="step-num">Step 2</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#6b7280">DEAD_END</span>
+          </div>
+          <div class="step-question">What are the diminishing returns and failure modes of inference-time compute scaling beyond a certai…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #0ea5e9">
+          <div class="step-header">
+            <span class="step-num">Step 3</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#0ea5e9">NO_EXTRACTABLE_CLAIMS</span>
+          </div>
+          <div class="step-question">Where is the evidence thin or contradictory regarding whether inference-time compute can compensate …</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #0ea5e9">
+          <div class="step-header">
+            <span class="step-num">Step 4</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#0ea5e9">NO_EXTRACTABLE_CLAIMS</span>
+          </div>
+          <div class="step-question">What methodological limitations exist in evaluating inference-time scaling benefits, including bench…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #f59e0b">
+          <div class="step-header">
+            <span class="step-num">Step 5</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#f59e0b">REDUNDANT</span>
+          </div>
+          <div class="step-question">What empirical evidence shows inference-time compute scaling improves LLM reasoning performance on b…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #6b7280">
+          <div class="step-header">
+            <span class="step-num">Step 6</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#6b7280">DEAD_END</span>
+          </div>
+          <div class="step-question">Which inference-time techniques like chain-of-thought, process reward models, and best-of-N sampling…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #6b7280">
+          <div class="step-header">
+            <span class="step-num">Step 7</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#6b7280">DEAD_END</span>
+          </div>
+          <div class="step-question">What are the diminishing returns and failure modes of inference-time compute scaling beyond a certai…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #6b7280; opacity: 0.8">
+          <div class="step-header">
+            <span class="step-num">END</span>
+            <span class="step-result" style="color:#6b7280">BUDGET_EXHAUSTED</span>
+          </div>
+          <div class="step-question">Hit step limit before evidence was exhausted — would benefit from more budget.</div>
+        </div>
+    </div>
+    <div>
+      <div class="col-header">
+        <span class="mode-badge badge-guided">GUIDED</span>
+        <span style="font-size:0.8rem;color:#64748b">8 steps · 8 claim groups · 0 disputes</span>
+      </div>
+      
+        <div class="step-card" style="border-left: 3px solid #6b7280">
+          <div class="step-header">
+            <span class="step-num">Step 0</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#6b7280">DEAD_END</span>
+          </div>
+          <div class="step-question">What empirical studies demonstrate inference-time compute scaling improving large language model rea…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #6b7280">
+          <div class="step-header">
+            <span class="step-num">Step 1</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#6b7280">DEAD_END</span>
+          </div>
+          <div class="step-question">What does the research show about process reward models versus outcome reward models for improving L…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #0ea5e9">
+          <div class="step-header">
+            <span class="step-num">Step 2</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#0ea5e9">NO_EXTRACTABLE_CLAIMS</span>
+          </div>
+          <div class="step-question">What are the documented performance improvements from methods like Best-of-N, beam search, and tree …</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 3</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the documented performance improvements from methods like Best-of-N, beam search, and tree …</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 4</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">When does inference-time compute scaling fail or show diminishing returns for LLM reasoning benchmar…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 5</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the criticisms and limitations of relying on test-time compute scaling versus pre-training …</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 6</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What empirical studies demonstrate inference-time compute scaling improving large language model rea…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 7</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What does the research show about process reward models versus outcome reward models for improving L…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e; opacity: 0.8">
+          <div class="step-header">
+            <span class="step-num">END</span>
+            <span class="step-result" style="color:#22c55e">COVERAGE_MET</span>
+          </div>
+          <div class="step-question">All sub-questions covered, no unchallenged high-confidence claims remaining.</div>
+        </div>
+    </div>
+  </div>
+
+  <h2>Evaluation Metrics — What Each Number Means</h2>
+  <div class="section">
+    
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Coverage</strong>
+            <span class="metric-explain">Fraction of sub-questions that got at least one evidence-backed claim. Low = the system left research threads uninvestigated.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:20%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">20%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+80%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Search Efficiency</strong>
+            <span class="metric-explain">Fraction of steps that produced new evidence or surfaced a conflict. Low = wasting budget on redundant or dead-end searches.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:12%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">12%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:62%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">62% <span style="color:#22c55e;font-size:0.75rem">+50%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Conflict Surfacing</strong>
+            <span class="metric-explain">When contradictions are detected, did the report surface them? If no contradictions are detected, this metric is N/A.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:0.25"></div></div>
+              <span class="bar-val">N/A</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e;opacity:0.25"></div></div>
+              <span class="bar-val">N/A <span style="color:#6b7280;font-size:0.75rem">n/a</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Stopping Quality</strong>
+            <span class="metric-explain">Did the run stop for a good reason? COVERAGE_MET or DIMINISHING_RETURNS = 100%; BUDGET_EXHAUSTED = 0%.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">0%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+100%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Summary Traceability</strong>
+            <span class="metric-explain">Fraction of summary sentences traceable to evidence claims or run metadata (coverage, claim groups, conflicts, steps).</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">0%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+100%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Source Diversity</strong>
+            <span class="metric-explain">Average number of distinct source domains per claim group. Higher = claims corroborated by independent sources, not just one outlet.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">100%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#6b7280;font-size:0.75rem">0%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Confidence Calibration</strong>
+            <span class="metric-explain">Are higher-confidence claims backed by stronger evidence than lower-confidence ones? If claims only use one confidence tier, this metric is N/A.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:0.25"></div></div>
+              <span class="bar-val">N/A</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e;opacity:0.25"></div></div>
+              <span class="bar-val">N/A <span style="color:#6b7280;font-size:0.75rem">n/a</span></span>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <h2>Conflicts Surfaced</h2>
+  <div class="cols section">
+    <div>
+      <div class="col-header"><span class="mode-badge badge-baseline">BASELINE</span></div>
+      <p class='dim'>No conflicts detected.</p>
+    </div>
+    <div>
+      <div class="col-header"><span class="mode-badge badge-guided">GUIDED</span></div>
+      <p class='dim'>No conflicts detected.</p>
+    </div>
+  </div>
+
+  <h2>Generated Reports</h2>
+  <div class="cols section">
+    <div>
+      <div class="col-header"><span class="mode-badge badge-baseline">BASELINE</span></div>
+      <div class="report-box"><h2 class="r-h2">Research Report</h2>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Query:</strong> What is the current state of inference-time compute scaling for LLM reasoning? Separate what has been empirically validated from what is still speculative, and identify where the evidence is too thin to draw conclusions.</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Summary</h3>
+<div class="r-gap"></div>
+<p class="r-p">Research suggests that inference-time compute scaling can improve LLM reasoning on certain tasks, as evidenced by OpenAI O3 achieving 87.5% on ARC-AGI at substantial cost and observed linear accuracy scaling with log-compute for some domains. However, the evidence base is limited—findings primarily come from small-scale studies across nine models and eight tasks, and whether scratchpad lengthening and other scaling strategies effective for mathematical reasoning generalize to broader reasoning remains unclear. Direct comparisons between different compute allocation strategies (chain-of-thought, best-of-N, tree search) and documented failure cases or diminishing returns are largely uncovered by available evidence.</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Findings</h3>
+<div class="r-gap"></div>
+<h4 class="r-h4">What empirical evidence demonstrates that inference-time compute scaling improves LLM reasoning performance on benchmark tasks?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> OpenAI O3 achieved 87.5% accuracy on ARC-AGI benchmark. [13]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: ARC-AGI benchmark</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> OpenAI O3 incurred over $1k test-time cost to solve each ARC-AGI task. [13]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: OpenAI O3 on ARC-AGI benchmark</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">How do different inference-time compute allocation strategies like chain-of-thought prompting, best-of-N sampling, and tree search compare in measured reasoning improvements?</h4>
+<div class="r-gap"></div>
+<p class="r-p">*No evidence found for this sub-question.*</p>
+<div class="r-gap"></div>
+<h4 class="r-h4">What theoretical frameworks or scaling laws have been proposed to predict the relationship between inference compute and reasoning capability?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Linear accuracy scaling with log-compute is an observed pattern that can be theoretically recovered. [7]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: In the theoretical framework presented</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The authors study inference scaling laws (test-time scaling laws) and compute-optimal inference for LLM problem-solving. [8]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: for large language model problem-solving tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> A simple predictive model can describe the functional behavior of inference with increasing number of attempts. [3]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: the proposed approach in this paper</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What are the documented failure cases and diminishing returns observed when scaling inference-time compute for large language model reasoning tasks? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p">*No evidence found for this sub-question.*</p>
+<div class="r-gap"></div>
+<h4 class="r-h4">Which claims about inference-time compute scaling rely on small-scale experiments or limited benchmarks that may not generalize to broader reasoning? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Lengthening generated scratchpads has proven effective for mathematical tasks. [6]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: For mathematical tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The broader impact of scratchpad lengthening on other tasks remains less clear. [6]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: For tasks other than mathematical tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The study examines benefits and limitations of scaling methods across nine state-of-the-art models and eight challenging tasks. [6]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: Nine state-of-the-art models and eight challenging tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Inference-time scaling methods were studied across nine state-of-the-art models. [6]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: in this research study investigating scaling methods</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Unresolved Questions</h3>
+<div class="r-gap"></div>
+<li>How do different inference-time compute allocation strategies like chain-of-thought prompting, best-of-N sampling, and tree search compare in measured reasoning improvements?</li>
+<div class="r-gap"></div>
+<li>What are the documented failure cases and diminishing returns observed when scaling inference-time compute for large language model reasoning tasks?</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Sources</h3>
+<div class="r-gap"></div>
+<p class="r-p">[1] dl.acm.org — https://dl.acm.org/doi/proceedings/10.1145/3721146</p>
+<div class="r-gap"></div>
+<p class="r-p">[2] arxiv.org — https://arxiv.org/list/cs.AI/new</p>
+<div class="r-gap"></div>
+<p class="r-p">[3] openreview.net — https://openreview.net/forum?id=4FWAwZtd2n</p>
+<div class="r-gap"></div>
+<p class="r-p">[4] aclanthology.org — https://aclanthology.org/2026.findings-eacl.315.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[5] proceedings.neurips.cc — https://proceedings.neurips.cc/paper_files/paper/2024/file/00d80722b756de0166523a87805dd00f-Paper-Conference.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[6] www.microsoft.com — https://www.microsoft.com/en-us/research/wp-content/uploads/2025/03/Inference-Time-Scaling-for-Complex-Tasks-Where-We-Stand-and-What-Lies-Ahead-2.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[7] royalsocietypublishing.org — https://royalsocietypublishing.org/rsta/article-abstract/384/2315/20240510/480528</p>
+<div class="r-gap"></div>
+<p class="r-p">[8] proceedings.iclr.cc — https://proceedings.iclr.cc/paper_files/paper/2025/file/8c3caae2f725c8e2a55ecd600563d172-Paper-Conference.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[9] neurips.cc — https://neurips.cc/virtual/2025/poster/116423</p>
+<div class="r-gap"></div>
+<p class="r-p">[10] medium.com — https://medium.com/@ml-point/test-time-compute-extending-scaling-laws-into-inference-0c65fba63716</p>
+<div class="r-gap"></div>
+<p class="r-p">[11] developers.redhat.com — https://developers.redhat.com/articles/2025/02/25/lessons-reproducing-r1-reasoning-small-llms</p>
+<div class="r-gap"></div>
+<p class="r-p">[12] www.researchgate.net — https://www.researchgate.net/publication/401429807_Inference-Time_Compute_as_a_Strategic_Resource_A_Structured_Quantitative_Synthesis_of_Test-Time_Scaling_Cost_Curves_and_Performance_Elasticity_in_Frontier_LLMs</p>
+<div class="r-gap"></div>
+<p class="r-p">[13] rdi.berkeley.edu — https://rdi.berkeley.edu/adv-llm-agents/slides/inference_time_techniques_lecture_sp25.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[14] github.com — https://github.com/ThreeSR/Awesome-Inference-Time-Scaling</p>
+<div class="r-gap"></div>
+<p class="r-p">[15] www.lesswrong.com — https://www.lesswrong.com/posts/HiTjDZyWdLEGCDzqu/implications-of-the-inference-scaling-paradigm-for-ai-safety</p>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Research Process</h3>
+<div class="r-gap"></div>
+<li>Total steps: 10</li>
+<div class="r-gap"></div>
+<li>Termination reason: BUDGET_EXHAUSTED</li>
+<div class="r-gap"></div>
+<li>Sub-questions: 5 total, 3 covered</li>
+<div class="r-gap"></div>
+<li>Claim groups: 9</li>
+<div class="r-gap"></div>
+<li>Step results: NO_EXTRACTABLE_CLAIMS, DEAD_END, NEW_EVIDENCE, DEAD_END, NEW_EVIDENCE, NEW_EVIDENCE, DEAD_END, NEW_EVIDENCE, NO_EXTRACTABLE_CLAIMS, NEW_EVIDENCE</li></div>
+    </div>
+    <div>
+      <div class="col-header"><span class="mode-badge badge-guided">GUIDED</span></div>
+      <div class="report-box"><h2 class="r-h2">Research Report</h2>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Query:</strong> What is the current state of inference-time compute scaling for LLM reasoning? Separate what has been empirically validated from what is still speculative, and identify where the evidence is too thin to draw conclusions.</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Summary</h3>
+<div class="r-gap"></div>
+<p class="r-p">Research indicates that inference-time compute scaling—using methods like Best-of-N, beam search, and tree search—can measurably improve LLM reasoning on math, coding, and STEM tasks without requiring additional training, with models like OpenAI o1 and O3 showing substantial gains; however, the evidence base is thin and largely derived from proprietary systems with limited public disclosure of methods. Studies suggest the effectiveness of test-time scaling varies considerably depending on task difficulty, and crucially, this approach currently shows little benefit for knowledge-intensive tasks where factual retrieval matters more than step-by-step reasoning. Pre-training scaling is reportedly reaching diminishing returns, which has increased interest in inference-time approaches, though whether these gains will generalize broadly or sustain further scaling remains speculative given the weak evidence quality and high computational costs (e.g., OpenAI O3 reportedly exceeding $1,000 per task on ARC-AGI).</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Findings</h3>
+<div class="r-gap"></div>
+<h4 class="r-h4">What empirical studies demonstrate inference-time compute scaling improving large language model reasoning performance?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> OpenAI o1 achieved impressive performance across various challenging reasoning tasks in math, coding, and STEM. [20]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: for challenging reasoning tasks in math, coding, and STEM</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Performance improves with more inference-time compute. [20]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: when more inference-time compute is allocated</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> OpenAI O3 achieved 87.5% accuracy on ARC-AGI with a test-time cost exceeding $1,000 to solve each task. [20]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: on ARC-AGI benchmark tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What does the research show about process reward models versus outcome reward models for improving LLM reasoning at test time?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The effectiveness of different approaches to scaling LLM test-time compute varies depending on the difficulty of the prompt. [10]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: for tasks involving two mechanisms: searching against process-based verifier reward models and adaptively updating response distributions</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What are the documented performance improvements from methods like Best-of-N, beam search, and tree search for LLM reasoning tasks?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Inference-time computation methods (e.g., Best-of-N, beam search) can enhance reasoning performance without modifying model parameters or requiring additional training. [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: for inference-time computation methods applied to large language models</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">When does inference-time compute scaling fail or show diminishing returns for LLM reasoning benchmarks? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Test-time scaling in reasoning models is not effective for knowledge-intensive tasks yet. [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: for knowledge-intensive tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What are the criticisms and limitations of relying on test-time compute scaling versus pre-training compute for language model improvements? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Test-time scaling in reasoning models is not effective for knowledge-intensive tasks yet. [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: in reasoning models applied to knowledge-intensive tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Pre-training scaling is reaching diminishing returns and resource limits. [18]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: in large language model development</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Sources</h3>
+<div class="r-gap"></div>
+<p class="r-p">[1] www.researchgate.net — https://www.researchgate.net/publication/389130353_Inference-Time_Computations_for_LLM_Reasoning_and_Planning_A_Benchmark_and_Insights</p>
+<div class="r-gap"></div>
+<p class="r-p">[2] openreview.net — https://openreview.net/forum?id=4FWAwZtd2n</p>
+<div class="r-gap"></div>
+<p class="r-p">[3] neurips.cc — https://neurips.cc/virtual/2025/poster/121550</p>
+<div class="r-gap"></div>
+<p class="r-p">[4] dl.acm.org — https://dl.acm.org/doi/10.5555/3600270.3602070</p>
+<div class="r-gap"></div>
+<p class="r-p">[5] www.anthropic.com — https://www.anthropic.com/research/reasoning-models-dont-say-think</p>
+<div class="r-gap"></div>
+<p class="r-p">[6] medium.com — https://medium.com/verimsabanci/inference-time-compute-scaling-enhancing-reasoning-in-llms-without-additional-training-63417b1febfc</p>
+<div class="r-gap"></div>
+<p class="r-p">[7] arxiv.org — https://arxiv.org/pdf/2509.23324</p>
+<div class="r-gap"></div>
+<p class="r-p">[8] ideas.jwest.org — https://ideas.jwest.org/</p>
+<div class="r-gap"></div>
+<p class="r-p">[9] uacm.edu.mx — https://uacm.edu.mx/publicaciones/2026/4/17/2026_April_Computer-IA.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[10] www.semanticscholar.org — https://www.semanticscholar.org/paper/On-the-Limits-of-Test-Time-Compute%3A-Sequential-for-Yu-Di/8844f75dd2289e144f6ed8b4258bf1113986f9d7</p>
+<div class="r-gap"></div>
+<p class="r-p">[11] api.semanticscholar.org — https://api.semanticscholar.org/arXiv:2408.03314</p>
+<div class="r-gap"></div>
+<p class="r-p">[12] www.mdpi.com — https://www.mdpi.com/2076-3417/16/4/1821</p>
+<div class="r-gap"></div>
+<p class="r-p">[13] www.cs.cmu.edu — https://www.cs.cmu.edu/~zhihaoj2/papers/AdaServe_EuroSys26.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[14] app.daily.dev — https://app.daily.dev/posts/categories-of-inference-time-scaling-for-improved-llm-reasoning-bguxcwmhk</p>
+<div class="r-gap"></div>
+<p class="r-p">[15] www.emergentmind.com — https://www.emergentmind.com/topics/test-time-scaling-effect</p>
+<div class="r-gap"></div>
+<p class="r-p">[16] icml.cc — https://icml.cc/virtual/2025/poster/46046</p>
+<div class="r-gap"></div>
+<p class="r-p">[17] tutai.ai — https://tutai.ai/en/blog/from-gpt2-to-gpt4-how-llms-evolved</p>
+<div class="r-gap"></div>
+<p class="r-p">[18] papers.lunadong.com — https://papers.lunadong.com/paper/16716</p>
+<div class="r-gap"></div>
+<p class="r-p">[19] wellecks.com — https://wellecks.com/data/welleck2024__inference_compute.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[20] rdi.berkeley.edu — https://rdi.berkeley.edu/adv-llm-agents/slides/inference_time_techniques_lecture_sp25.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[21] bytez.com — https://bytez.com/read/neurips/117621?_c=eyJ2IjoxLCJyZWxhdGVkIjpbImNvZGUiLCJyZWZlcmVuY2VzIiwiY29uZmVyZW5jZSJdfQ==</p>
+<div class="r-gap"></div>
+<p class="r-p">[22] www.aimodels.fyi — https://www.aimodels.fyi/papers/arxiv/genprm-scaling-test-time-compute-process-reward</p>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Research Process</h3>
+<div class="r-gap"></div>
+<li>Total steps: 8</li>
+<div class="r-gap"></div>
+<li>Termination reason: COVERAGE_MET</li>
+<div class="r-gap"></div>
+<li>Sub-questions: 5 total, 5 covered</li>
+<div class="r-gap"></div>
+<li>Claim groups: 8</li>
+<div class="r-gap"></div>
+<li>Step results: DEAD_END, DEAD_END, NO_EXTRACTABLE_CLAIMS, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE</li></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

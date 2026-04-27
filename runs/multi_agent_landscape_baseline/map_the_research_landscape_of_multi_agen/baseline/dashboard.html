@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Research Agent — Baseline Run</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.5; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.25rem; }
+  h2 { font-size: 1.1rem; font-weight: 600; color: #94a3b8; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta { font-size: 0.85rem; color: #64748b; margin-bottom: 2rem; }
+  .meta span { margin-right: 1.5rem; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .metric-card { background: #1e293b; border-radius: 8px; padding: 1.25rem; }
+  .metric-value { font-size: 2rem; font-weight: 700; }
+  .metric-name { font-size: 0.8rem; color: #64748b; margin: 0.25rem 0 0.5rem; }
+  .metric-bar-bg { background: #334155; border-radius: 4px; height: 6px; }
+  .metric-bar-fill { height: 6px; border-radius: 4px; transition: width 0.3s; }
+  .timeline { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .pill { padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; color: white; cursor: default; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #1e293b; border-radius: 8px; overflow: hidden; }
+  .data-table th { background: #334155; padding: 0.6rem 0.8rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; }
+  .data-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #334155; vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; font-weight: 600; }
+  .badge-red { background: #450a0a; color: #fca5a5; }
+  .badge-blue { background: #1e3a5f; color: #93c5fd; }
+  .badge-orange { background: #431407; color: #fdba74; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+  .section { background: #1e293b; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; overflow-x: auto; }
+  .summary-bar { display: flex; gap: 1.5rem; background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 0.85rem; }
+  .summary-item { display: flex; flex-direction: column; }
+  .summary-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-val { font-weight: 700; color: #f8fafc; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.75rem; color: #cbd5e1; }
+  .yield-chip { display: inline-block; border-radius: 4px; padding: 0.15rem 0.4rem; font-size: 0.7rem; font-weight: 700; }
+  .yield-high { background: #14532d; color: #86efac; }
+  .yield-mid { background: #78350f; color: #fcd34d; }
+  .yield-low { background: #3f3f46; color: #d4d4d8; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Map the research landscape of multi-agent LLM systems. Produce a structured report that includes a visual taxonomy or design graph showing the major architectural patterns, how they relate, and where the open problems are.</h1>
+  <div class="meta">
+    <span>Mode: <strong>baseline</strong></span>
+    <span>Model: <strong>MiniMax-M2.7</strong></span>
+    <span>Termination: <strong style="color:#6b7280">BUDGET_EXHAUSTED</strong></span>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-item"><span class="summary-label">Steps</span><span class="summary-val">12</span></div>
+    <div class="summary-item"><span class="summary-label">Sub-questions</span><span class="summary-val">4/5</span></div>
+    <div class="summary-item"><span class="summary-label">Claim Groups</span><span class="summary-val">14</span></div>
+    <div class="summary-item"><span class="summary-label">Disputes</span><span class="summary-val">0</span></div>
+  </div>
+
+  <div class="metrics-grid">
+    
+        <div class="metric-card">
+          <div class="metric-value" style="color:#6366f1">80%</div>
+          <div class="metric-name">Coverage</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:80%; background:#6366f1"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#22c55e">67%</div>
+          <div class="metric-name">Efficiency</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:66%; background:#22c55e"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#64748b">N/A</div>
+          <div class="metric-name">Conflict Surfacing</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:0%; background:#ef4444"></div>
+      </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" style="color:#f59e0b">0%</div>
+          <div class="metric-name">Stopping Quality</div>
+          
+      <div class="metric-bar-bg">
+        <div class="metric-bar-fill" style="width:0%; background:#f59e0b"></div>
+      </div>
+        </div>
+  </div>
+
+  <h2>Step Timeline</h2>
+  <div class="section">
+    <div class='timeline'><span class="pill" style="background:#22c55e" title="Step 0: search:sq1">0 SEA NEW</span><span class="pill" style="background:#0ea5e9" title="Step 1: search:sq2">1 SEA NO CLAIMS</span><span class="pill" style="background:#22c55e" title="Step 2: search:sq3">2 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 3: search:sq4">3 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 4: search:sq5">4 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 5: search:sq1">5 SEA NEW</span><span class="pill" style="background:#6b7280" title="Step 6: search:sq2">6 SEA DEAD END</span><span class="pill" style="background:#22c55e" title="Step 7: search:sq3">7 SEA NEW</span><span class="pill" style="background:#0ea5e9" title="Step 8: search:sq4">8 SEA NO CLAIMS</span><span class="pill" style="background:#22c55e" title="Step 9: search:sq5">9 SEA NEW</span><span class="pill" style="background:#22c55e" title="Step 10: search:sq1">10 SEA NEW</span><span class="pill" style="background:#0ea5e9" title="Step 11: search:sq2">11 SEA NO CLAIMS</span></div>
+    <div style="margin-top:0.75rem;font-size:0.75rem;color:#64748b;display:flex;gap:1rem">
+      <span><span class="dot" style="background:#22c55e"></span>New Evidence</span>
+      <span><span class="dot" style="background:#ef4444"></span>Conflict Found</span>
+      <span><span class="dot" style="background:#f59e0b"></span>Redundant</span>
+      <span><span class="dot" style="background:#6b7280"></span>Dead End</span>
+      <span><span class="dot" style="background:#475569"></span>No Retrieval Results</span>
+      <span><span class="dot" style="background:#0ea5e9"></span>No Extractable Claims</span>
+    </div>
+  </div>
+
+  <h2>Diminishing Returns (Search Yield)</h2>
+  <div class="section">
+    <p style='margin-bottom:0.75rem;color:#94a3b8;font-size:0.8rem'>Stale streak counts consecutive low-yield steps (REDUNDANT/DEAD_END/NO_RESULTS/NO_CLAIMS). The move marker shows when search switched to a different sub-question.</p><table class='data-table'><thead><tr><th>Step</th><th>Action</th><th>Sub-question</th><th>Retrieved</th><th>Claims</th><th>Outcome</th><th>Stale Streak</th><th>Transition</th></tr></thead><tbody>
+            <tr>
+              <td>0</td>
+              <td><span class="mono">search:sq1</span></td>
+              <td>What are the major architectural patterns for multi-agent LLM systems?</td>
+              <td>5</td>
+              <td>1</td>
+              <td><span class="yield-chip yield-high">NEW_EVIDENCE</span></td>
+              <td>0</td>
+              <td>—</td>
+            </tr>
+            
+            <tr>
+              <td>1</td>
+              <td><span class="mono">search:sq2</span></td>
+              <td>What coordination mechanisms and communication protocols are used in multi...</td>
+              <td>5</td>
+              <td>0</td>
+              <td><span class="yield-chip yield-mid">NO_EXTRACTABLE_CLAIMS</span></td>
+              <td>1</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>2</td>
+              <td><span class="mono">search:sq3</span></td>
+              <td>What evaluation benchmarks and metrics are used to assess multi-agent LLM ...</td>
+              <td>5</td>
+              <td>1</td>
+              <td><span class="yield-chip yield-high">NEW_EVIDENCE</span></td>
+              <td>0</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>3</td>
+              <td><span class="mono">search:sq4</span></td>
+              <td>What are the failure modes, limitations, and criticisms of current multi-a...</td>
+              <td>5</td>
+              <td>4</td>
+              <td><span class="yield-chip yield-high">NEW_EVIDENCE</span></td>
+              <td>0</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>4</td>
+              <td><span class="mono">search:sq5</span></td>
+              <td>What are the open research problems and unsolved challenges in multi-agent...</td>
+              <td>5</td>
+              <td>4</td>
+              <td><span class="yield-chip yield-high">NEW_EVIDENCE</span></td>
+              <td>0</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>5</td>
+              <td><span class="mono">search:sq1</span></td>
+              <td>What are the major architectural patterns for multi-agent LLM systems?</td>
+              <td>5</td>
+              <td>3</td>
+              <td><span class="yield-chip yield-high">NEW_EVIDENCE</span></td>
+              <td>0</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>6</td>
+              <td><span class="mono">search:sq2</span></td>
+              <td>What coordination mechanisms and communication protocols are used in multi...</td>
+              <td>5</td>
+              <td>3</td>
+              <td><span class="yield-chip yield-high">DEAD_END</span></td>
+              <td>1</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>7</td>
+              <td><span class="mono">search:sq3</span></td>
+              <td>What evaluation benchmarks and metrics are used to assess multi-agent LLM ...</td>
+              <td>5</td>
+              <td>2</td>
+              <td><span class="yield-chip yield-high">NEW_EVIDENCE</span></td>
+              <td>0</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>8</td>
+              <td><span class="mono">search:sq4</span></td>
+              <td>What are the failure modes, limitations, and criticisms of current multi-a...</td>
+              <td>5</td>
+              <td>0</td>
+              <td><span class="yield-chip yield-mid">NO_EXTRACTABLE_CLAIMS</span></td>
+              <td>1</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>9</td>
+              <td><span class="mono">search:sq5</span></td>
+              <td>What are the open research problems and unsolved challenges in multi-agent...</td>
+              <td>5</td>
+              <td>2</td>
+              <td><span class="yield-chip yield-high">NEW_EVIDENCE</span></td>
+              <td>0</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>10</td>
+              <td><span class="mono">search:sq1</span></td>
+              <td>What are the major architectural patterns for multi-agent LLM systems?</td>
+              <td>5</td>
+              <td>3</td>
+              <td><span class="yield-chip yield-high">NEW_EVIDENCE</span></td>
+              <td>0</td>
+              <td>→ moved on</td>
+            </tr>
+            
+            <tr>
+              <td>11</td>
+              <td><span class="mono">search:sq2</span></td>
+              <td>What coordination mechanisms and communication protocols are used in multi...</td>
+              <td>5</td>
+              <td>0</td>
+              <td><span class="yield-chip yield-mid">NO_EXTRACTABLE_CLAIMS</span></td>
+              <td>1</td>
+              <td>→ moved on</td>
+            </tr>
+            </tbody></table>
+  </div>
+
+  <h2>Sub-questions</h2>
+  <div class="section">
+    <table class='data-table'><thead><tr><th></th><th>Sub-question</th><th>Kind</th><th>Groups</th><th>Disputes</th></tr></thead><tbody>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What are the major architectural patterns for multi-agent LLM systems?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>5</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#9ca3af;font-weight:bold">○</td>
+            <td>What coordination mechanisms and communication protocols are used in multi-agent LLM frameworks like AutoGen, CrewAI, and LangGraph?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>0</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What evaluation benchmarks and metrics are used to assess multi-agent LLM system performance?</td>
+            <td><span class="badge badge-blue">supporting</span></td>
+            <td>2</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What are the failure modes, limitations, and criticisms of current multi-agent LLM architectures?</td>
+            <td><span class="badge badge-orange">adversarial</span></td>
+            <td>4</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="color:#22c55e;font-weight:bold">✓</td>
+            <td>What are the open research problems and unsolved challenges in multi-agent LLM systems?</td>
+            <td><span class="badge badge-orange">adversarial</span></td>
+            <td>3</td>
+            <td></td>
+          </tr></tbody></table>
+  </div>
+
+  <h2>Claim Groups (14)</h2>
+  <div class="section">
+    <table class='data-table'><thead><tr><th>Claim</th><th>Confidence</th><th>Status</th><th>Sources</th><th>Supporting</th><th>Contradicting</th></tr></thead><tbody>
+          <tr>
+            <td>The paper presents a systematic benchmark comparing four multi-agent orchestrati…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>A systematic benchmark comparing four multi-agent orchestration architectures ex…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>This paper presents a structured taxonomy of LLM agent failure modes with formal…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">papers.ssrn.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The taxonomy of LLM agent failure modes is organized across four functional cate…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">papers.ssrn.com</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>The paper benchmarks and systematically explores failure modes of multi-agent sy…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">openreview.net</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>This study presents the first systematic investigation of failure modes of LLM b…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Fine-grained failure modes in multi-agent systems are organized into 3 categorie…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>This work presents a systematic benchmark comparing four multi-agent orchestrati…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Multi-agent architectures distribute context across agents with separate windows</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">galileo.ai</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>This work aims to bring clarity to the fragmented landscape of agent evaluation …</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Multi-Agent LLM Systems often show minimal performance gains on popular benchmar…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">neurips.cc</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>This paper presents the first comprehensive study of MAS challenges</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>A systematic benchmark comparing four multi-agent orchestration architectures is…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Sequential pipeline is one of four multi-agent orchestration architectures being…</td>
+            <td><span class="dot" style="background:#9ca3af"></span>low</td>
+            <td><span class="dot" style="background:#9ca3af"></span>weak</td>
+            <td style="font-size:0.75rem;color:#6b7280">arxiv.org</td>
+            <td>2</td>
+            <td>0</td>
+          </tr></tbody></table>
+  </div>
+</div>
+</body>
+</html>

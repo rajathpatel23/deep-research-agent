@@ -29,6 +29,15 @@ def _slug(text: str, max_len: int = 40) -> str:
     return "".join(c if c.isalnum() else "_" for c in text.lower())[:max_len].strip("_")
 
 
+def _fmt_pct(value, width: int = 5) -> str:
+    """Format a metric as a percentage; treat None as 0."""
+    return f"{(value or 0):>{width}.0%}"
+
+
+def _fmt_float(value, width: int = 5, precision: int = 2) -> str:
+    return f"{(value or 0):>{width}.{precision}f}"
+
+
 def _print_comparison(results: list) -> None:
     if not results:
         return
@@ -48,19 +57,21 @@ def _print_comparison(results: list) -> None:
     print("-" * len(header))
 
     for r in results:
+        query = (r.get('query') or '')[:32]
+        model = (r.get('llm_model') or '')[:18]
         print(
-            f"{r['query'][:32]:<32} "
-            f"{r['mode']:<10} "
-            f"{r.get('llm_model', '')[:18]:<18} "
-            f"{r['total_steps']:>5} "
-            f"{r.get('coverage_completeness', 0):>5.0%} "
-            f"{r.get('search_efficiency', 0):>5.0%} "
-            f"{r.get('conflict_surfacing_rate', 0):>5.0%} "
-            f"{r.get('stopping_quality', 0):>5.0%} "
-            f"{r.get('summary_grounding_rate', 0):>5.0%} "
-            f"{r.get('source_diversity_mean', 0):>5.2f} "
-            f"{r.get('confidence_calibration', 0):>5.0%} "
-            f"{r['termination_reason']:<22}"
+            f"{query:<32} "
+            f"{r.get('mode', ''):<10} "
+            f"{model:<18} "
+            f"{r.get('total_steps', 0):>5} "
+            f"{_fmt_pct(r.get('coverage_completeness'))} "
+            f"{_fmt_pct(r.get('search_efficiency'))} "
+            f"{_fmt_pct(r.get('conflict_surfacing_rate'))} "
+            f"{_fmt_pct(r.get('stopping_quality'))} "
+            f"{_fmt_pct(r.get('summary_grounding_rate'))} "
+            f"{_fmt_float(r.get('source_diversity_mean'))} "
+            f"{_fmt_pct(r.get('confidence_calibration'))} "
+            f"{r.get('termination_reason', ''):<22}"
         )
     print("=" * len(header))
 

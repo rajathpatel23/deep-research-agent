@@ -3,11 +3,11 @@ from threading import Lock
 from copy import copy
 from dataclasses import dataclass
 from urllib.parse import urlparse
-from typing import Any
 
-from src.agent.config import Config, LLMProvider
+from src.agent.config import Config, LLMProvider, SearchBackend
 from src.agent.domain_policy import DomainQualityPolicy
 from src.agent.llm import LLMClient
+from src.agent.search_clients import SearchClient, build_search_client
 
 _SEARCH_RETRIES = 3
 _SEARCH_RETRY_SECS = 5
@@ -93,15 +93,12 @@ class Retriever:
                 else default_policy.low_score
             ),
         )
-        self._client: Any = None
+        self._client: SearchClient = build_search_client(config)
         self._query_compressor: LLMClient | None = None
         self._query_prep_lock = Lock()
         self._query_prep_events: list[dict] = []
         self._search_event_lock = Lock()
         self._search_call_events: list[dict] = []
-        if config.search_backend == "tavily":
-            from tavily import TavilyClient
-            self._client = TavilyClient(api_key=config.tavily_api_key)
         if (
             not config.mock_mode
             and config.enable_query_compressor
@@ -127,38 +124,28 @@ class Retriever:
                     self._query_compressor = None
 
     def search(self, query: str, max_results: int = 5, research_mode: bool = False) -> list[SearchResult]:
-        if self.config.search_backend == "mock":
-            return self._mock_search(query)
+        if self.config.search_backend == SearchBackend.MOCK:
+            raw_results = self._client.search(query, max_results=max_results)
+            return [self._to_search_result(r) for r in raw_results]
         safe_query, prep_meta = self._prepare_query(query)
         with self._query_prep_lock:
             self._query_prep_events.append(dict(prep_meta))
+        include_domains = self.domain_policy.research_domains if research_mode else None
+        exclude_domains = None if research_mode else _EXCLUDED_DOMAINS
         start = time.perf_counter()
         retries = 0
         for attempt in range(_SEARCH_RETRIES):
             try:
-                search_kwargs = dict(
+                raw_results = self._client.search(
+                    safe_query,
                     max_results=max_results,
-                    include_raw_content=True,
+                    include_domains=include_domains,
+                    exclude_domains=exclude_domains,
                 )
-                if research_mode:
-                    search_kwargs["include_domains"] = self.domain_policy.research_domains
-                else:
-                    search_kwargs["exclude_domains"] = _EXCLUDED_DOMAINS
-                results = self._client.search(safe_query, **search_kwargs)
                 filtered = [
-                    SearchResult(
-                        url=r["url"],
-                        title=r.get("title", ""),
-                        snippet=(r.get("raw_content") or r.get("content", ""))[:800],
-                        domain=self._extract_domain(r["url"]),
-                        domain_score=self._domain_quality_score(self._extract_domain(r["url"])),
-                    )
-                    for r in results.get("results", [])
-                    if self._is_text_result(
-                        url=r.get("url", ""),
-                        title=r.get("title", ""),
-                        snippet=(r.get("raw_content") or r.get("content", "")),
-                    )
+                    self._to_search_result(r)
+                    for r in raw_results
+                    if self._is_text_result(url=r.url, title=r.title, snippet=r.snippet)
                 ]
                 self._record_search_event(
                     retries=retries,
@@ -179,6 +166,16 @@ class Retriever:
                     )
                     raise
         return []
+
+    def _to_search_result(self, raw) -> SearchResult:
+        domain = self._extract_domain(raw.url)
+        return SearchResult(
+            url=raw.url,
+            title=raw.title,
+            snippet=raw.snippet,
+            domain=domain,
+            domain_score=self._domain_quality_score(domain),
+        )
 
     def _extract_domain(self, url: str) -> str:
         return urlparse(url).netloc
@@ -321,23 +318,3 @@ class Retriever:
 
         return True
 
-    def _mock_search(self, query: str) -> list[SearchResult]:
-        short = query[:40]
-        return [
-            SearchResult(
-                url=f"https://source-{i}.example.com/research",
-                title=f"Research on {short} — Source {i}",
-                snippet=(
-                    f"Empirical study {i}: Research on '{short}' shows measurable effects "
-                    f"in controlled conditions. Source {i} provides independent replication "
-                    f"with sample size n=200. Limitations include short follow-up period."
-                    if i % 2 == 1 else
-                    f"Critical review {i}: While initial findings on '{short}' appear promising, "
-                    f"several methodological concerns limit generalizability. Effect sizes vary "
-                    f"considerably across populations and settings."
-                ),
-                domain=f"source-{i}.example.com",
-                domain_score=self.domain_policy.medium_score,
-            )
-            for i in range(1, 4)
-        ]
