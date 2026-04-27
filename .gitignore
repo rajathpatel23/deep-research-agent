@@ -12,3 +12,4 @@ examples/outputs/*.json
 examples/outputs/*.md
 !examples/outputs/.gitkeep
 docs/
+runs/

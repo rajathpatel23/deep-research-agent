@@ -60,6 +60,63 @@ def _step_timeline(store: EvidenceStore) -> str:
     return "<div class='timeline'>" + "".join(pills) + "</div>"
 
 
+def _diminishing_returns_panel(store: EvidenceStore) -> str:
+    if not store.step_history:
+        return "<p>No steps recorded.</p>"
+
+    stale_results = {
+        StepResult.REDUNDANT,
+        StepResult.DEAD_END,
+        StepResult.NO_RETRIEVAL_RESULTS,
+        StepResult.NO_EXTRACTABLE_CLAIMS,
+    }
+    sq_by_id = {sq.id: sq.text for sq in store.sub_questions}
+    rows = []
+    stale_streak = 0
+    last_search_sq = ""
+    for s in store.step_history:
+        is_search = s.action.startswith("search:")
+        current_sq = s.action.split(":", 1)[1] if is_search and ":" in s.action else ""
+        if s.result in stale_results:
+            stale_streak += 1
+        else:
+            stale_streak = 0
+        moved_on = bool(is_search and last_search_sq and current_sq and current_sq != last_search_sq)
+        if is_search and current_sq:
+            last_search_sq = current_sq
+
+        quality_class = "yield-high" if s.extracted_claims > 0 else ("yield-mid" if s.retrieved_results > 0 else "yield-low")
+        sq_label = sq_by_id.get(current_sq, current_sq) if current_sq else "—"
+        if len(sq_label) > 74:
+            sq_label = sq_label[:74] + "..."
+        rows.append(
+            f"""
+            <tr>
+              <td>{s.step}</td>
+              <td><span class="mono">{s.action}</span></td>
+              <td>{sq_label}</td>
+              <td>{s.retrieved_results}</td>
+              <td>{s.extracted_claims}</td>
+              <td><span class="yield-chip {quality_class}">{s.result.value}</span></td>
+              <td>{stale_streak}</td>
+              <td>{"→ moved on" if moved_on else "—"}</td>
+            </tr>
+            """
+        )
+    return (
+        "<p style='margin-bottom:0.75rem;color:#94a3b8;font-size:0.8rem'>"
+        "Stale streak counts consecutive low-yield steps (REDUNDANT/DEAD_END/NO_RESULTS/NO_CLAIMS). "
+        "The move marker shows when search switched to a different sub-question."
+        "</p>"
+        "<table class='data-table'><thead><tr>"
+        "<th>Step</th><th>Action</th><th>Sub-question</th><th>Retrieved</th><th>Claims</th>"
+        "<th>Outcome</th><th>Stale Streak</th><th>Transition</th>"
+        "</tr></thead><tbody>"
+        + "".join(rows)
+        + "</tbody></table>"
+    )
+
+
 def _sub_questions(store: EvidenceStore) -> str:
     rows = []
     for sq in store.sub_questions:
@@ -151,6 +208,11 @@ def _render(store: EvidenceStore, run_trace: dict, metrics: dict) -> str:
   .summary-item {{ display: flex; flex-direction: column; }}
   .summary-label {{ font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }}
   .summary-val {{ font-weight: 700; color: #f8fafc; }}
+  .mono {{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.75rem; color: #cbd5e1; }}
+  .yield-chip {{ display: inline-block; border-radius: 4px; padding: 0.15rem 0.4rem; font-size: 0.7rem; font-weight: 700; }}
+  .yield-high {{ background: #14532d; color: #86efac; }}
+  .yield-mid {{ background: #78350f; color: #fcd34d; }}
+  .yield-low {{ background: #3f3f46; color: #d4d4d8; }}
 </style>
 </head>
 <body>
@@ -184,6 +246,11 @@ def _render(store: EvidenceStore, run_trace: dict, metrics: dict) -> str:
       <span><span class="dot" style="background:#475569"></span>No Retrieval Results</span>
       <span><span class="dot" style="background:#0ea5e9"></span>No Extractable Claims</span>
     </div>
+  </div>
+
+  <h2>Diminishing Returns (Search Yield)</h2>
+  <div class="section">
+    {_diminishing_returns_panel(store)}
   </div>
 
   <h2>Sub-questions</h2>
