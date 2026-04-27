@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Research Agent — Baseline vs Guided</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.5; }
+  .container { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.5rem; }
+  h2 { font-size: 0.9rem; font-weight: 600; color: #94a3b8; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .query-box { background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 1rem; color: #f1f5f9; border-left: 3px solid #6366f1; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .col-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .mode-badge { padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+  .badge-baseline { background: #312e81; color: #a5b4fc; }
+  .badge-guided { background: #14532d; color: #86efac; }
+  .stat-row { display: flex; gap: 1.5rem; margin-bottom: 1rem; }
+  .stat { background: #1e293b; border-radius: 6px; padding: 0.6rem 1rem; flex: 1; }
+  .stat-val { font-size: 1.4rem; font-weight: 700; }
+  .stat-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; }
+  .step-card { background: #1e293b; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; }
+  .step-header { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.3rem; }
+  .step-num { font-size: 0.7rem; color: #475569; font-weight: 600; min-width: 40px; }
+  .step-action { font-size: 0.75rem; font-weight: 600; color: #94a3b8; }
+  .step-result { font-size: 0.7rem; font-weight: 700; margin-left: auto; }
+  .step-question { font-size: 0.78rem; color: #64748b; line-height: 1.4; }
+  .metric-row { background: #1e293b; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+  .metric-label strong { display: block; font-size: 0.85rem; margin-bottom: 0.2rem; }
+  .metric-explain { font-size: 0.72rem; color: #475569; line-height: 1.4; display: block; margin-bottom: 0.75rem; }
+  .bar-group { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+  .bar-label { font-size: 0.7rem; color: #64748b; min-width: 55px; }
+  .bar-track { flex: 1; background: #334155; border-radius: 3px; height: 8px; }
+  .bar-fill { height: 8px; border-radius: 3px; }
+  .bar-val { font-size: 0.78rem; font-weight: 600; min-width: 55px; }
+  .report-box { background: #1e293b; border-radius: 8px; padding: 1.25rem; font-size: 0.82rem; color: #cbd5e1; line-height: 1.7; max-height: 600px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+  .r-h2 { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin: 1.2rem 0 0.4rem; border-bottom: 1px solid #334155; padding-bottom: 0.25rem; }
+  .r-h3 { font-size: 0.88rem; font-weight: 700; color: #a5b4fc; margin: 1rem 0 0.3rem; }
+  .r-h4 { font-size: 0.82rem; font-weight: 600; color: #7dd3fc; margin: 0.8rem 0 0.2rem; }
+  .r-p { margin-bottom: 0.5rem; }
+  .r-gap { height: 0.4rem; }
+  li { margin-left: 1.2rem; margin-bottom: 0.25rem; }
+  .conflict-card { background: #1e293b; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid #ef4444; }
+  .conflict-claim { font-size: 0.82rem; margin-bottom: 0.3rem; }
+  .conflict-meta { font-size: 0.72rem; color: #64748b; }
+  .dim { color: #475569; font-size: 0.82rem; }
+  .section { margin-bottom: 2.5rem; }
+  .full-width { grid-column: 1 / -1; }
+  .insight-box { background: #172033; border: 1px solid #334155; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; }
+  .insight-box h3 { font-size: 0.8rem; color: #6366f1; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .insight-box p { font-size: 0.85rem; color: #94a3b8; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Deep Research Agent — Baseline vs. Guided Comparison</h1>
+  <div class="query-box">Map the research landscape of multi-agent LLM systems. Produce a structured report that includes a visual taxonomy or design graph showing the major architectural patterns, how they relate, and where the open problems are.</div>
+
+  <div class="insight-box">
+    <h3>What this comparison shows</h3>
+    <p>
+      Both modes ran on the same query with the same model (MiniMax-M2.7).
+      <strong>Baseline</strong> cycles sub-questions in fixed order, never challenges claims, stops only when budget runs out.
+      <strong>Guided</strong> reads the evidence state at each step — prioritizing uncovered angles, challenging high-confidence claims,
+      and stopping when evidence is genuinely exhausted.
+      The step journeys below show where they diverged and why the metrics differ.
+    </p>
+  </div>
+
+  <h2>Step Journey</h2>
+  <div class="cols section">
+    <div>
+      <div class="col-header">
+        <span class="mode-badge badge-baseline">BASELINE</span>
+        <span style="font-size:0.8rem;color:#64748b">12 steps · 14 claim groups · 0 disputes</span>
+      </div>
+      
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 0</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the major architectural patterns for multi-agent LLM systems?</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #0ea5e9">
+          <div class="step-header">
+            <span class="step-num">Step 1</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#0ea5e9">NO_EXTRACTABLE_CLAIMS</span>
+          </div>
+          <div class="step-question">What coordination mechanisms and communication protocols are used in multi-agent LLM frameworks like…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 2</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What evaluation benchmarks and metrics are used to assess multi-agent LLM system performance?</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 3</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the failure modes, limitations, and criticisms of current multi-agent LLM architectures?</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 4</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the open research problems and unsolved challenges in multi-agent LLM systems?</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 5</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the major architectural patterns for multi-agent LLM systems?</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #6b7280">
+          <div class="step-header">
+            <span class="step-num">Step 6</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#6b7280">DEAD_END</span>
+          </div>
+          <div class="step-question">What coordination mechanisms and communication protocols are used in multi-agent LLM frameworks like…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 7</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What evaluation benchmarks and metrics are used to assess multi-agent LLM system performance?</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #0ea5e9">
+          <div class="step-header">
+            <span class="step-num">Step 8</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#0ea5e9">NO_EXTRACTABLE_CLAIMS</span>
+          </div>
+          <div class="step-question">What are the failure modes, limitations, and criticisms of current multi-agent LLM architectures?</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 9</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the open research problems and unsolved challenges in multi-agent LLM systems?</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 10</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the major architectural patterns for multi-agent LLM systems?</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #0ea5e9">
+          <div class="step-header">
+            <span class="step-num">Step 11</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#0ea5e9">NO_EXTRACTABLE_CLAIMS</span>
+          </div>
+          <div class="step-question">What coordination mechanisms and communication protocols are used in multi-agent LLM frameworks like…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #6b7280; opacity: 0.8">
+          <div class="step-header">
+            <span class="step-num">END</span>
+            <span class="step-result" style="color:#6b7280">BUDGET_EXHAUSTED</span>
+          </div>
+          <div class="step-question">Hit step limit before evidence was exhausted — would benefit from more budget.</div>
+        </div>
+    </div>
+    <div>
+      <div class="col-header">
+        <span class="mode-badge badge-guided">GUIDED</span>
+        <span style="font-size:0.8rem;color:#64748b">6 steps · 14 claim groups · 0 disputes</span>
+      </div>
+      
+        <div class="step-card" style="border-left: 3px solid #6b7280">
+          <div class="step-header">
+            <span class="step-num">Step 0</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#6b7280">DEAD_END</span>
+          </div>
+          <div class="step-question">What are the dominant architectural patterns in multi-agent LLM systems including hierarchical, peer…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 1</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What coordination mechanisms do multi-agent LLM systems use for agent communication and how do debat…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 2</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What empirical evidence exists for multi-agent LLM systems outperforming single-agent baselines on c…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 3</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the common failure modes and limitations of multi-agent LLM systems including error propaga…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 4</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What open research problems remain unsolved in multi-agent LLM systems such as agent role specializa…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e">
+          <div class="step-header">
+            <span class="step-num">Step 5</span>
+            <span class="step-action">⟳ SEARCH</span>
+            <span class="step-result" style="color:#22c55e">NEW_EVIDENCE</span>
+          </div>
+          <div class="step-question">What are the dominant architectural patterns in multi-agent LLM systems including hierarchical, peer…</div>
+        </div>
+        <div class="step-card" style="border-left: 3px solid #22c55e; opacity: 0.8">
+          <div class="step-header">
+            <span class="step-num">END</span>
+            <span class="step-result" style="color:#22c55e">COVERAGE_MET</span>
+          </div>
+          <div class="step-question">All sub-questions covered, no unchallenged high-confidence claims remaining.</div>
+        </div>
+    </div>
+  </div>
+
+  <h2>Evaluation Metrics — What Each Number Means</h2>
+  <div class="section">
+    
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Coverage</strong>
+            <span class="metric-explain">Fraction of sub-questions that got at least one evidence-backed claim. Low = the system left research threads uninvestigated.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:80%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">80%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+20%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Search Efficiency</strong>
+            <span class="metric-explain">Fraction of steps that produced new evidence or surfaced a conflict. Low = wasting budget on redundant or dead-end searches.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:66%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">67%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:83%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">83% <span style="color:#22c55e;font-size:0.75rem">+17%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Conflict Surfacing</strong>
+            <span class="metric-explain">When contradictions are detected, did the report surface them? If no contradictions are detected, this metric is N/A.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:0.25"></div></div>
+              <span class="bar-val">N/A</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e;opacity:0.25"></div></div>
+              <span class="bar-val">N/A <span style="color:#6b7280;font-size:0.75rem">n/a</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Stopping Quality</strong>
+            <span class="metric-explain">Did the run stop for a good reason? COVERAGE_MET or DIMINISHING_RETURNS = 100%; BUDGET_EXHAUSTED = 0%.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">0%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+100%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Summary Traceability</strong>
+            <span class="metric-explain">Fraction of summary sentences traceable to evidence claims or run metadata (coverage, claim groups, conflicts, steps).</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:66%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">67%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:33%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">33% <span style="color:#ef4444;font-size:0.75rem">-33%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Source Diversity</strong>
+            <span class="metric-explain">Average number of distinct source domains per claim group. Higher = claims corroborated by independent sources, not just one outlet.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#6366f1;opacity:1"></div></div>
+              <span class="bar-val">100%</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#6b7280;font-size:0.75rem">0%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">
+            <strong>Confidence Calibration</strong>
+            <span class="metric-explain">Are higher-confidence claims backed by stronger evidence than lower-confidence ones? If claims only use one confidence tier, this metric is N/A.</span>
+          </div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <span class="bar-label">Baseline</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:0.25"></div></div>
+              <span class="bar-val">N/A</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-label">Guided</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e;opacity:0.25"></div></div>
+              <span class="bar-val">N/A <span style="color:#6b7280;font-size:0.75rem">n/a</span></span>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <h2>Conflicts Surfaced</h2>
+  <div class="cols section">
+    <div>
+      <div class="col-header"><span class="mode-badge badge-baseline">BASELINE</span></div>
+      <p class='dim'>No conflicts detected.</p>
+    </div>
+    <div>
+      <div class="col-header"><span class="mode-badge badge-guided">GUIDED</span></div>
+      <p class='dim'>No conflicts detected.</p>
+    </div>
+  </div>
+
+  <h2>Generated Reports</h2>
+  <div class="cols section">
+    <div>
+      <div class="col-header"><span class="mode-badge badge-baseline">BASELINE</span></div>
+      <div class="report-box"><h2 class="r-h2">Research Report</h2>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Query:</strong> Map the research landscape of multi-agent LLM systems. Produce a structured report that includes a visual taxonomy or design graph showing the major architectural patterns, how they relate, and where the open problems are.</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Summary</h3>
+<div class="r-gap"></div>
+<p class="r-p">Research indicates that multi-agent LLM systems operate across several distinct architectural patterns—including sequential pipelines and parallel fan-out with merge structures—with context distributed across agents with separate windows, though systematic comparison frameworks remain nascent. Evidence points to structured taxonomies of failure modes organized into three to four functional categories, with findings suggesting that multi-agent systems often yield minimal performance improvements on existing benchmarks, and that this appears to be among the first comprehensive investigations of multi-agent LLM challenges. Notably, the evidence leaves significant gaps regarding coordination mechanisms and communication protocols in popular frameworks like AutoGen, CrewAI, and LangGraph, representing an area where research coverage is currently insufficient.</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Findings</h3>
+<div class="r-gap"></div>
+<h4 class="r-h4">What are the major architectural patterns for multi-agent LLM systems?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The paper presents a systematic benchmark comparing four multi-agent orchestration architectures. [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: General multi-agent orchestration evaluation</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> This work presents a systematic benchmark comparing four multi-agent orchestration architectures: sequential pipeline, parallel fan-out with merge, ... [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: Not specified</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Multi-agent architectures distribute context across agents with separate windows [3]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: in multi-agent systems</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> A systematic benchmark comparing four multi-agent orchestration architectures is presented [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: multi-agent system research</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Sequential pipeline is one of four multi-agent orchestration architectures being benchmarked [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: multi-agent orchestration architectures</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What coordination mechanisms and communication protocols are used in multi-agent LLM frameworks like AutoGen, CrewAI, and LangGraph?</h4>
+<div class="r-gap"></div>
+<p class="r-p">*No evidence found for this sub-question.*</p>
+<div class="r-gap"></div>
+<h4 class="r-h4">What evaluation benchmarks and metrics are used to assess multi-agent LLM system performance?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> A systematic benchmark comparing four multi-agent orchestration architectures exists [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: for multi-agent system evaluation</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> This work aims to bring clarity to the fragmented landscape of agent evaluation and provide a framework for systematic assessment [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: agent evaluation</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What are the failure modes, limitations, and criticisms of current multi-agent LLM architectures? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> This paper presents a structured taxonomy of LLM agent failure modes with formal definitions [16]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: LLM agent systems</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The taxonomy of LLM agent failure modes is organized across four functional categories [16]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: LLM agent systems</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The paper benchmarks and systematically explores failure modes of multi-agent systems. [7]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: not specified</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> This study presents the first systematic investigation of failure modes of LLM based Multi-Agent Systems [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: LLM based Multi-Agent Systems</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What are the open research problems and unsolved challenges in multi-agent LLM systems? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Fine-grained failure modes in multi-agent systems are organized into 3 categories [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: for analysis of multi-agent AI system failures</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Multi-Agent LLM Systems often show minimal performance gains on popular benchmarks. [18]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: on popular benchmarks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> This paper presents the first comprehensive study of MAS challenges [2]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: general (paper's stated contribution)</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Unresolved Questions</h3>
+<div class="r-gap"></div>
+<li>What coordination mechanisms and communication protocols are used in multi-agent LLM frameworks like AutoGen, CrewAI, and LangGraph?</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Sources</h3>
+<div class="r-gap"></div>
+<p class="r-p">[1] medium.com — https://medium.com/@princekrampah/multi-agent-architecture-in-multi-agent-systems-multi-agent-system-design-patterns-langgraph-b92e934bf843</p>
+<div class="r-gap"></div>
+<p class="r-p">[2] arxiv.org — https://arxiv.org/html/2404.04834v4</p>
+<div class="r-gap"></div>
+<p class="r-p">[3] galileo.ai — https://galileo.ai/blog/architectures-for-multi-agent-systems</p>
+<div class="r-gap"></div>
+<p class="r-p">[4] www.researchgate.net — https://www.researchgate.net/publication/384732283_A_survey_on_LLM-based_multi-agent_systems_workflow_infrastructure_and_challenges</p>
+<div class="r-gap"></div>
+<p class="r-p">[5] www.comet.com — https://www.comet.com/site/blog/multi-agent-systems/</p>
+<div class="r-gap"></div>
+<p class="r-p">[6] www.augmentcode.com — https://www.augmentcode.com/guides/multi-agent-ai-architecture-patterns-enterprise</p>
+<div class="r-gap"></div>
+<p class="r-p">[7] openreview.net — https://openreview.net/forum?id=fAjbYBmonr&referrer=%5Bthe%20profile%20of%20Matei%20Zaharia%5D(%2Fprofile%3Fid%3D~Matei_Zaharia1)</p>
+<div class="r-gap"></div>
+<p class="r-p">[8] xue-guang.com — https://xue-guang.com/post/llm-marl/</p>
+<div class="r-gap"></div>
+<p class="r-p">[9] aaronyuqi.medium.com — https://aaronyuqi.medium.com/first-hand-comparison-of-langgraph-crewai-and-autogen-30026e60b563</p>
+<div class="r-gap"></div>
+<p class="r-p">[10] dev.to — https://dev.to/pockit_tools/langgraph-vs-crewai-vs-autogen-the-complete-multi-agent-ai-orchestration-guide-for-2026-2d63</p>
+<div class="r-gap"></div>
+<p class="r-p">[11] www.rapidinnovation.io — https://www.rapidinnovation.io/post/a-comparative-analysis-of-langgraph-crewai-and-autogen</p>
+<div class="r-gap"></div>
+<p class="r-p">[12] link.springer.com — https://link.springer.com/article/10.1007/s44336-024-00009-2</p>
+<div class="r-gap"></div>
+<p class="r-p">[13] dl.acm.org — https://dl.acm.org/doi/10.1145/3712003</p>
+<div class="r-gap"></div>
+<p class="r-p">[14] orq.ai — https://orq.ai/blog/multi-agent-llm-eval-system</p>
+<div class="r-gap"></div>
+<p class="r-p">[15] www.llmwatch.com — https://www.llmwatch.com/p/multi-agent-failure-why-complex-ai</p>
+<div class="r-gap"></div>
+<p class="r-p">[16] papers.ssrn.com — https://papers.ssrn.com/sol3/Delivery.cfm/6572478.pdf?abstractid=6572478&mirid=1</p>
+<div class="r-gap"></div>
+<p class="r-p">[17] towardsdatascience.com — https://towardsdatascience.com/why-your-multi-agent-system-is-failing-escaping-the-17x-error-trap-of-the-bag-of-agents/</p>
+<div class="r-gap"></div>
+<p class="r-p">[18] neurips.cc — https://neurips.cc/virtual/2025/122442</p>
+<div class="r-gap"></div>
+<p class="r-p">[19] huggingface.co — https://huggingface.co/blog/Musamolla/multi-agent-llm-systems-failure</p>
+<div class="r-gap"></div>
+<p class="r-p">[20] github.com — https://github.com/AGI-Edgerunners/LLM-Agents-Papers</p>
+<div class="r-gap"></div>
+<p class="r-p">[21] redis.io — https://redis.io/blog/why-multi-agent-llm-systems-fail/</p>
+<div class="r-gap"></div>
+<p class="r-p">[22] openlayer.com — https://openlayer.com/blog/post/multi-agent-system-architecture-guide</p>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Research Process</h3>
+<div class="r-gap"></div>
+<li>Total steps: 12</li>
+<div class="r-gap"></div>
+<li>Termination reason: BUDGET_EXHAUSTED</li>
+<div class="r-gap"></div>
+<li>Sub-questions: 5 total, 4 covered</li>
+<div class="r-gap"></div>
+<li>Claim groups: 14</li>
+<div class="r-gap"></div>
+<li>Step results: NEW_EVIDENCE, NO_EXTRACTABLE_CLAIMS, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, DEAD_END, NEW_EVIDENCE, NO_EXTRACTABLE_CLAIMS, NEW_EVIDENCE, NEW_EVIDENCE, NO_EXTRACTABLE_CLAIMS</li></div>
+    </div>
+    <div>
+      <div class="col-header"><span class="mode-badge badge-guided">GUIDED</span></div>
+      <div class="report-box"><h2 class="r-h2">Research Report</h2>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Query:</strong> Map the research landscape of multi-agent LLM systems. Produce a structured report that includes a visual taxonomy or design graph showing the major architectural patterns, how they relate, and where the open problems are.</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Summary</h3>
+<div class="r-gap"></div>
+<p class="r-p">Research on multi-agent LLM systems has identified several architectural patterns (hierarchical, peer-to-peer, shared-memory) with evidence suggesting coordination mechanisms like voting and consensus protocols can improve performance on specific task types, though gains vary considerably by task domain. However, multi-agent systems do not universally outperform single-agent baselines, and researchers have catalogued at least 14 distinct failure modes across three categories, including issues with error propagation and scalability. Key open problems include developing standardized evaluation benchmarks given current limitations in task coverage, metric consistency, and reproducibility.</p>
+<div class="r-gap"></div>
+<h3 class="r-h3">Findings</h3>
+<div class="r-gap"></div>
+<h4 class="r-h4">What are the dominant architectural patterns in multi-agent LLM systems including hierarchical, peer-to-peer, and shared-memory designs?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The paper presents a systematic benchmark comparing four multi-agent orchestration architectures. [3]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: benchmarking multi-agent orchestration architectures</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> L2M2 is a hierarchical framework in which LLMs generate high-level strategies while MARL agents execute low-level control. [17]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: in the L2M2 framework architecture</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> This paper proposes a hierarchical multi-agent framework [7]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: general framework description</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The framework trains a single leader LLM to coordinate several untrained companion agents [7]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: framework architecture and training approach</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What coordination mechanisms do multi-agent LLM systems use for agent communication and how do debate, negotiation, and consensus protocols affect system performance?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Voting protocols improve performance by 13.2% in reasoning tasks [8]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: in reasoning tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Consensus protocols improve performance by 2.8% in knowledge tasks [8]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: in knowledge tasks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What empirical evidence exists for multi-agent LLM systems outperforming single-agent baselines on complex reasoning and collaborative tasks?</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> SAS consistently match or outperform MAS on multi-hop reasoning tasks when reasoning tokens are held constant. [3]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: when reasoning tokens are held constant</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Multi-agent frameworks do not universally outperform single LLMs. [7]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: Based on the results highlighted in the study</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What are the common failure modes and limitations of multi-agent LLM systems including error propagation, scalability bottlenecks, and reward hacking? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> We identified 14 distinct failure modes. [3]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: In our comprehensive analysis</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> The 14 distinct failure modes are clustered into 3 categories. [3]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: In our comprehensive analysis of failure modes</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Current MAS frameworks have high failure rates when performing MAD analysis [7]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: for MAD analysis in current MAS frameworks</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h4 class="r-h4">What open research problems remain unsolved in multi-agent LLM systems such as agent role specialization, dynamic team formation, and evaluation benchmarks? [adversarial]</h4>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Existing evaluations face limited task coverage [14]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Existing evaluations use inconsistent metrics [14]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<p class="r-p"><strong>Claim:</strong> Existing evaluations have poor reproducibility [14]</p>
+<div class="r-gap"></div>
+<li>Confidence: low | Status: weak</li>
+<div class="r-gap"></div>
+<li>Scope: general</li>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Sources</h3>
+<div class="r-gap"></div>
+<p class="r-p">[1] medium.com — https://medium.com/@princekrampah/multi-agent-architecture-in-multi-agent-systems-multi-agent-system-design-patterns-langgraph-b92e934bf843</p>
+<div class="r-gap"></div>
+<p class="r-p">[2] openlayer.com — https://openlayer.com/blog/post/multi-agent-system-architecture-guide</p>
+<div class="r-gap"></div>
+<p class="r-p">[3] arxiv.org — https://arxiv.org/html/2508.12683</p>
+<div class="r-gap"></div>
+<p class="r-p">[4] www.comet.com — https://www.comet.com/site/blog/multi-agent-systems/</p>
+<div class="r-gap"></div>
+<p class="r-p">[5] www.augmentcode.com — https://www.augmentcode.com/guides/multi-agent-ai-architecture-patterns-enterprise</p>
+<div class="r-gap"></div>
+<p class="r-p">[6] neurips.cc — https://neurips.cc/virtual/2024/poster/93363</p>
+<div class="r-gap"></div>
+<p class="r-p">[7] openreview.net — https://openreview.net/forum?id=cfL8zApofK</p>
+<div class="r-gap"></div>
+<p class="r-p">[8] aclanthology.org — https://aclanthology.org/2025.findings-acl.606.pdf</p>
+<div class="r-gap"></div>
+<p class="r-p">[9] www.researchgate.net — https://www.researchgate.net/publication/397203308_Multi-LLM_Debate_Framework_Principals_and_Interventions</p>
+<div class="r-gap"></div>
+<p class="r-p">[10] www.nature.com — https://www.nature.com/articles/s41746-026-02443-6</p>
+<div class="r-gap"></div>
+<p class="r-p">[11] towardsdatascience.com — https://towardsdatascience.com/why-your-multi-agent-system-is-failing-escaping-the-17x-error-trap-of-the-bag-of-agents/</p>
+<div class="r-gap"></div>
+<p class="r-p">[12] www.zartis.com — https://www.zartis.com/the-compounding-errors-problem-why-multi-agent-systems-fail-and-the-architecture-that-fixes-it/</p>
+<div class="r-gap"></div>
+<p class="r-p">[13] repository.kaust.edu.sa — https://repository.kaust.edu.sa/server/api/core/bitstreams/314fe81f-cfa1-4d93-8262-c1cde761c754/content</p>
+<div class="r-gap"></div>
+<p class="r-p">[14] dl.acm.org — https://dl.acm.org/doi/full/10.1145/3784013.3784018</p>
+<div class="r-gap"></div>
+<p class="r-p">[15] www.scribd.com — https://www.scribd.com/document/929175913/LLM-Multi-Agent-Systems-Challenges-and-Open-Problems</p>
+<div class="r-gap"></div>
+<p class="r-p">[16] galileo.ai — https://galileo.ai/blog/architectures-for-multi-agent-systems</p>
+<div class="r-gap"></div>
+<p class="r-p">[17] www.preprints.org — https://www.preprints.org/manuscript/202602.0689</p>
+<div class="r-gap"></div>
+<div class="r-gap"></div>
+<h3 class="r-h3">Research Process</h3>
+<div class="r-gap"></div>
+<li>Total steps: 6</li>
+<div class="r-gap"></div>
+<li>Termination reason: COVERAGE_MET</li>
+<div class="r-gap"></div>
+<li>Sub-questions: 5 total, 5 covered</li>
+<div class="r-gap"></div>
+<li>Claim groups: 14</li>
+<div class="r-gap"></div>
+<li>Step results: DEAD_END, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE, NEW_EVIDENCE</li></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

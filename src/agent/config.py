@@ -19,6 +19,7 @@ class LLMProvider(str, Enum):
 
 class SearchBackend(str, Enum):
     TAVILY = "tavily"
+    MINIMAX = "minimax"
     MOCK = "mock"
 
 
@@ -49,6 +50,7 @@ class Config:
     nebius_api_key: Optional[str]
     minimax_api_key: Optional[str]
     tavily_api_key: Optional[str]
+    minimax_api_host: str = "https://api.minimax.io"
     max_steps: int = 10
     max_results: int = 3
     research_mode: bool = True
@@ -87,6 +89,7 @@ def load_config() -> Config:
         nebius_api_key=os.getenv("NEBIUS_API_KEY"),
         minimax_api_key=os.getenv("MINIMAX_API_KEY"),
         tavily_api_key=os.getenv("TAVILY_API_KEY"),
+        minimax_api_host=os.getenv("MINIMAX_API_HOST", "https://api.minimax.io"),
         research_mode=os.getenv("RESEARCH_MODE", "true").lower() == "true",
         enable_recovery=os.getenv("ENABLE_RECOVERY", "true").lower() == "true",
         recovery_max_attempts=int(os.getenv("RECOVERY_MAX_ATTEMPTS", "2")),

@@ -23,9 +23,18 @@
 
 ## `src/agent/retriever.py`
 
-- Executes web retrieval (Tavily or mock backend).
+- Executes web retrieval against a pluggable `SearchClient`.
 - Applies domain policy and non-text filtering.
 - Supports query compression and adaptive parallelism hints.
+- Owns cross-cutting retrieval concerns (retries, scoring, filtering); backend-specific HTTP lives in `search_clients.py`.
+
+## `src/agent/search_clients.py`
+
+- Strategy-pattern abstraction over search backends.
+- Exposes a `SearchClient` protocol that returns normalized `RawSearchResult`s.
+- Concrete clients: `TavilySearchClient` (full raw page content), `MiniMaxSearchClient` (snippets only via coding-plan search), `MockSearchClient` (deterministic fixtures).
+- `build_search_client(config)` selects a client based on `SEARCH_BACKEND`.
+- Add a new backend by implementing the protocol and registering it in `build_search_client`.
 
 ## `src/agent/decomposer.py`
 
