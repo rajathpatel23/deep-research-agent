@@ -7,7 +7,6 @@ from src.agent.evidence_store import EvidenceStore
 from src.agent.states import (
     ChallengeStatus,
     Confidence,
-    SearchTool,
     StepResult,
     SubQuestionKind,
     TerminationReason,
@@ -23,7 +22,6 @@ class ActionType(str, Enum):
 class SearchAction(BaseModel):
     type: ActionType = ActionType.SEARCH
     sub_question_id: str = ""
-    tool: SearchTool = SearchTool.WEB
 
 
 class ChallengeAction(BaseModel):
@@ -73,7 +71,7 @@ def guided_plan(
     # Rule 1a: uncovered sub-questions not recently dead-ended
     for sq in store.sub_questions:
         if not sq.has_evidence and sq.id not in recent_dead_sq_ids:
-            return SearchAction(sub_question_id=sq.id, tool=_select_tool(sq.kind))
+            return SearchAction(sub_question_id=sq.id)
 
     # Rule 4: diminishing returns — fires when all uncovered sqs have dead-ended recently
     # (or all sqs are covered). Placed here so persistent dead-ends stop the run rather
@@ -94,7 +92,7 @@ def guided_plan(
     # aren't all stale yet; try the first uncovered sq anyway
     for sq in store.sub_questions:
         if not sq.has_evidence:
-            return SearchAction(sub_question_id=sq.id, tool=_select_tool(sq.kind))
+            return SearchAction(sub_question_id=sq.id)
 
     # Rule 2: challenge medium-or-high confidence supporting claims with 2+ domains, not yet challenged
     for group in store.claim_groups:
@@ -129,10 +127,4 @@ def guided_plan(
     if all_covered and not has_unchallenged_high:
         return StopAction(reason=TerminationReason.COVERAGE_MET)
 
-    return SearchAction(sub_question_id=weakest.id, tool=_select_tool(weakest.kind))
-
-
-def _select_tool(kind: SubQuestionKind) -> SearchTool:
-    """Tool selection hook — ARXIV for supporting, WEB for adversarial.
-    ArXiv backend wired in Phase 6; defaults to WEB until then."""
-    return SearchTool.WEB
+    return SearchAction(sub_question_id=weakest.id)

@@ -1,4 +1,4 @@
-from src.agent.extractor import extract_claims
+from src.agent.extractor import batch_extract_claims
 from src.agent.evidence_store import Observation, _new_id
 from src.agent.states import ClaimType
 from src.agent.config import load_config
@@ -25,13 +25,13 @@ def _mock_llm():
 
 def test_extract_returns_claims():
     llm = _mock_llm()
-    claims = extract_claims(_obs(), llm)
+    claims = batch_extract_claims([_obs()], llm)
     assert len(claims) > 0
 
 
 def test_extract_claim_has_required_fields():
     llm = _mock_llm()
-    claims = extract_claims(_obs(), llm)
+    claims = batch_extract_claims([_obs()], llm)
     for claim in claims:
         assert claim.text
         assert claim.scope
@@ -42,7 +42,7 @@ def test_extract_claim_has_required_fields():
 
 def test_extract_claim_type_empirical_or_speculative():
     llm = _mock_llm()
-    claims = extract_claims(_obs(), llm)
+    claims = batch_extract_claims([_obs()], llm)
     types = {c.claim_type for c in claims}
     assert types <= {ClaimType.EMPIRICAL, ClaimType.SPECULATIVE}
 
@@ -56,5 +56,5 @@ def test_extract_fallback_on_bad_json():
         def complete(self, s, u, trace=None):
             return BadProvider().complete(s, u, trace=trace)
 
-    claims = extract_claims(_obs(), FakeLLM())
+    claims = batch_extract_claims([_obs()], FakeLLM())
     assert claims == []

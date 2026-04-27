@@ -57,7 +57,7 @@ class GroqProvider(BaseLLMProvider):
                     else:
                         raise
                 return "".join(chunk.choices[0].delta.content or "" for chunk in stream)
-            except RateLimitError as e:
+            except RateLimitError:
                 wait = _RETRY_BASE_SECS * (attempt + 1)
                 print(f"  [rate limit] waiting {wait}s (attempt {attempt + 1}/{_MAX_RETRIES})")
                 time.sleep(wait)

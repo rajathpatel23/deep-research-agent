@@ -1,5 +1,4 @@
 """Generate a self-contained HTML dashboard for a single run."""
-import json
 from pathlib import Path
 
 from src.agent.evidence_store import EvidenceStore
@@ -37,12 +36,21 @@ def generate_dashboard(store: EvidenceStore, run_trace: dict, output_path: Path)
     output_path.write_text(html)
 
 
-def _bar(value: float, color: str = "#6366f1") -> str:
-    pct = int(value * 100)
+def _bar(value: float | None, color: str = "#6366f1") -> str:
+    pct = int((value or 0) * 100)
     return f"""
       <div class="metric-bar-bg">
         <div class="metric-bar-fill" style="width:{pct}%; background:{color}"></div>
       </div>"""
+
+
+def _format_metric_value(value: float | None) -> str:
+    """Show 'N/A' for undefined metrics; percentage otherwise.
+    None means the metric is not applicable to this run (e.g. no disputes
+    for conflict_surfacing_rate), which is distinct from 0%."""
+    if value is None:
+        return "N/A"
+    return f"{value:.0%}"
 
 
 def _step_timeline(store: EvidenceStore) -> str:
@@ -161,9 +169,10 @@ def _render(store: EvidenceStore, run_trace: dict, metrics: dict) -> str:
     metric_cards = ""
     colors = ["#6366f1", "#22c55e", "#ef4444", "#f59e0b"]
     for (name, val), color in zip(metrics.items(), colors):
+        display_color = color if val is not None else "#64748b"
         metric_cards += f"""
         <div class="metric-card">
-          <div class="metric-value" style="color:{color}">{val:.0%}</div>
+          <div class="metric-value" style="color:{display_color}">{_format_metric_value(val)}</div>
           <div class="metric-name">{name}</div>
           {_bar(val, color)}
         </div>"""

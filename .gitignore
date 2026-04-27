@@ -8,9 +8,6 @@ venv/
 dist/
 build/
 .DS_Store
-examples/outputs/*.json
-examples/outputs/*.md
-!examples/outputs/.gitkeep
 docs/
 runs/
 *.pdf

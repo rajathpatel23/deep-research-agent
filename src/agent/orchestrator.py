@@ -1,4 +1,3 @@
-import copy
 import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path

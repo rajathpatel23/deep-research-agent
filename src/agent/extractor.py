@@ -101,8 +101,3 @@ def _extract_one(obs: Observation, llm: "LLMClient") -> List[Claim]:
         return claims
     except (json.JSONDecodeError, KeyError, TypeError, RuntimeError):
         return []
-
-
-def extract_claims(obs: Observation, llm: "LLMClient") -> List[Claim]:
-    """Single-observation extraction (kept for backward compatibility)."""
-    return batch_extract_claims([obs], llm)

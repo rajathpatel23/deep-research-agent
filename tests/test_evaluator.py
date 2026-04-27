@@ -1,5 +1,5 @@
 from src.agent.evaluator import classify_step
-from src.agent.evidence_store import ClaimGroup, _new_id
+from src.agent.evidence_store import ClaimGroup
 from src.agent.states import GroupStatus, StepResult
 
 

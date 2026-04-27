@@ -5,7 +5,6 @@ from pathlib import Path
 
 from src.agent.evidence_store import EvidenceStore
 from src.agent.metrics import compute_metrics
-from src.agent.states import StepResult
 
 
 _STEP_COLOR = {
@@ -73,10 +72,9 @@ def generate_comparison(baseline_dir: Path, guided_dir: Path, output_path: Path)
     print(f"Comparison dashboard → {output_path}")
 
 
-def _step_journey(run: dict, side: str) -> str:
+def _step_journey(run: dict) -> str:
     store: EvidenceStore = run["store"]
     trace = run["trace"]
-    step_results = trace.get("step_results", [])
 
     sq_map = {sq.id: sq.text for sq in store.sub_questions}
 
@@ -84,9 +82,7 @@ def _step_journey(run: dict, side: str) -> str:
     for record in store.step_history:
         result = record.result.value
         color = _STEP_COLOR.get(result, "#6b7280")
-        action_parts = record.action.split(":", 1)
-        action_type = action_parts[0]
-        action_id = action_parts[1] if len(action_parts) > 1 else ""
+        action_type = record.action.split(":", 1)[0]
         sq_text = sq_map.get(record.sub_question_id, record.sub_question_id)
 
         icon = {"search": "⟳", "challenge": "⚡", "stop": "■"}.get(action_type, "?")
@@ -228,7 +224,6 @@ def _render(b: dict, g: dict) -> str:
     b_disputes = b["trace"].get("disputes", 0)
     g_disputes = g["trace"].get("disputes", 0)
     b_model = b["trace"].get("llm_model", "unknown")
-    g_model = g["trace"].get("llm_model", "unknown")
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -308,14 +303,14 @@ def _render(b: dict, g: dict) -> str:
         <span class="mode-badge badge-baseline">BASELINE</span>
         <span style="font-size:0.8rem;color:#64748b">{b_steps} steps · {b_groups} claim groups · {b_disputes} disputes</span>
       </div>
-      {_step_journey(b, "baseline")}
+      {_step_journey(b)}
     </div>
     <div>
       <div class="col-header">
         <span class="mode-badge badge-guided">GUIDED</span>
         <span style="font-size:0.8rem;color:#64748b">{g_steps} steps · {g_groups} claim groups · {g_disputes} disputes</span>
       </div>
-      {_step_journey(g, "guided")}
+      {_step_journey(g)}
     </div>
   </div>
 
