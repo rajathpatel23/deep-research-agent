@@ -1,7 +1,5 @@
-import pytest
 from src.agent.evidence_store import (
     Claim,
-    ClaimGroup,
     EvidenceStore,
     Observation,
     SubQuestion,
@@ -9,8 +7,6 @@ from src.agent.evidence_store import (
     _new_id,
 )
 from src.agent.states import (
-    ChallengeStatus,
-    ClaimRelationship,
     ClaimRelevanceLabel,
     ClaimType,
     Confidence,

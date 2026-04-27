@@ -1,5 +1,5 @@
 import pytest
-from src.agent.evidence_store import Claim, ClaimGroup, EvidenceStore, Observation, StepRecord, SubQuestion, _new_id
+from src.agent.evidence_store import ClaimGroup, EvidenceStore, StepRecord, SubQuestion, _new_id
 from src.agent.metrics import (
     _extract_summary_section,
     confidence_calibration,

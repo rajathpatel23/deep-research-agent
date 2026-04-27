@@ -1,9 +1,8 @@
-from src.agent.evidence_store import ClaimGroup, EvidenceStore, StepRecord, SubQuestion, _new_id
+from src.agent.evidence_store import ClaimGroup, EvidenceStore, StepRecord, SubQuestion
 from src.agent.planner import ChallengeAction, SearchAction, StopAction, guided_plan, baseline_plan
 from src.agent.states import (
     ChallengeStatus,
     Confidence,
-    GroupStatus,
     StepResult,
     SubQuestionKind,
     TerminationReason,

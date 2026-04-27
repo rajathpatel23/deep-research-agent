@@ -58,9 +58,3 @@ class ClaimRelationship(str, Enum):
     CONTRADICT = "CONTRADICT"
     COMPATIBLE = "COMPATIBLE"
     UNRELATED = "UNRELATED"
-
-
-class SearchTool(str, Enum):
-    WEB = "web"
-    ARXIV = "arxiv"
-    FULL_PAGE = "full_page"
