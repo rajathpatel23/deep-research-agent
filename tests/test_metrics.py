@@ -107,7 +107,7 @@ def test_efficiency_empty():
 
 def test_csr_no_conflicts():
     store = _store(claim_groups=[_group(status=GroupStatus.WEAK)])
-    assert conflict_surfacing_rate(store, "any report text") == 1.0
+    assert conflict_surfacing_rate(store, "any report text") is None
 
 
 def test_csr_conflict_surfaced():
@@ -149,7 +149,7 @@ def test_stopping_quality_budget_exhausted():
 
 def test_stopping_quality_coverage_met():
     store = _store(termination_reason=TerminationReason.COVERAGE_MET.value)
-    assert stopping_quality(store) == 0.0
+    assert stopping_quality(store) == 1.0
 
 
 # ── summary_grounding_rate ───────────────────────────────────────────────────
@@ -242,10 +242,9 @@ def test_calibration_no_ordering():
 
 
 def test_calibration_missing_tiers():
-    # Only low-confidence groups — no ordering violation possible, default to 1.0
+    # Only low-confidence groups — calibration is undefined without confidence spread.
     store = _store(claim_groups=[
         _group(confidence=Confidence.LOW, domains=["a.com"]),
         _group(confidence=Confidence.LOW, domains=["b.com"]),
     ])
-    # high=0, medium=0, low=1 → high >= low is False → 0.0
-    assert confidence_calibration(store) == 0.0
+    assert confidence_calibration(store) is None

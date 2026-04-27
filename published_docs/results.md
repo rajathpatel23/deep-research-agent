@@ -10,13 +10,15 @@ The report is a view over an explicit evidence state, not the primary product of
 
 There is no ground-truth answer key for open-ended research reports, so evaluation is framed as honesty relative to the evidence store the system collected.
 
+Metric definitions and `N/A` rules are documented in `published_docs/METRICS.md`.
+
 Primary runtime metrics:
 
 - `coverage_completeness`
 - `search_efficiency`
 - `conflict_surfacing_rate`
 - `stopping_quality`
-- `summary_grounding_rate`
+- `summary_grounding_rate` (reported in dashboards as "Summary Traceability")
 - `source_diversity_mean`
 - `confidence_calibration`
 
@@ -32,10 +34,10 @@ Supporting diagnostics:
 
 ## Results: Baseline vs Guided
 
-Compared artifacts:
+Compared artifacts (used for recalculation):
 
-- Baseline: `runs/ablation_phase6_parallel/is_chain_of_thought_prompting_an_effecti/baseline/run_trace.json`
-- Guided: `runs/ablation_phase6_parallel_guided/is_chain_of_thought_prompting_an_effecti/guided/run_trace.json`
+- Baseline: `runs/ablation_phase6_parallel/is_chain_of_thought_prompting_an_effecti/baseline/{evidence_store.json, report.md}`
+- Guided: `runs/ablation_phase6_parallel_guided/is_chain_of_thought_prompting_an_effecti/guided/{evidence_store.json, report.md}`
 
 ### Metrics Snapshot
 
@@ -45,20 +47,31 @@ Compared artifacts:
 | Termination reason | BUDGET_EXHAUSTED | COVERAGE_MET | n/a |
 | Coverage completeness | 0.800 | 1.000 | +0.200 |
 | Search efficiency | 0.533 | 0.833 | +0.300 |
-| Conflict surfacing rate | 1.000 | 1.000 | 0.000 |
-| Stopping quality | 0.000 | 0.000 | 0.000 |
-| Summary grounding rate | 0.667 | 0.000 | -0.667 |
+| Conflict surfacing rate | n/a | 1.000 | n/a |
+| Stopping quality | 0.000 | 1.000 | +1.000 |
+| Summary traceability (`summary_grounding_rate`) | 0.667 | 1.000 | +0.333 |
 | Source diversity mean | 1.000 | 1.000 | 0.000 |
-| Confidence calibration | 0.000 | 0.000 | 0.000 |
+| Confidence calibration | n/a | n/a | n/a |
 | Claim groups total | 11 | 12 | +1 |
 | Disputes | 0 | 2 | +2 |
+
+### Supporting Diagnostics Snapshot
+
+| Metric | Baseline | Guided | Delta (Guided - Baseline) |
+|---|---:|---:|---:|
+| Unsupported summary rate | 0.333 | 0.000 | -0.333 |
+| Unresolved disclosure rate | 1.000 | 1.000 | 0.000 |
+| Uncertainty calibration score | 0.500 | 0.000 | -0.500 |
+| Epistemic honesty score | 0.733 | 0.800 | +0.067 |
 
 ## Interpretation Against the Thesis
 
 - Guided improves uncertainty-reduction efficiency (`search_efficiency`) and reaches full decomposition coverage (`coverage_completeness`) with fewer steps.
 - Guided better surfaces contested evidence (`disputes` increased from 0 to 2), which aligns with the thesis requirement to expose fault lines rather than smooth them over.
-- Honesty-floor metrics are mixed in this pair: `summary_grounding_rate` regressed for guided, so this should be treated as an explicit gap, not hidden.
-- Both runs show weak calibration/stopping signals (`confidence_calibration` and `stopping_quality` at 0.0), indicating remaining work on confidence semantics and stopping policy quality.
+- Guided improves process-faithful summary quality (`summary_grounding_rate` rose to 1.0 under traceability rules that include process metadata claims).
+- `stopping_quality` now distinguishes good vs bad stopping causes (guided reached `COVERAGE_MET`; baseline hit `BUDGET_EXHAUSTED`).
+- `confidence_calibration` is undefined (`n/a`) for this pair because confidence tiers lack spread, so calibration cannot be meaningfully estimated.
+- `uncertainty_calibration_score` is lower for guided because the guided summary is concise and less hedged linguistically despite strong process metrics; this should be interpreted alongside the component metrics, not in isolation.
 
 ## Scope and Caveat
 
