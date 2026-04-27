@@ -1,4 +1,5 @@
 import time
+from threading import Lock
 from copy import copy
 from dataclasses import dataclass
 from urllib.parse import urlparse
@@ -11,6 +12,7 @@ from src.agent.llm import LLMClient
 _SEARCH_RETRIES = 3
 _SEARCH_RETRY_SECS = 5
 _MAX_QUERY_CHARS = 400
+_GROQ_DEFAULT_QUERY_COMPRESSOR_MODEL = "llama-3.1-8b-instant"
 
 # Non-text sources — no parseable article content for claim extraction
 _EXCLUDED_DOMAINS = [
@@ -93,8 +95,10 @@ class Retriever:
         )
         self._client: Any = None
         self._query_compressor: LLMClient | None = None
-        self._last_query_prep_meta: dict = {}
+        self._query_prep_lock = Lock()
         self._query_prep_events: list[dict] = []
+        self._search_event_lock = Lock()
+        self._search_call_events: list[dict] = []
         if config.search_backend == "tavily":
             from tavily import TavilyClient
             self._client = TavilyClient(api_key=config.tavily_api_key)
@@ -104,18 +108,32 @@ class Retriever:
             and len(config.query_compressor_model.strip()) > 0
             and config.llm_provider != LLMProvider.MOCK
         ):
-            compressor_cfg = copy(config)
-            compressor_cfg.llm_model = config.query_compressor_model
-            try:
-                self._query_compressor = LLMClient(compressor_cfg)
-            except Exception:
-                self._query_compressor = None
+            incompatible_minimax_default = (
+                config.llm_provider == LLMProvider.MINIMAX
+                and config.query_compressor_model.strip() == _GROQ_DEFAULT_QUERY_COMPRESSOR_MODEL
+            )
+            if incompatible_minimax_default:
+                # Avoid invalid-model retries when using MiniMax with Groq-specific default compressor model.
+                print(
+                    "  [query compressor] disabled: model "
+                    f"'{config.query_compressor_model}' is not valid for MiniMax"
+                )
+            else:
+                compressor_cfg = copy(config)
+                compressor_cfg.llm_model = config.query_compressor_model
+                try:
+                    self._query_compressor = LLMClient(compressor_cfg)
+                except Exception:
+                    self._query_compressor = None
 
     def search(self, query: str, max_results: int = 5, research_mode: bool = False) -> list[SearchResult]:
         if self.config.search_backend == "mock":
             return self._mock_search(query)
-        safe_query = self._prepare_query(query)
-        self._query_prep_events.append(dict(self._last_query_prep_meta))
+        safe_query, prep_meta = self._prepare_query(query)
+        with self._query_prep_lock:
+            self._query_prep_events.append(dict(prep_meta))
+        start = time.perf_counter()
+        retries = 0
         for attempt in range(_SEARCH_RETRIES):
             try:
                 search_kwargs = dict(
@@ -142,12 +160,23 @@ class Retriever:
                         snippet=(r.get("raw_content") or r.get("content", "")),
                     )
                 ]
+                self._record_search_event(
+                    retries=retries,
+                    success=True,
+                    elapsed_ms=int((time.perf_counter() - start) * 1000),
+                )
                 return filtered[:max_results]
             except Exception as e:
                 if attempt < _SEARCH_RETRIES - 1:
+                    retries += 1
                     print(f"  [search retry {attempt + 1}/{_SEARCH_RETRIES}] {e}")
                     time.sleep(_SEARCH_RETRY_SECS)
                 else:
+                    self._record_search_event(
+                        retries=retries,
+                        success=False,
+                        elapsed_ms=int((time.perf_counter() - start) * 1000),
+                    )
                     raise
         return []
 
@@ -157,11 +186,11 @@ class Retriever:
     def _domain_quality_score(self, domain: str) -> float:
         return self.domain_policy.score(domain)
 
-    def _prepare_query(self, query: str) -> str:
+    def _prepare_query(self, query: str) -> tuple[str, dict]:
         compact = " ".join((query or "").split())
         original_len = len(compact)
         if len(compact) <= _MAX_QUERY_CHARS:
-            self._last_query_prep_meta = {
+            prep_meta = {
                 "compression_attempted": False,
                 "compression_method": "none",
                 "compression_model": "",
@@ -170,12 +199,12 @@ class Retriever:
                 "compression_saved_chars": 0,
                 "compression_fallback_used": False,
             }
-            return compact
+            return compact, prep_meta
         compressed = self._compress_query(compact)
         if compressed:
             compressed = " ".join(compressed.split())
             if len(compressed) <= _MAX_QUERY_CHARS:
-                self._last_query_prep_meta = {
+                prep_meta = {
                     "compression_attempted": True,
                     "compression_method": "llm",
                     "compression_model": self.config.query_compressor_model,
@@ -184,9 +213,9 @@ class Retriever:
                     "compression_saved_chars": max(0, original_len - len(compressed)),
                     "compression_fallback_used": False,
                 }
-                return compressed
+                return compressed, prep_meta
             truncated = compressed[:_MAX_QUERY_CHARS].rsplit(" ", 1)[0].strip()
-            self._last_query_prep_meta = {
+            prep_meta = {
                 "compression_attempted": True,
                 "compression_method": "truncate",
                 "compression_model": self.config.query_compressor_model,
@@ -195,10 +224,10 @@ class Retriever:
                 "compression_saved_chars": max(0, original_len - len(truncated)),
                 "compression_fallback_used": True,
             }
-            return truncated
+            return truncated, prep_meta
         # Keep as much semantic context as possible within Tavily's query limit.
         truncated = compact[:_MAX_QUERY_CHARS].rsplit(" ", 1)[0].strip()
-        self._last_query_prep_meta = {
+        prep_meta = {
             "compression_attempted": True,
             "compression_method": "truncate",
             "compression_model": "",
@@ -207,7 +236,7 @@ class Retriever:
             "compression_saved_chars": max(0, original_len - len(truncated)),
             "compression_fallback_used": True,
         }
-        return truncated
+        return truncated, prep_meta
 
     def _compress_query(self, query: str) -> str:
         if self._query_compressor is None:
@@ -224,12 +253,39 @@ class Retriever:
             return ""
 
     def get_query_prep_event_count(self) -> int:
-        return len(self._query_prep_events)
+        with self._query_prep_lock:
+            return len(self._query_prep_events)
 
     def get_query_prep_events_since(self, start_idx: int) -> list[dict]:
         if start_idx < 0:
             start_idx = 0
-        return [dict(e) for e in self._query_prep_events[start_idx:]]
+        with self._query_prep_lock:
+            return [dict(e) for e in self._query_prep_events[start_idx:]]
+
+    def suggest_parallelism(self, requested_parallelism: int, window: int = 20) -> int:
+        if requested_parallelism <= 1:
+            return 1
+        with self._search_event_lock:
+            recent = self._search_call_events[-window:]
+        if not recent:
+            return requested_parallelism
+        retry_ratio = sum(1 for e in recent if int(e.get("retries", 0)) > 0) / len(recent)
+        failure_ratio = sum(1 for e in recent if not bool(e.get("success", True))) / len(recent)
+        if failure_ratio >= 0.20 or retry_ratio >= 0.50:
+            return 1
+        if retry_ratio >= 0.25:
+            return max(1, requested_parallelism // 2)
+        return requested_parallelism
+
+    def _record_search_event(self, retries: int, success: bool, elapsed_ms: int) -> None:
+        with self._search_event_lock:
+            self._search_call_events.append(
+                {
+                    "retries": retries,
+                    "success": success,
+                    "elapsed_ms": elapsed_ms,
+                }
+            )
 
     def _is_text_result(self, url: str, title: str, snippet: str) -> bool:
         parsed = urlparse(url)

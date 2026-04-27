@@ -21,6 +21,10 @@ class AgentConfig(BaseModel):
     recovery_max_attempts: int = 2
     query_rewrite_variants: int = 3
     rerank_top_k: int = 4
+    query_compressor_model: str = "llama-3.1-8b-instant"
+    search_parallelism: int = 1
+    adaptive_parallelism: bool = True
+    extract_parallelism: int = 1
     enable_claim_filter: bool = True
     diminishing_window: int = 4
     min_coverage_for_diminishing: float = 0.4
@@ -64,6 +68,10 @@ class ExperimentConfig(BaseModel):
             recovery_max_attempts=self.agent.recovery_max_attempts,
             query_rewrite_variants=self.agent.query_rewrite_variants,
             rerank_top_k=self.agent.rerank_top_k,
+            query_compressor_model=self.agent.query_compressor_model,
+            search_parallelism=max(1, self.agent.search_parallelism),
+            adaptive_parallelism=self.agent.adaptive_parallelism,
+            extract_parallelism=max(1, self.agent.extract_parallelism),
             enable_claim_filter=self.agent.enable_claim_filter,
             diminishing_window=self.agent.diminishing_window,
             min_coverage_for_diminishing=self.agent.min_coverage_for_diminishing,

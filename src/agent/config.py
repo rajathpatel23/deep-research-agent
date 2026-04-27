@@ -56,6 +56,9 @@ class Config:
     recovery_max_attempts: int = 2
     query_rewrite_variants: int = 3
     rerank_top_k: int = 4
+    search_parallelism: int = 1
+    adaptive_parallelism: bool = True
+    extract_parallelism: int = 1
     enable_claim_filter: bool = True
     diminishing_window: int = 4
     min_coverage_for_diminishing: float = 0.4
@@ -89,6 +92,9 @@ def load_config() -> Config:
         recovery_max_attempts=int(os.getenv("RECOVERY_MAX_ATTEMPTS", "2")),
         query_rewrite_variants=int(os.getenv("QUERY_REWRITE_VARIANTS", "3")),
         rerank_top_k=int(os.getenv("RERANK_TOP_K", "4")),
+        search_parallelism=max(1, int(os.getenv("SEARCH_PARALLELISM", "1"))),
+        adaptive_parallelism=os.getenv("ADAPTIVE_PARALLELISM", "true").lower() == "true",
+        extract_parallelism=max(1, int(os.getenv("EXTRACT_PARALLELISM", "1"))),
         enable_claim_filter=os.getenv("ENABLE_CLAIM_FILTER", "true").lower() == "true",
         diminishing_window=int(os.getenv("DIMINISHING_WINDOW", "4")),
         min_coverage_for_diminishing=float(os.getenv("MIN_COVERAGE_FOR_DIMINISHING", "0.4")),
