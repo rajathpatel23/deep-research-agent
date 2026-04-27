@@ -2,12 +2,14 @@ import json
 import time
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
+from threading import Lock
 from typing import Any, Dict, Optional
 
 from src.agent.config import Config, LLMProvider
 
 _MAX_RETRIES = 4
 _RETRY_BASE_SECS = 35  # Groq rate limit windows are ~30s
+_REQUEST_TIMEOUT_SECS = 60
 
 _NEBIUS_BASE_URL = "https://api.tokenfactory.us-central1.nebius.com/v1/"
 _MINIMAX_BASE_URL = "https://api.minimax.io/v1"
@@ -115,15 +117,40 @@ class MinimaxProvider(BaseLLMProvider):
         self._model = config.llm_model
 
     def complete(self, system: str, user: str, model_override: str | None = None) -> str:
-        response = self._client.chat.completions.create(
-            model=model_override or self._model,
-            messages=[
-                {"role": "system", "content": system},
-                {"role": "user", "content": user},
-            ],
-            temperature=0.2,
-        )
-        return response.choices[0].message.content or ""
+        model = model_override or self._model
+        for attempt in range(_MAX_RETRIES):
+            try:
+                response = self._client.chat.completions.create(
+                    model=model,
+                    messages=[
+                        {"role": "system", "content": system},
+                        {"role": "user", "content": user},
+                    ],
+                    temperature=0.2,
+                    timeout=_REQUEST_TIMEOUT_SECS,
+                )
+                return response.choices[0].message.content or ""
+            except Exception as e:
+                # Client/model validation errors (4xx) are non-retryable; fail fast.
+                err = str(e).lower()
+                if (
+                    "bad_request_error" in err
+                    or "http_code': '400'" in err
+                    or 'http_code": "400"' in err
+                    or "error code: 400" in err
+                    or "invalid params" in err
+                    or "unknown model" in err
+                ):
+                    raise
+                if attempt < _MAX_RETRIES - 1:
+                    wait = min(2 ** attempt, 8)
+                    print(
+                        f"  [minimax retry] waiting {wait}s "
+                        f"(attempt {attempt + 1}/{_MAX_RETRIES}) due to: {e}"
+                    )
+                    time.sleep(wait)
+                    continue
+                raise
 
 
 class OllamaProvider(BaseLLMProvider):
@@ -223,6 +250,7 @@ class LLMClient:
         self._config = config
         self._provider = create_provider(config)
         self._calls: list[dict] = []
+        self._calls_lock = Lock()
 
     def complete(
         self,
@@ -233,8 +261,10 @@ class LLMClient:
     ) -> str:
         response = self._provider.complete(system, user, model_override=model_override)
         trace = trace or {}
+        with self._calls_lock:
+            call_id = f"llm_{len(self._calls):05d}"
         call_record = {
-            "id": f"llm_{len(self._calls):05d}",
+            "id": call_id,
             "step": int(trace.get("step", -1)),
             "component": str(trace.get("component", "unknown")),
             "provider": str(self._config.llm_provider.value if hasattr(self._config.llm_provider, "value") else self._config.llm_provider),
@@ -245,8 +275,12 @@ class LLMClient:
             "meta": {k: v for k, v in trace.items() if k not in {"step", "component"}},
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         }
-        self._calls.append(call_record)
+        with self._calls_lock:
+            if call_record["id"] != f"llm_{len(self._calls):05d}":
+                call_record["id"] = f"llm_{len(self._calls):05d}"
+            self._calls.append(call_record)
         return response
 
     def get_trace(self) -> list[dict]:
-        return list(self._calls)
+        with self._calls_lock:
+            return list(self._calls)

@@ -1,5 +1,6 @@
 import copy
 import json
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Dict, Optional
 
@@ -63,6 +64,55 @@ def _build_search_query(query: str, sq) -> str:
             "replication failure contradictory evidence"
         )
     return f"{topic} {focus}"
+
+
+def _recent_search_queries(store: EvidenceStore, limit: int = 6) -> set[str]:
+    """Return normalized base search queries from recent search steps."""
+    if limit <= 0:
+        return set()
+    sq_by_id = {sq.id: sq for sq in store.sub_questions}
+    recent = []
+    for record in reversed(store.step_history):
+        if not record.action.startswith("search:"):
+            continue
+        sq_id = record.action.split(":", 1)[1].strip()
+        sq = sq_by_id.get(sq_id)
+        if sq is None:
+            continue
+        recent.append(_normalize_query_text(_build_search_query(store.query, sq)))
+        if len(recent) >= limit:
+            break
+    return set(recent)
+
+
+def _enforce_query_novelty(
+    store: EvidenceStore,
+    sq,
+    search_query: str,
+    sq_failure_streak: int,
+    recent_window: int = 6,
+) -> tuple[str, bool]:
+    """Avoid repeating identical base queries across recent steps."""
+    normalized = _normalize_query_text(search_query)
+    recent = _recent_search_queries(store, limit=recent_window)
+    if normalized not in recent:
+        return search_query, False
+    novelty_pivots = _pivot_queries(store.query, sq, max(1, sq_failure_streak + 1))
+    for candidate in novelty_pivots:
+        if _normalize_query_text(candidate) not in recent:
+            return candidate, True
+    forced = f"{search_query} replication benchmark ablation"
+    return forced, True
+
+
+def _preview_text(text: str, max_chars: int = 140) -> str:
+    clean = _normalize_query_text(text)
+    if len(clean) <= max_chars:
+        return clean
+    if max_chars <= 12:
+        return clean[:max_chars]
+    keep = (max_chars - 3) // 2
+    return f"{clean[:keep]}...{clean[-keep:]}"
 
 
 def _build_challenge_query(query: str, group, step: int) -> str:
@@ -178,6 +228,53 @@ def _pivot_queries(query: str, sq, failure_streak: int) -> list[str]:
     return pivots
 
 
+def _search_query_variants(
+    retriever: Retriever,
+    query_variants: list[str],
+    max_results: int,
+    research_mode: bool,
+    parallelism: int,
+    adaptive_parallelism: bool,
+):
+    if not query_variants:
+        return []
+    effective_parallelism = (
+        retriever.suggest_parallelism(parallelism) if adaptive_parallelism else parallelism
+    )
+    if effective_parallelism <= 1 or len(query_variants) <= 1:
+        raw_results = []
+        for qv in query_variants:
+            raw_results.extend(
+                retriever.search(
+                    qv,
+                    max_results=max_results,
+                    research_mode=research_mode,
+                )
+            )
+        return raw_results
+
+    raw_results_by_idx: dict[int, list] = {}
+    max_workers = min(effective_parallelism, len(query_variants))
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_map = {
+            executor.submit(
+                retriever.search,
+                qv,
+                max_results=max_results,
+                research_mode=research_mode,
+            ): idx
+            for idx, qv in enumerate(query_variants)
+        }
+        for future in as_completed(future_map):
+            idx = future_map[future]
+            raw_results_by_idx[idx] = future.result()
+
+    merged = []
+    for idx in range(len(query_variants)):
+        merged.extend(raw_results_by_idx.get(idx, []))
+    return merged
+
+
 def run(
     query: str,
     mode: str,
@@ -253,6 +350,12 @@ def run(
                 continue
             search_query = _build_search_query(query, sq)
             sq_failure_streak = _recent_sq_failure_streak(store, sq.id)
+            search_query, was_novelty_rewritten = _enforce_query_novelty(
+                store,
+                sq,
+                search_query,
+                sq_failure_streak,
+            )
             query_variants = [search_query]
             query_variants.extend(_pivot_queries(query, sq, sq_failure_streak))
             # Escalate to high-quality research domains after repeated extraction dead-zones.
@@ -260,7 +363,10 @@ def run(
                 config.research_mode
                 and (_should_use_research_mode(sq) or sq_failure_streak >= 2)
             )
-            print(f"[step {step}] search: {search_query[:100]}")
+            print(f"[step {step}] search[{sq.id}] focus: {_preview_text(sq.text, max_chars=90)}")
+            print(f"  query: {_preview_text(search_query)}")
+            if was_novelty_rewritten:
+                print("  [novelty] base query repeated recently; using pivoted query")
             if observation_cache is not None and sq.id in observation_cache:
                 results = observation_cache[sq.id]
                 print(f"  [cached] {len(results)} results")
@@ -285,15 +391,14 @@ def run(
                     seen_queries.add(key)
                 query_variants = deduped_queries
                 query_variants_tried = len(query_variants)
-                raw_results = []
-                for qv in query_variants:
-                    raw_results.extend(
-                        retriever.search(
-                            qv,
-                            max_results=config.max_results,
-                            research_mode=research_mode,
-                        )
-                    )
+                raw_results = _search_query_variants(
+                    retriever,
+                    query_variants,
+                    max_results=config.max_results,
+                    research_mode=research_mode,
+                    parallelism=config.search_parallelism,
+                    adaptive_parallelism=config.adaptive_parallelism,
+                )
                 raw_results = _dedupe_results(raw_results)
                 rerank_in_count = len(raw_results)
                 results, _ = rerank_results(
@@ -316,15 +421,14 @@ def run(
                 if research_mode and recovery_attempts < config.recovery_max_attempts:
                     recovery_attempts += 1
                     recovery_strategy = "expand_domain"
-                    raw_results = []
-                    for qv in query_variants:
-                        raw_results.extend(
-                            retriever.search(
-                                qv,
-                                max_results=config.max_results,
-                                research_mode=False,
-                            )
-                        )
+                    raw_results = _search_query_variants(
+                        retriever,
+                        query_variants,
+                        max_results=config.max_results,
+                        research_mode=False,
+                        parallelism=config.search_parallelism,
+                        adaptive_parallelism=config.adaptive_parallelism,
+                    )
                     raw_results = _dedupe_results(raw_results)
                     rerank_in_count = len(raw_results)
                     results, _ = rerank_results(
@@ -362,16 +466,15 @@ def run(
                     )
                     rewrite_variants = list(dict.fromkeys(q.strip() for q in rewrite_variants if q.strip()))
                     query_variants_tried += len(rewrite_variants)
-                    print(f"  [recovery] rewritten search: {rewritten_query[:100]}")
-                    raw_results = []
-                    for qv in rewrite_variants:
-                        raw_results.extend(
-                            retriever.search(
-                                qv,
-                                max_results=config.max_results,
-                                research_mode=False,
-                            )
-                        )
+                    print(f"  [recovery] rewritten search: {_preview_text(rewritten_query)}")
+                    raw_results = _search_query_variants(
+                        retriever,
+                        rewrite_variants,
+                        max_results=config.max_results,
+                        research_mode=False,
+                        parallelism=config.search_parallelism,
+                        adaptive_parallelism=config.adaptive_parallelism,
+                    )
                     raw_results = _dedupe_results(raw_results)
                     rerank_in_count = len(raw_results)
                     results, _ = rerank_results(
@@ -398,7 +501,11 @@ def run(
             ]
             store.observations.extend(new_obs)
             observations_added = len(new_obs)
-            new_claims = batch_extract_claims(new_obs, llm)
+            new_claims = batch_extract_claims(
+                new_obs,
+                llm,
+                parallelism=config.extract_parallelism,
+            )
             if config.enable_claim_filter:
                 filtered_claims, _ = filter_claims_for_sub_question(
                     query,
@@ -426,15 +533,14 @@ def run(
                 rescue_variants = [q.strip() for q in rescue_variants if q.strip()]
                 if rescue_variants:
                     query_variants_tried += len(rescue_variants)
-                    rescue_raw = []
-                    for qv in rescue_variants:
-                        rescue_raw.extend(
-                            retriever.search(
-                                qv,
-                                max_results=config.max_results,
-                                research_mode=True,
-                            )
-                        )
+                    rescue_raw = _search_query_variants(
+                        retriever,
+                        rescue_variants,
+                        max_results=config.max_results,
+                        research_mode=True,
+                        parallelism=config.search_parallelism,
+                        adaptive_parallelism=config.adaptive_parallelism,
+                    )
                     rescue_raw = _dedupe_results(rescue_raw)
                     rerank_in_count += len(rescue_raw)
                     rescue_results, _ = rerank_results(
@@ -456,7 +562,11 @@ def run(
                     ]
                     store.observations.extend(rescue_obs)
                     observations_added += len(rescue_obs)
-                    rescue_claims = batch_extract_claims(rescue_obs, llm)
+                    rescue_claims = batch_extract_claims(
+                        rescue_obs,
+                        llm,
+                        parallelism=config.extract_parallelism,
+                    )
                     if config.enable_claim_filter:
                         filtered_claims, _ = filter_claims_for_sub_question(
                             query,
@@ -486,7 +596,7 @@ def run(
             if group is None:
                 continue
             challenge_query = _build_challenge_query(query, group, step)
-            print(f"[step {step}] challenge: {challenge_query[:80]}")
+            print(f"[step {step}] challenge[{group.id}]: {_preview_text(challenge_query, max_chars=120)}")
             results = retriever.search(
                 challenge_query,
                 max_results=config.max_results,
@@ -507,7 +617,11 @@ def run(
             ]
             store.observations.extend(new_obs)
             observations_added = len(new_obs)
-            new_claims = batch_extract_claims(new_obs, llm)
+            new_claims = batch_extract_claims(
+                new_obs,
+                llm,
+                parallelism=config.extract_parallelism,
+            )
             if config.enable_claim_filter:
                 challenge_sq = next((s for s in store.sub_questions if s.id == group.sub_question_id), None)
                 sq_text = challenge_sq.text if challenge_sq is not None else group.canonical_text
