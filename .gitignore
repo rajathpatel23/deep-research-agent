@@ -13,3 +13,4 @@ examples/outputs/*.md
 !examples/outputs/.gitkeep
 docs/
 runs/
+*.pdf

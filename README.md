@@ -134,9 +134,8 @@ Typical run directory contents include:
 
 - `dashboard.html`: visual timeline, sub-question coverage, claim group status
 - `report.md`: narrative synthesis and conclusions
-- `trace.json`: run-level metrics and step outcomes
+- `run_trace.json`: run-level metrics and step outcomes
 - `evidence_store.json`: structured evidence graph/state
-- `llm_trace.json`: model call trace for debugging
 
 ## Testing
 
