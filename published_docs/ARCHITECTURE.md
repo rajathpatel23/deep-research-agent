@@ -24,6 +24,68 @@ Query
   -> Metrics + Dashboard + Report
 ```
 
+## Block Diagram
+
+```text
++------------------------------+
+| User Query / Experiment Run  |
+| run.py or experiment.py      |
++--------------+---------------+
+               |
+               v
++------------------------------+
+| Orchestrator                |
+| src/agent/orchestrator.py   |
++------+-----------------------+
+       |
+       v
++------------------------------+       +------------------------------+
+| Decomposer                  | -----> | Evidence Store              |
+| src/agent/decomposer.py     |        | src/agent/evidence_store.py |
++------------------------------+       +------------------------------+
+                                             ^               |
+                                             | (read)        | (write)
+                                             |               v
+                                     +------------------------------+
+                                     | Planner                      |
+                                     | baseline_plan / guided_plan  |
+                                     +--------------+---------------+
+                                                    |
+                                                    v
+                                     +------------------------------+
+                                     | Action                       |
+                                     | Search / Challenge / Stop    |
+                                     +------+-----------------------+
+                                            |
+                                            | if Search or Challenge
+                                            v
+                   +------------------------+------------------------+
+                   | Retrieval + Processing Pipeline                 |
+                   | Retriever -> Query Rewriter -> Reranker         |
+                   | -> Extractor (+ Claim Filter) -> Conflict       |
+                   +------------------------+------------------------+
+                                            |
+                                            v
+                                     +------------------------------+
+                                     | Evidence Store Update         |
+                                     | observations, claims, disputes|
+                                     +--------------+---------------+
+                                                    |
+                                                    v
+                                     +------------------------------+
+                                     | Stop Criteria + Metrics       |
+                                     | coverage / budget / returns   |
+                                     +--------------+---------------+
+                                                    |
+                                                    v
+                                     +------------------------------+
+                                     | Outputs                       |
+                                     | run_trace.json                |
+                                     | evidence_store.json           |
+                                     | report.md + dashboard.html    |
+                                     +------------------------------+
+```
+
 ## Core Runtime Loop
 
 Implemented in `src/agent/orchestrator.py`.

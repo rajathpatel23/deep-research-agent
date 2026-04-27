@@ -6,7 +6,7 @@ A deep research agent has one job: improve an explicit evidence state and produc
 
 The report is a view over an explicit evidence state, not the primary product of generation. Every claim should trace to sources, confidence should reflect evidence quality, conflicts should be surfaced, and uncertainty reduction over the evidence state should drive what to do next and when to stop.
 
-## Evaluation Frame (from Self-Evaluation)
+## Evaluation Framework
 
 There is no ground-truth answer key for open-ended research reports, so evaluation is framed as honesty relative to the evidence store the system collected.
 

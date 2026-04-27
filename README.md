@@ -25,7 +25,6 @@ A Python research agent that decomposes a complex question into sub-questions, r
 ├── src/agent/              # Core agent modules
 ├── tests/                  # Pytest suite
 ├── published_docs/         # Commit-ready architecture and results docs
-├── docs/                   # Local scratch notes (optional, not for publishing)
 └── runs/                   # Generated run artifacts
 ```
 
@@ -33,10 +32,10 @@ A Python research agent that decomposes a complex question into sub-questions, r
 
 Use these docs for sharing/publishing:
 
-- `published_docs/ARCHITECTURE.md` - end-to-end system architecture and data flow
-- `published_docs/COMPONENTS.md` - component-by-component responsibilities and interfaces
-- `published_docs/RUNBOOK.md` - exact commands for local runs and experiments
-- `published_docs/THESIS_AND_RESULTS.md` - thesis, baseline-vs-guided outcomes, and metrics
+- `published_docs/architecture.md` - end-to-end system architecture and data flow
+- `published_docs/components.md` - component-by-component responsibilities and interfaces
+- `published_docs/runbook.md` - exact commands for local runs and experiments
+- `published_docs/results.md` - thesis, baseline-vs-guided outcomes, and metrics
 
 ## Quickstart
 
