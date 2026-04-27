@@ -1,0 +1,21 @@
+name: rag_factuality
+description: "Ablation — does guided search improve over baseline for RAG research queries?"
+
+llm:
+  provider: groq
+  model: qwen/qwen3-32b
+
+search:
+  backend: tavily
+  max_results: 3
+
+output_dir: runs
+
+runs:
+  - query: "Does retrieval-augmented generation improve factual accuracy in large language models?"
+    modes: [baseline, guided]
+    max_steps: 10
+
+  - query: "What are the main failure modes and limitations of retrieval-augmented generation?"
+    modes: [baseline, guided]
+    max_steps: 10

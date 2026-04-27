@@ -1,0 +1,17 @@
+name: rag_ollama
+description: "Ollama local inference — no rate limits"
+
+llm:
+  provider: ollama
+  model: qwen3:8b
+
+search:
+  backend: tavily
+  max_results: 3
+
+output_dir: runs
+
+runs:
+  - query: "Does retrieval-augmented generation improve factual accuracy in large language models?"
+    modes: [guided]
+    max_steps: 10

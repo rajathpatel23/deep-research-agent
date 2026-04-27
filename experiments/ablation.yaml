@@ -1,0 +1,25 @@
+name: ablation
+description: "Baseline vs guided — Reinforce Labs test cases, same model, clean comparison"
+
+llm:
+  provider: groq
+  model: qwen/qwen3-32b
+
+search:
+  backend: tavily
+  max_results: 5
+
+output_dir: runs
+
+runs:
+  # Example 2: Contradictory sources — best for showing conflict surfacing
+  - query: "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees—find the real fault lines and explain what accounts for the conflicting results."
+    modes: [baseline, guided]
+    max_steps: 10
+    shared_sources: true
+
+  # Example 1: Straightforward — shows baseline vs guided on a well-sourced topic
+  - query: "What are the real-world risks and benefits of using synthetic data to train or fine-tune large language models? Focus on data quality, bias, and evaluation."
+    modes: [baseline, guided]
+    max_steps: 10
+    shared_sources: true

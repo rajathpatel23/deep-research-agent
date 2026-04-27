@@ -1,0 +1,743 @@
+{
+  "query": "Does retrieval-augmented generation improve factual accuracy in large language models?",
+  "sub_questions": [
+    {
+      "id": "sq1",
+      "text": "How does retrieval-augmented generation affect factual accuracy metrics compared to baseline models?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq2",
+      "text": "Are there specific domains where retrieval-augmented generation shows significant improvements in accuracy?",
+      "kind": "supporting",
+      "has_evidence": true
+    },
+    {
+      "id": "sq3",
+      "text": "Under what conditions does retrieval-augmented generation fail to improve factual accuracy?",
+      "kind": "adversarial",
+      "has_evidence": true
+    },
+    {
+      "id": "sq4",
+      "text": "Can retrieval-augmented generation introduce new errors or biases that reduce factual accuracy?",
+      "kind": "adversarial",
+      "has_evidence": true
+    },
+    {
+      "id": "sq5",
+      "text": "What role does the quality of external knowledge sources play in the effectiveness of retrieval-augmented generation?",
+      "kind": "supporting",
+      "has_evidence": true
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs_eedbe067",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://binginagesh.medium.com/evaluating-retrieval-augmented-generation-rag-measuring-llm-response-quality-c2a41f78f9a8",
+      "source_title": "Evaluating Retrieval-Augmented Generation (RAG)",
+      "domain": "binginagesh.medium.com",
+      "snippet": "Evaluation Metrics Used \u00b7 Exact Match (EM): It checks whether the predicted answer exactly matches the ground-truth answer after normalization."
+    },
+    {
+      "id": "obs_00e83314",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://www.researchgate.net/publication/395288092_Retrieval-Augmented_Generation_vs_Baseline_LLMs_A_Multi-Metric_Evaluation_for_Knowledge-Intensive_Content",
+      "source_title": "(PDF) Retrieval-Augmented Generation vs. Baseline LLMs",
+      "domain": "www.researchgate.net",
+      "snippet": "Our experiments show that RAG-Augmented LLMs demonstrate high lexical and semantic scores relative to baseline LLMs. This offers RAG-Augmented"
+    },
+    {
+      "id": "obs_d92d5d54",
+      "step": 0,
+      "sub_question_id": "sq1",
+      "source_url": "https://doaj.org/article/712f11ef22b041baa4545b2c70dec211",
+      "source_title": "Retrieval-Augmented Generation vs. Baseline LLMs",
+      "domain": "doaj.org",
+      "snippet": "Our experiments show that RAG-Augmented LLMs demonstrate high lexical and semantic scores relative to baseline LLMs. This offers RAG-Augmented LLMs as a"
+    },
+    {
+      "id": "obs_98450d33",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://www.linkedin.com/pulse/strategic-evolution-retrieval-augmented-generation-s83cc",
+      "source_title": "The Strategic Evolution of Retrieval-Augmented Generation (RAG ...",
+      "domain": "www.linkedin.com",
+      "snippet": "30% improvement in customer-facing accuracy; 60% faster internal search and decision cycles. RAG allows smaller, cheaper models to outperform"
+    },
+    {
+      "id": "obs_5baab56d",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://verysell.ai/retrieval-augmented-generation-best-knowledge-for-2026/",
+      "source_title": "Retrieval Augmented Generation (RAG) Best Knowledge for 2026",
+      "domain": "verysell.ai",
+      "snippet": "*   [Insight](https://verysell.ai/retrieval-augmented-generation-best-knowledge-for-2026/#). What is RAG?](https://verysell.ai/retrieval-augmented-generation-best-knowledge-for-2026/#1_What_is_RAG). Approach: The Standard RAG Pipeline](https://verysell.ai/retrieval-augmented-generation-best-knowledge-for-2026/#2_Approach_The_Standard_RAG_Pipeline). How to Improve RAG](https://verysell.ai/retrieval-augmented-generation-best-knowledge-for-2026/#3_How_to_Improve_RAG). Parametric RAG and Dynamic RAG"
+    },
+    {
+      "id": "obs_1fed6816",
+      "step": 1,
+      "sub_question_id": "sq2",
+      "source_url": "https://medium.com/@martinagrafsvw25/advancements-in-rag-retrieval-augmented-generation-systems-by-mid-2025-935a39c15ae9",
+      "source_title": "Advancements in RAG [Retrieval-Augmented Generation] Systems by Mid-2025",
+      "domain": "medium.com",
+      "snippet": "[Sign in](https://medium.com/m/signin?operation=login&redirect=https%3A%2F%2Fmedium.com%2F%40martinagrafsvw25%2Fadvancements-in-rag-retrieval-augmented-generation-systems-by-mid-2025-935a39c15ae9&source=post_page---top_nav_layout_nav-----------------------global_nav------------------). [Sign in](https://medium.com/m/signin?operation=login&redirect=https%3A%2F%2Fmedium.com%2F%40martinagrafsvw25%2Fadvancements-in-rag-retrieval-augmented-generation-systems-by-mid-2025-935a39c15ae9&source=post_page-"
+    },
+    {
+      "id": "obs_5c98c17a",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://snorkel.ai/blog/retrieval-augmented-generation-rag-failure-modes-and-how-to-fix-them/",
+      "source_title": "Retrieval-augmented generation (RAG) failure modes and how to fix ...",
+      "domain": "snorkel.ai",
+      "snippet": "A RAG system that lacks complete coverage could leave the LLM with no context to draw on, increasing the likelihood that it generates a \u201challucination).\u201d Additionally, a system that includes poorly curated documents could give the end user misleading, incorrect, or outdated information. Ineffective document chunking can lead to information loss, noisy context, or irrelevant retrievals, hampering the performance of RAG pipelines. Generalist embedding models usually won\u2019t\u00a0capture the semantic nuan"
+    },
+    {
+      "id": "obs_1663b56c",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://www.leximancer.com/blog/everything-wrong-with-retrieval-augmented-generation",
+      "source_title": "Everything Wrong with Retrieval-Augmented Generation - Leximancer",
+      "domain": "www.leximancer.com",
+      "snippet": "Retrieval-Augmented Generation (RAG) has emerged as a promising solution to some of the biggest challenges facing large language models (LLMs). By combining the creative power of generative AI with the precision of information retrieval, RAG aims to reduce hallucinations and provide more grounded, trustworthy outputs. At the heart of RAG lies the retrieval component, which is responsible for fetching relevant information. * **Computation Overhead**: Generating responses after retrieving and proc"
+    },
+    {
+      "id": "obs_1602226d",
+      "step": 2,
+      "sub_question_id": "sq3",
+      "source_url": "https://medium.com/@ThinkingLoop/rag-isnt-accuracy-8-confident-failure-modes-568cfe855694",
+      "source_title": "RAG Isn't Accuracy: 8 Confident Failure Modes | by Thinking Loop",
+      "domain": "medium.com",
+      "snippet": "4. When retrieval increases the model's confidence on bad answers. One of the most counterintuitive findings in recent uncertainty work is that"
+    },
+    {
+      "id": "obs_470d2c5a",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/evaluate-the-reliability-of-retrieval-augmented-generation-applications-using-amazon-bedrock/",
+      "source_title": "Evaluate the reliability of Retrieval Augmented Generation ... - AWS",
+      "domain": "aws.amazon.com",
+      "snippet": "Additionally, evaluation can identify potential biases, hallucinations, inconsistencies, or factual errors that may arise from the"
+    },
+    {
+      "id": "obs_64625b51",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://arxiv.org/html/2409.10102v1",
+      "source_title": "Trustworthiness in Retrieval-Augmented Generation Systems - arXiv",
+      "domain": "arxiv.org",
+      "snippet": "In the answer generation phase, the introduction of external knowledge may lead to biased reasoning and compromise the alignment achieved"
+    },
+    {
+      "id": "obs_b18b568a",
+      "step": 3,
+      "sub_question_id": "sq4",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12713515/",
+      "source_title": "Retrieval-Augmented Generation Undermines Fairness in LLMs ...",
+      "domain": "pmc.ncbi.nlm.nih.gov",
+      "snippet": "Even with fully censored and supposedly unbiased external datasets, RAG can lead to biased outputs. Our findings underscore the limitations of"
+    },
+    {
+      "id": "obs_f61755e4",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://aclanthology.org/2025.findings-emnlp.218/",
+      "source_title": "How Does Knowledge Selection Help Retrieval Augmented ...",
+      "domain": "aclanthology.org",
+      "snippet": "Retrieval-augmented generation (RAG) is a powerful method for enhancing natural language generation by integrating external knowledge into a model's output."
+    },
+    {
+      "id": "obs_2692a180",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://www.linkedin.com/posts/naveensrtv_rag-retrieval-augmented-generation-system-activity-7409894918204231681-FOpl",
+      "source_title": "RAG Enhances AI Response Accuracy with External Knowledge",
+      "domain": "www.linkedin.com",
+      "snippet": "Retrieval-Augmented Generation (RAG) enhances AI responses by retrieving relevant information from external knowledge bases before"
+    },
+    {
+      "id": "obs_aab09dd8",
+      "step": 4,
+      "sub_question_id": "sq5",
+      "source_url": "https://www.digitaldividedata.com/blog/rag-detailed-guide-data-quality-evaluation-and-governance",
+      "source_title": "RAG Detailed Guide: Data Quality, Evaluation, And Governance",
+      "domain": "www.digitaldividedata.com",
+      "snippet": "Retrieval Augmented Generation (RAG) is often presented as a simple architectural upgrade: connect a language model to a knowledge base, retrieve relevant documents, and generate grounded answers. In this article, let\u2019s explore how Retrieval Augmented Generation or RAG should be treated not as a retrieval pipeline, but as a data system, an evaluation system, and a governance system. Before discussing chunking or embeddings, it helps to define what data quality means in the RAG context. The choic"
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_ea33f425",
+      "text": "Exact Match (EM) checks whether the predicted answer exactly matches the ground-truth answer",
+      "scope": "after normalization",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_eedbe067",
+      "verbatim": "Exact Match (EM): It checks whether the predicted answer exactly matches the ground-truth answer after normalization.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_8945b067",
+      "text": "RAG-Augmented LLMs demonstrate high lexical and semantic scores",
+      "scope": "relative to baseline LLMs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_00e83314",
+      "verbatim": "Our experiments show that RAG-Augmented LLMs demonstrate high lexical and semantic scores relative to baseline LLMs.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_83a0d288",
+      "text": "RAG-Augmented LLMs demonstrate high lexical and semantic scores",
+      "scope": "relative to baseline LLMs",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_d92d5d54",
+      "verbatim": "Our experiments show that RAG-Augmented LLMs demonstrate high lexical and semantic scores relative to baseline LLMs.",
+      "sub_question_id": "sq1",
+      "step": 0
+    },
+    {
+      "id": "clm_037deb11",
+      "text": "Customer-facing accuracy improves by 30%",
+      "scope": "for customer-facing tasks",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_98450d33",
+      "verbatim": "30% improvement in customer-facing accuracy",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_10016b7d",
+      "text": "Internal search and decision cycles are 60% faster",
+      "scope": "for internal search and decision cycles",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_98450d33",
+      "verbatim": "60% faster internal search and decision cycles",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_800c522e",
+      "text": "RAG enables smaller, cheaper models to outperform",
+      "scope": "when using RAG",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_98450d33",
+      "verbatim": "RAG allows smaller, cheaper models to outperform",
+      "sub_question_id": "sq2",
+      "step": 1
+    },
+    {
+      "id": "clm_f9ef300f",
+      "text": "A RAG system that lacks complete coverage increases the likelihood of hallucinations",
+      "scope": "for RAG systems lacking complete coverage",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5c98c17a",
+      "verbatim": "A RAG system that lacks complete coverage could leave the LLM with no context to draw on, increasing the likelihood that it generates a 'hallucination'.",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_c3b262ed",
+      "text": "A system with poorly curated documents provides misleading, incorrect, or outdated information",
+      "scope": "for systems with poorly curated documents",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5c98c17a",
+      "verbatim": "a system that includes poorly curated documents could give the end user misleading, incorrect, or outdated information",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_a193378f",
+      "text": "Ineffective document chunking leads to information loss, noisy context, or irrelevant retrievals",
+      "scope": "for RAG pipelines",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_5c98c17a",
+      "verbatim": "Ineffective document chunking can lead to information loss, noisy context, or irrelevant retrievals, hampering the performance of RAG pipelines",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_9875b4d9",
+      "text": "Generalist embedding models usually fail to capture semantic nuance",
+      "scope": "for generalist embedding models",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_5c98c17a",
+      "verbatim": "Generalist embedding models usually won\u2019t capture the semantic nuance",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_00ba7980",
+      "text": "Retrieval-Augmented Generation (RAG) is a promising solution to challenges facing large language models (LLMs)",
+      "scope": "for large language models",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_1663b56c",
+      "verbatim": "Retrieval-Augmented Generation (RAG) has emerged as a promising solution to some of the biggest challenges facing large language models (LLMs).",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_494e023b",
+      "text": "RAG reduces hallucinations by combining generative AI with information retrieval",
+      "scope": "when using retrieval components",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_1663b56c",
+      "verbatim": "RAG aims to reduce hallucinations and provide more grounded, trustworthy outputs.",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_293a8826",
+      "text": "When retrieval increases the model's confidence on bad answers",
+      "scope": "when retrieval is used in the model's process",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_1602226d",
+      "verbatim": "When retrieval increases the model's confidence on bad answers.",
+      "sub_question_id": "sq3",
+      "step": 2
+    },
+    {
+      "id": "clm_504b0d3e",
+      "text": "Evaluation can identify potential biases, hallucinations, inconsistencies, or factual errors",
+      "scope": "for retrieval-augmented generation applications",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_470d2c5a",
+      "verbatim": "Additionally, evaluation can identify potential biases, hallucinations, inconsistencies, or factual errors that may arise from the /think",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_9d9197fa",
+      "text": "The introduction of external knowledge may lead to biased reasoning",
+      "scope": "in the answer generation phase",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_64625b51",
+      "verbatim": "In the answer generation phase, the introduction of external knowledge may lead to biased reasoning and compromise the alignment achieved",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_dcc4d942",
+      "text": "The introduction of external knowledge may compromise the alignment achieved",
+      "scope": "in the answer generation phase",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_64625b51",
+      "verbatim": "In the answer generation phase, the introduction of external knowledge may lead to biased reasoning and compromise the alignment achieved",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_c7a7f075",
+      "text": "RAG can lead to biased outputs",
+      "scope": "when using fully censored and supposedly unbiased external datasets",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_b18b568a",
+      "verbatim": "Even with fully censored and supposedly unbiased external datasets, RAG can lead to biased outputs.",
+      "sub_question_id": "sq4",
+      "step": 3
+    },
+    {
+      "id": "clm_168a620e",
+      "text": "Retrieval-augmented generation (RAG) is a powerful method for enhancing natural language generation by integrating external knowledge into a model's output.",
+      "scope": "for enhancing natural language generation by integrating external knowledge into a model's output",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_f61755e4",
+      "verbatim": "Retrieval-augmented generation (RAG) is a powerful method for enhancing natural language generation by integrating external knowledge into a model's output.",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_282e33ce",
+      "text": "Retrieval-Augmented Generation (RAG) enhances AI responses by retrieving relevant information from external knowledge bases before /think",
+      "scope": "for AI responses",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_2692a180",
+      "verbatim": "Retrieval-Augmented Generation (RAG) enhances AI responses by retrieving relevant information from external knowledge bases before /think",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_a0801d6d",
+      "text": "RAG is often presented as a simple architectural upgrade",
+      "scope": "in the context of its initial description",
+      "claim_type": "empirical",
+      "source_observation_id": "obs_aab09dd8",
+      "verbatim": "Retrieval Augmented Generation (RAG) is often presented as a simple architectural upgrade: connect a language model to a knowledge base, retrieve relevant documents, and generate grounded answers.",
+      "sub_question_id": "sq5",
+      "step": 4
+    },
+    {
+      "id": "clm_9349c359",
+      "text": "RAG should be treated as a data system, evaluation system, and governance system",
+      "scope": "according to the article's argument",
+      "claim_type": "speculative",
+      "source_observation_id": "obs_aab09dd8",
+      "verbatim": "In this article, let\u2019s explore how Retrieval Augmented Generation or RAG should be treated not as a retrieval pipeline, but as a data system, an evaluation system, and a governance system.",
+      "sub_question_id": "sq5",
+      "step": 4
+    }
+  ],
+  "claim_groups": [
+    {
+      "id": "grp_a252bee9",
+      "canonical_text": "Exact Match (EM) checks whether the predicted answer exactly matches the ground-truth answer",
+      "scope": "after normalization",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_ea33f425"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "binginagesh.medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_f9e77227",
+      "canonical_text": "RAG-Augmented LLMs demonstrate high lexical and semantic scores",
+      "scope": "relative to baseline LLMs",
+      "sub_question_id": "sq1",
+      "supporting_claim_ids": [
+        "clm_8945b067",
+        "clm_83a0d288"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.researchgate.net",
+        "doaj.org"
+      ],
+      "aggregate_confidence": "medium",
+      "status": "supported",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_5a573eac",
+      "canonical_text": "Customer-facing accuracy improves by 30%",
+      "scope": "for customer-facing tasks",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_037deb11"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.linkedin.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_d90b9eeb",
+      "canonical_text": "Internal search and decision cycles are 60% faster",
+      "scope": "for internal search and decision cycles",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_10016b7d"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.linkedin.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_23b450d4",
+      "canonical_text": "RAG enables smaller, cheaper models to outperform",
+      "scope": "when using RAG",
+      "sub_question_id": "sq2",
+      "supporting_claim_ids": [
+        "clm_800c522e"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.linkedin.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_ead316e8",
+      "canonical_text": "A RAG system that lacks complete coverage increases the likelihood of hallucinations",
+      "scope": "for RAG systems lacking complete coverage",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_f9ef300f"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "snorkel.ai"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_0616cacd",
+      "canonical_text": "A system with poorly curated documents provides misleading, incorrect, or outdated information",
+      "scope": "for systems with poorly curated documents",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_c3b262ed"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "snorkel.ai"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_32771ac6",
+      "canonical_text": "Ineffective document chunking leads to information loss, noisy context, or irrelevant retrievals",
+      "scope": "for RAG pipelines",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_a193378f"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "snorkel.ai"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_b2ee17e8",
+      "canonical_text": "Generalist embedding models usually fail to capture semantic nuance",
+      "scope": "for generalist embedding models",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_9875b4d9"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "snorkel.ai"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_c18f5e08",
+      "canonical_text": "Retrieval-Augmented Generation (RAG) is a promising solution to challenges facing large language models (LLMs)",
+      "scope": "for large language models",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_00ba7980"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.leximancer.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_22ad89c7",
+      "canonical_text": "RAG reduces hallucinations by combining generative AI with information retrieval",
+      "scope": "when using retrieval components",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_494e023b"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.leximancer.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_4f94d2a4",
+      "canonical_text": "When retrieval increases the model's confidence on bad answers",
+      "scope": "when retrieval is used in the model's process",
+      "sub_question_id": "sq3",
+      "supporting_claim_ids": [
+        "clm_293a8826"
+      ],
+      "contradicting_claim_ids": [
+        "clm_293a8826"
+      ],
+      "source_domains": [
+        "medium.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "disputed",
+      "challenge_status": "challenged_conflict_found"
+    },
+    {
+      "id": "grp_9c8da990",
+      "canonical_text": "Evaluation can identify potential biases, hallucinations, inconsistencies, or factual errors",
+      "scope": "for retrieval-augmented generation applications",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_504b0d3e"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "aws.amazon.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_1a7b74ed",
+      "canonical_text": "The introduction of external knowledge may lead to biased reasoning",
+      "scope": "in the answer generation phase",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_9d9197fa"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_0ebaecc3",
+      "canonical_text": "The introduction of external knowledge may compromise the alignment achieved",
+      "scope": "in the answer generation phase",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_dcc4d942"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "arxiv.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_47644df5",
+      "canonical_text": "RAG can lead to biased outputs",
+      "scope": "when using fully censored and supposedly unbiased external datasets",
+      "sub_question_id": "sq4",
+      "supporting_claim_ids": [
+        "clm_c7a7f075"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "pmc.ncbi.nlm.nih.gov"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_3231c77c",
+      "canonical_text": "Retrieval-augmented generation (RAG) is a powerful method for enhancing natural language generation by integrating external knowledge into a model's output.",
+      "scope": "for enhancing natural language generation by integrating external knowledge into a model's output",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_168a620e"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "aclanthology.org"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_917d35d0",
+      "canonical_text": "Retrieval-Augmented Generation (RAG) enhances AI responses by retrieving relevant information from external knowledge bases before /think",
+      "scope": "for AI responses",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_282e33ce"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.linkedin.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_595da20b",
+      "canonical_text": "RAG is often presented as a simple architectural upgrade",
+      "scope": "in the context of its initial description",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_a0801d6d"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.digitaldividedata.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    },
+    {
+      "id": "grp_198842f3",
+      "canonical_text": "RAG should be treated as a data system, evaluation system, and governance system",
+      "scope": "according to the article's argument",
+      "sub_question_id": "sq5",
+      "supporting_claim_ids": [
+        "clm_9349c359"
+      ],
+      "contradicting_claim_ids": [],
+      "source_domains": [
+        "www.digitaldividedata.com"
+      ],
+      "aggregate_confidence": "low",
+      "status": "weak",
+      "challenge_status": "unchallenged"
+    }
+  ],
+  "step_history": [
+    {
+      "step": 0,
+      "action": "search:sq1",
+      "sub_question_id": "sq1",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 1,
+      "action": "search:sq2",
+      "sub_question_id": "sq2",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 2,
+      "action": "search:sq3",
+      "sub_question_id": "sq3",
+      "result": "CONFLICT_FOUND"
+    },
+    {
+      "step": 3,
+      "action": "search:sq4",
+      "sub_question_id": "sq4",
+      "result": "NEW_EVIDENCE"
+    },
+    {
+      "step": 4,
+      "action": "search:sq5",
+      "sub_question_id": "sq5",
+      "result": "NEW_EVIDENCE"
+    }
+  ],
+  "termination_reason": "COVERAGE_MET"
+}
