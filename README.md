@@ -36,6 +36,7 @@ Use these docs for sharing/publishing:
 - `published_docs/components.md` - component-by-component responsibilities and interfaces
 - `published_docs/runbook.md` - exact commands for local runs and experiments
 - `published_docs/results.md` - thesis, baseline-vs-guided outcomes, and metrics
+- `published_docs/metrics.md` - metrics definition
 
 ## Quickstart
 
