@@ -280,12 +280,12 @@
           <div class="metric-bars">
             <div class="bar-group">
               <span class="bar-label">Baseline</span>
-              <div class="bar-track"><div class="bar-fill" style="width:80%;background:#6366f1"></div></div>
+              <div class="bar-track"><div class="bar-fill" style="width:80%;background:#6366f1;opacity:1"></div></div>
               <span class="bar-val">80%</span>
             </div>
             <div class="bar-group">
               <span class="bar-label">Guided</span>
-              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
               <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+20%</span></span>
             </div>
           </div>
@@ -298,12 +298,12 @@
           <div class="metric-bars">
             <div class="bar-group">
               <span class="bar-label">Baseline</span>
-              <div class="bar-track"><div class="bar-fill" style="width:53%;background:#6366f1"></div></div>
+              <div class="bar-track"><div class="bar-fill" style="width:53%;background:#6366f1;opacity:1"></div></div>
               <span class="bar-val">53%</span>
             </div>
             <div class="bar-group">
               <span class="bar-label">Guided</span>
-              <div class="bar-track"><div class="bar-fill" style="width:83%;background:#22c55e"></div></div>
+              <div class="bar-track"><div class="bar-fill" style="width:83%;background:#22c55e;opacity:1"></div></div>
               <span class="bar-val">83% <span style="color:#22c55e;font-size:0.75rem">+30%</span></span>
             </div>
           </div>
@@ -311,54 +311,54 @@
         <div class="metric-row">
           <div class="metric-label">
             <strong>Conflict Surfacing</strong>
-            <span class="metric-explain">When the evidence store contained contradicting claims, did the report surface them? 0% = conflicts found but hidden. 100% = fully honest.</span>
+            <span class="metric-explain">When contradictions are detected, did the report surface them? If no contradictions are detected, this metric is N/A.</span>
           </div>
           <div class="metric-bars">
             <div class="bar-group">
               <span class="bar-label">Baseline</span>
-              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#6366f1"></div></div>
-              <span class="bar-val">100%</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:0.25"></div></div>
+              <span class="bar-val">N/A</span>
             </div>
             <div class="bar-group">
               <span class="bar-label">Guided</span>
-              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div>
-              <span class="bar-val">100% <span style="color:#6b7280;font-size:0.75rem">0%</span></span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#6b7280;font-size:0.75rem">n/a</span></span>
             </div>
           </div>
         </div>
         <div class="metric-row">
           <div class="metric-label">
             <strong>Stopping Quality</strong>
-            <span class="metric-explain">Did the system stop because evidence was exhausted (good) or budget ran out (bad)? DIMINISHING_RETURNS = 1.0, COVERAGE_MET = 0 (also good), BUDGET_EXHAUSTED = 0.</span>
+            <span class="metric-explain">Did the run stop for a good reason? COVERAGE_MET or DIMINISHING_RETURNS = 100%; BUDGET_EXHAUSTED = 0%.</span>
           </div>
           <div class="metric-bars">
             <div class="bar-group">
               <span class="bar-label">Baseline</span>
-              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1"></div></div>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:1"></div></div>
               <span class="bar-val">0%</span>
             </div>
             <div class="bar-group">
               <span class="bar-label">Guided</span>
-              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e"></div></div>
-              <span class="bar-val">0% <span style="color:#6b7280;font-size:0.75rem">0%</span></span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+100%</span></span>
             </div>
           </div>
         </div>
         <div class="metric-row">
           <div class="metric-label">
-            <strong>Summary Grounding</strong>
-            <span class="metric-explain">Fraction of LLM-generated summary sentences traceable to a claim in the evidence store. Low = the summary introduced claims not backed by what was retrieved.</span>
+            <strong>Summary Traceability</strong>
+            <span class="metric-explain">Fraction of summary sentences traceable to evidence claims or run metadata (coverage, claim groups, conflicts, steps).</span>
           </div>
           <div class="metric-bars">
             <div class="bar-group">
               <span class="bar-label">Baseline</span>
-              <div class="bar-track"><div class="bar-fill" style="width:66%;background:#6366f1"></div></div>
+              <div class="bar-track"><div class="bar-fill" style="width:66%;background:#6366f1;opacity:1"></div></div>
               <span class="bar-val">67%</span>
             </div>
             <div class="bar-group">
               <span class="bar-label">Guided</span>
-              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e"></div></div>
-              <span class="bar-val">0% <span style="color:#ef4444;font-size:0.75rem">-67%</span></span>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
+              <span class="bar-val">100% <span style="color:#22c55e;font-size:0.75rem">+33%</span></span>
             </div>
           </div>
         </div>
@@ -370,12 +370,12 @@
           <div class="metric-bars">
             <div class="bar-group">
               <span class="bar-label">Baseline</span>
-              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#6366f1"></div></div>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#6366f1;opacity:1"></div></div>
               <span class="bar-val">100%</span>
             </div>
             <div class="bar-group">
               <span class="bar-label">Guided</span>
-              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:#22c55e;opacity:1"></div></div>
               <span class="bar-val">100% <span style="color:#6b7280;font-size:0.75rem">0%</span></span>
             </div>
           </div>
@@ -383,18 +383,18 @@
         <div class="metric-row">
           <div class="metric-label">
             <strong>Confidence Calibration</strong>
-            <span class="metric-explain">Are high-confidence claims backed by more sources than low-confidence ones? 1.0 = perfectly ordered. 0 = confidence labels are meaningless.</span>
+            <span class="metric-explain">Are higher-confidence claims backed by stronger evidence than lower-confidence ones? If claims only use one confidence tier, this metric is N/A.</span>
           </div>
           <div class="metric-bars">
             <div class="bar-group">
               <span class="bar-label">Baseline</span>
-              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1"></div></div>
-              <span class="bar-val">0%</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#6366f1;opacity:0.25"></div></div>
+              <span class="bar-val">N/A</span>
             </div>
             <div class="bar-group">
               <span class="bar-label">Guided</span>
-              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e"></div></div>
-              <span class="bar-val">0% <span style="color:#6b7280;font-size:0.75rem">0%</span></span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c55e;opacity:0.25"></div></div>
+              <span class="bar-val">N/A <span style="color:#6b7280;font-size:0.75rem">n/a</span></span>
             </div>
           </div>
         </div>

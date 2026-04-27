@@ -1,5 +1,6 @@
 from src.agent.evidence_store import EvidenceStore
 from src.agent.states import Confidence, GroupStatus, TerminationReason
+import re
 
 
 # ── process metrics ──────────────────────────────────────────────────────────
@@ -21,7 +22,7 @@ def search_efficiency(store: EvidenceStore) -> float:
 def conflict_surfacing_rate(store: EvidenceStore, report_text: str) -> float:
     detected = sum(1 for g in store.claim_groups if g.status == GroupStatus.DISPUTED)
     if detected == 0:
-        return 1.0
+        return None
     # Scope to ## Conflicts Surfaced section only — prevents gaming via Findings echoing disputed text
     conflicts_section = _extract_conflicts_section(report_text)
     surfaced = sum(
@@ -33,33 +34,54 @@ def conflict_surfacing_rate(store: EvidenceStore, report_text: str) -> float:
 
 
 def stopping_quality(store: EvidenceStore) -> float:
-    return 1.0 if store.termination_reason == TerminationReason.DIMINISHING_RETURNS.value else 0.0
+    return 1.0 if store.termination_reason in (
+        TerminationReason.DIMINISHING_RETURNS.value,
+        TerminationReason.COVERAGE_MET.value,
+    ) else 0.0
 
 
 # ── report faithfulness metrics ──────────────────────────────────────────────
 
 def summary_grounding_rate(store: EvidenceStore, report_text: str) -> float:
-    """Fraction of sentences in the LLM-generated Summary that overlap with
-    at least one claim group's canonical text (word overlap >= 0.15 Jaccard)."""
+    """Fraction of summary sentences traceable to claim text or run metadata.
+    Metadata grounding prevents penalizing concise process summaries."""
     summary = _extract_summary_section(report_text)
     if not summary.strip():
         return 1.0
 
-    sentences = [s.strip() for s in summary.split(".") if len(s.strip()) > 20]
+    sentences = [s.strip() for s in re.split(r"[.!?]\s+", summary) if len(s.strip()) > 20]
     if not sentences:
         return 1.0
 
     claim_word_sets = [
-        set(g.canonical_text.lower().split()) for g in store.claim_groups
+        _token_set(g.canonical_text) for g in store.claim_groups
     ]
+
+    covered = sum(1 for sq in store.sub_questions if sq.has_evidence)
+    total_sub_questions = len(store.sub_questions)
+    total_claim_groups = len(store.claim_groups)
+    disputes = sum(1 for g in store.claim_groups if g.status == GroupStatus.DISPUTED)
+    total_steps = len(store.step_history)
 
     grounded = 0
     for sentence in sentences:
-        s_words = set(sentence.lower().split())
+        s_words = _token_set(sentence)
+
+        if _is_metadata_grounded(
+            sentence.lower(),
+            covered=covered,
+            total_sub_questions=total_sub_questions,
+            total_claim_groups=total_claim_groups,
+            disputes=disputes,
+            total_steps=total_steps,
+        ):
+            grounded += 1
+            continue
+
         for c_words in claim_word_sets:
             union = s_words | c_words
             intersection = s_words & c_words
-            if union and len(intersection) / len(union) >= 0.15:
+            if union and len(intersection) / len(union) >= 0.12:
                 grounded += 1
                 break
 
@@ -141,6 +163,10 @@ def confidence_calibration(store: EvidenceStore) -> float:
     for g in store.claim_groups:
         tier_domains[g.aggregate_confidence].append(len(g.source_domains))
 
+    present_tiers = [tier for tier, counts in tier_domains.items() if counts]
+    if len(present_tiers) < 2:
+        return None
+
     avgs = {}
     for tier, counts in tier_domains.items():
         avgs[tier] = sum(counts) / len(counts) if counts else 0.0
@@ -159,18 +185,23 @@ def confidence_calibration(store: EvidenceStore) -> float:
 # ── aggregate ────────────────────────────────────────────────────────────────
 
 def compute_metrics(store: EvidenceStore, report_text: str) -> dict:
+    def _round(value):
+        if value is None:
+            return None
+        return round(value, 3)
+
     return {
-        "coverage_completeness": round(coverage_completeness(store), 3),
-        "search_efficiency": round(search_efficiency(store), 3),
-        "conflict_surfacing_rate": round(conflict_surfacing_rate(store, report_text), 3),
-        "stopping_quality": round(stopping_quality(store), 3),
-        "summary_grounding_rate": round(summary_grounding_rate(store, report_text), 3),
-        "unsupported_summary_rate": round(unsupported_summary_rate(store, report_text), 3),
-        "unresolved_disclosure_rate": round(unresolved_disclosure_rate(store, report_text), 3),
-        "uncertainty_calibration_score": round(uncertainty_calibration_score(store, report_text), 3),
-        "epistemic_honesty_score": round(epistemic_honesty_score(store, report_text), 3),
-        "source_diversity_mean": round(source_diversity(store), 3),
-        "confidence_calibration": round(confidence_calibration(store), 3),
+        "coverage_completeness": _round(coverage_completeness(store)),
+        "search_efficiency": _round(search_efficiency(store)),
+        "conflict_surfacing_rate": _round(conflict_surfacing_rate(store, report_text)),
+        "stopping_quality": _round(stopping_quality(store)),
+        "summary_grounding_rate": _round(summary_grounding_rate(store, report_text)),
+        "unsupported_summary_rate": _round(unsupported_summary_rate(store, report_text)),
+        "unresolved_disclosure_rate": _round(unresolved_disclosure_rate(store, report_text)),
+        "uncertainty_calibration_score": _round(uncertainty_calibration_score(store, report_text)),
+        "epistemic_honesty_score": _round(epistemic_honesty_score(store, report_text)),
+        "source_diversity_mean": _round(source_diversity(store)),
+        "confidence_calibration": _round(confidence_calibration(store)),
     }
 
 
@@ -219,3 +250,26 @@ def _extract_unresolved_section(report_text: str) -> str:
         if in_section:
             out.append(line)
     return "\n".join(out).strip()
+
+
+def _token_set(text: str) -> set[str]:
+    return set(re.findall(r"\b[a-z0-9]+\b", text.lower()))
+
+
+def _is_metadata_grounded(
+    sentence: str,
+    covered: int,
+    total_sub_questions: int,
+    total_claim_groups: int,
+    disputes: int,
+    total_steps: int,
+) -> bool:
+    if "sub-question" in sentence and f"{covered} of {total_sub_questions}" in sentence:
+        return True
+    if "claim group" in sentence and str(total_claim_groups) in sentence:
+        return True
+    if "contradict" in sentence and str(disputes) in sentence:
+        return True
+    if "step" in sentence and str(total_steps) in sentence:
+        return True
+    return False

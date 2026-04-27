@@ -12,12 +12,22 @@ import argparse
 import json
 from pathlib import Path
 
+from src.agent.evidence_store import EvidenceStore
+from src.agent.metrics import compute_metrics
+
 
 def load_traces(runs_dir: Path, mode_filter: str = None) -> list:
     traces = []
     for trace_file in sorted(runs_dir.rglob("run_trace.json")):
         try:
             data = json.loads(trace_file.read_text())
+            run_dir = trace_file.parent
+            store_file = run_dir / "evidence_store.json"
+            report_file = run_dir / "report.md"
+            if store_file.exists():
+                store = EvidenceStore(**json.loads(store_file.read_text()))
+                report_text = report_file.read_text() if report_file.exists() else ""
+                data.update(compute_metrics(store, report_text))
             if mode_filter and data.get("mode") != mode_filter:
                 continue
             data["_path"] = str(trace_file.parent.relative_to(runs_dir))

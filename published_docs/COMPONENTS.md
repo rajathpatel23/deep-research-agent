@@ -66,6 +66,7 @@
   - summary grounding rate
   - source diversity mean
   - confidence calibration
+- Metric definitions and interpretation guidance live in `published_docs/METRICS.md`.
 
 ## `src/agent/dashboard.py`
 

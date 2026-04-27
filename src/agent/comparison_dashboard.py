@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 from src.agent.evidence_store import EvidenceStore
+from src.agent.metrics import compute_metrics
 from src.agent.states import StepResult
 
 
@@ -29,18 +30,18 @@ _METRIC_EXPLANATIONS = {
     ),
     "conflict_surfacing_rate": (
         "Conflict Surfacing",
-        "When the evidence store contained contradicting claims, did the report surface them? "
-        "0% = conflicts found but hidden. 100% = fully honest."
+        "When contradictions are detected, did the report surface them? "
+        "If no contradictions are detected, this metric is N/A."
     ),
     "stopping_quality": (
         "Stopping Quality",
-        "Did the system stop because evidence was exhausted (good) or budget ran out (bad)? "
-        "DIMINISHING_RETURNS = 1.0, COVERAGE_MET = 0 (also good), BUDGET_EXHAUSTED = 0."
+        "Did the run stop for a good reason? "
+        "COVERAGE_MET or DIMINISHING_RETURNS = 100%; BUDGET_EXHAUSTED = 0%."
     ),
     "summary_grounding_rate": (
-        "Summary Grounding",
-        "Fraction of LLM-generated summary sentences traceable to a claim in the evidence store. "
-        "Low = the summary introduced claims not backed by what was retrieved."
+        "Summary Traceability",
+        "Fraction of summary sentences traceable to evidence claims or run metadata "
+        "(coverage, claim groups, conflicts, steps)."
     ),
     "source_diversity_mean": (
         "Source Diversity",
@@ -49,8 +50,8 @@ _METRIC_EXPLANATIONS = {
     ),
     "confidence_calibration": (
         "Confidence Calibration",
-        "Are high-confidence claims backed by more sources than low-confidence ones? "
-        "1.0 = perfectly ordered. 0 = confidence labels are meaningless."
+        "Are higher-confidence claims backed by stronger evidence than lower-confidence ones? "
+        "If claims only use one confidence tier, this metric is N/A."
     ),
 }
 
@@ -60,6 +61,7 @@ def load_run(run_dir: Path) -> dict:
     store_data = json.loads((run_dir / "evidence_store.json").read_text())
     store = EvidenceStore(**store_data)
     report = (run_dir / "report.md").read_text() if (run_dir / "report.md").exists() else ""
+    trace.update(compute_metrics(store, report))
     return {"trace": trace, "store": store, "report": report, "path": run_dir}
 
 
@@ -122,25 +124,26 @@ def _termination_explanation(reason: str) -> str:
 
 
 def _metric_comparison(b: dict, g: dict) -> str:
+    def _format_metric(value):
+        if value is None:
+            return {"text": "N/A", "bar": 0, "defined": False}
+        if isinstance(value, float) and value <= 1.0:
+            return {"text": f"{value:.0%}", "bar": int(value * 100), "defined": True}
+        return {"text": f"{value:.2f}", "bar": min(int(value * 33), 100), "defined": True}
+
     rows = ""
     for key, (label, explanation) in _METRIC_EXPLANATIONS.items():
-        bv = b["trace"].get(key, 0)
-        gv = g["trace"].get(key, 0)
+        bv = b["trace"].get(key)
+        gv = g["trace"].get(key)
+        b_data = _format_metric(bv)
+        g_data = _format_metric(gv)
 
-        if isinstance(bv, float) and bv <= 1.0:
-            b_fmt = f"{bv:.0%}"
-            g_fmt = f"{gv:.0%}"
-            b_bar = int(bv * 100)
-            g_bar = int(gv * 100)
-        else:
-            b_fmt = f"{bv:.2f}"
-            g_fmt = f"{gv:.2f}"
-            b_bar = min(int(bv * 33), 100)
-            g_bar = min(int(gv * 33), 100)
-
-        delta = gv - bv if isinstance(gv, (int, float)) else 0
-        delta_str = f"+{delta:.0%}" if isinstance(delta, float) and delta > 0 else (f"{delta:.0%}" if isinstance(delta, float) else "")
-        delta_color = "#22c55e" if delta > 0 else ("#ef4444" if delta < 0 else "#6b7280")
+        delta_str = "n/a"
+        delta_color = "#6b7280"
+        if isinstance(bv, (int, float)) and isinstance(gv, (int, float)):
+            delta = gv - bv
+            delta_str = f"+{delta:.0%}" if isinstance(delta, float) and delta > 0 else f"{delta:.0%}"
+            delta_color = "#22c55e" if delta > 0 else ("#ef4444" if delta < 0 else "#6b7280")
 
         rows += f"""
         <div class="metric-row">
@@ -151,13 +154,13 @@ def _metric_comparison(b: dict, g: dict) -> str:
           <div class="metric-bars">
             <div class="bar-group">
               <span class="bar-label">Baseline</span>
-              <div class="bar-track"><div class="bar-fill" style="width:{b_bar}%;background:#6366f1"></div></div>
-              <span class="bar-val">{b_fmt}</span>
+              <div class="bar-track"><div class="bar-fill" style="width:{b_data["bar"]}%;background:#6366f1;opacity:{1 if b_data["defined"] else 0.25}"></div></div>
+              <span class="bar-val">{b_data["text"]}</span>
             </div>
             <div class="bar-group">
               <span class="bar-label">Guided</span>
-              <div class="bar-track"><div class="bar-fill" style="width:{g_bar}%;background:#22c55e"></div></div>
-              <span class="bar-val">{g_fmt} <span style="color:{delta_color};font-size:0.75rem">{delta_str}</span></span>
+              <div class="bar-track"><div class="bar-fill" style="width:{g_data["bar"]}%;background:#22c55e;opacity:{1 if g_data["defined"] else 0.25}"></div></div>
+              <span class="bar-val">{g_data["text"]} <span style="color:{delta_color};font-size:0.75rem">{delta_str}</span></span>
             </div>
           </div>
         </div>"""
