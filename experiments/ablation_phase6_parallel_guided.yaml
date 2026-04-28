@@ -6,7 +6,7 @@ llm:
   model: MiniMax-M2.7
 
 search:
-  backend: tavily
+  backend: minimax
   max_results: 8
   research_mode: false
 
@@ -53,7 +53,11 @@ domain_policy:
 output_dir: runs
 
 runs:
-  - query: "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees—find the real fault lines and explain what accounts for the conflicting results."
+  # - query: "Is chain-of-thought prompting an effective reasoning strategy for LLMs, or does it primarily improve output formatting? The literature disagrees—find the real fault lines and explain what accounts for the conflicting results."
+  #   modes: [guided]
+  #   max_steps: 15
+  #   shared_sources: false
+  - query: "What is GRPO ? What is it built on and how does it work?"
     modes: [guided]
     max_steps: 15
     shared_sources: false
